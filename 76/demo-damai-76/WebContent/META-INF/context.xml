@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--	
+		maxIdle			最大空闲连接数量
+		maxTotal		最大连接数量
+		maxWaitMillis	等待时间  -1 不限时，  5000等待5秒，超时之后，系统会抛出异常 timeout
+		name			服务名
+-->
+<Context>
+	<Resource 
+	    auth="Container" 
+	    driverClassName="com.mysql.jdbc.Driver" 
+	    maxIdle="30" 
+	    maxTotal="50" 
+	    maxWaitMillis="-1" 
+	    name="mysql/damai" 
+	    username="root"
+	    password="a" 
+	    type="javax.sql.DataSource" 
+	    url="jdbc:mysql://localhost:3306/demo-damai"/>
+</Context>
