@@ -49,6 +49,9 @@ public class Talker extends Thread{
 		}
 	}
 
+	/**
+	 * 发送消息
+	 */
 	public String send(String name, String msg) throws IOException {
 		String ret = name + " 说：" + msg;
 		out.write(ret.getBytes());

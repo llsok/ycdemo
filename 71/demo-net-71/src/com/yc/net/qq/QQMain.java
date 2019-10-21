@@ -147,6 +147,7 @@ public class QQMain {
 					talker = new Talker(socket, new MsgListener() {
 						@Override
 						public void onMessage(String msg) {
+							// 收到消息时，将消息更新到多行文本框
 							shell.getDisplay().asyncExec(new Runnable() {
 								@Override
 								public void run() {
@@ -157,6 +158,7 @@ public class QQMain {
 
 						@Override
 						public void onConnect(InetAddress addr) {
+							// 连接成功时，显示对方IP
 							shell.getDisplay().asyncExec(new Runnable() {
 								@Override
 								public void run() {
