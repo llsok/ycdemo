@@ -136,10 +136,12 @@
 					<div class="title">
 						<strong>会员登录</strong>USER LOGIN
 					</div>
-					<div class="title">
-						
+					<div class="title" style="text-align: center;">
+						<%if(request.getAttribute("msg")!=null){ %>
+							<font color="red"><%=request.getAttribute("msg")%></font>
+						<%}%>
 					</div>
-					<form id="loginForm" action="login.html"  method="post" novalidate="novalidate">
+					<form id="loginForm" action="dologin.jsp"  method="post" novalidate="novalidate">
 						<table>
 							<tbody><tr>
 								<th>

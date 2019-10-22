@@ -32,7 +32,12 @@
 			<ul>
 				
 					<li id="headerLogin" class="headerLogin" style="display: list-item;">
-						Song|
+					<%if(session.getAttribute("loginedUser")==null){%>
+						<a href="login.jsp">登录</a>|
+					<%} else { %>
+						<%-- JSP 注释 ：使用 EL 表达式 输出 session 中的 loginedUser 的 username --%>
+						${loginedUser.username}|
+					<%} %>
 					</li>
 					<li id="headerLogin" class="headerLogin" style="display: list-item;">
 						<a href="olist.html">我的订单</a>|
@@ -44,7 +49,9 @@
 				
 				
 				
-				<li id="headerUsername" class="headerUsername"></li>
+				<li id="headerUsername" class="headerUsername">
+					${loginedUser.username}
+				</li>
 				<li id="headerLogout" class="headerLogout">
 					<a>[退出]</a>|
 				</li>
@@ -178,10 +185,13 @@
 							</li>
 						<%}%>
 						</ul>
-						<a href="index.jsp?pageNumber=1">首页</a>
-						<a href="index.jsp?pageNumber=<%=pageNumber<=1 ? 1 : pageNumber-1%>">上一页</a>
-						<a href="index.jsp?pageNumber=<%=pageNumber>=totalPage ? totalPage : pageNumber+1%>">下一页</a>
-						<a href="index.jsp?pageNumber=<%=totalPage%>">尾页</a>
+						<div style="text-align:center;">
+							<a href="index.jsp?pageNumber=1">首页</a>
+							<a href="index.jsp?pageNumber=<%=pageNumber<=1 ? 1 : pageNumber-1%>">上一页</a>
+							第 <input value="<%=pageNumber%>" style="width:30px;text-align: center"> 页
+							<a href="index.jsp?pageNumber=<%=pageNumber>=totalPage ? totalPage : pageNumber+1%>">下一页</a>
+							<a href="index.jsp?pageNumber=<%=totalPage%>">尾页</a>
+						</div>
 			</div>
 		</div>
 		<div class="span24">
