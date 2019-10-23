@@ -1,4 +1,4 @@
-package com.yc.net.http;
+package com.yc.net.http.v1;
 
 import java.util.HashMap;
 import java.util.List;
