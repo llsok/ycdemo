@@ -59,8 +59,13 @@
 			// 每次的状态改变都会调用该方法
 			xmlhttp.onreadystatechange=function(){
 				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// 替换空格
 					var msg = xmlhttp.responseText.replace(/\s/gi,"");
-					alert(msg);
+					// 使用 span 展示错误信息， 替代 alert(msg); 提升用户体验
+					// 允许注册使用绿色字体， 否则红色字体
+					var color = msg == '该用户名可以注册！' ? 'green' : 'red'; 
+					// 输入框的后面一个元素是用于展示信息的 span 元素
+					$("#username").next().text(msg).css("color", color);  
 				}
 			};
 
