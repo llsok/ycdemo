@@ -87,47 +87,13 @@
 						|
 					</li>
 					
-					<li>
-<a href="clist.html?1&pageIndex=1">
-					女装男装
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?2&pageIndex=1">
-					鞋靴箱包
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?3&pageIndex=1">
-					运动户外
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?4&pageIndex=1">
-					珠宝配饰
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?5&pageIndex=1">
-					手机数码
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?6&pageIndex=1">
-					家电办公
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?7&pageIndex=1">
-					护肤彩妆
-</a>
-					|</li>
+					<%
+						String cSql = "select * from category";
+						List<Map<String,Object>> clist = DBHelper.selectList(cSql);
+						for(Map<String,Object> row : clist) {
+					%>
+					<li><a href="clist.jsp?cid=<%=row.get("cid")%>"><%=row.get("cname")%></a>|</li>
+					<%}%>
 							
 		</ul>
 	</div>
