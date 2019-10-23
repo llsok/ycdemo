@@ -12,6 +12,11 @@ public class HttpServletResponse {
 	
 	private HttpServletRequest request;
 	private OutputStream out;
+
+	//  状态码字段
+	private int status=200;
+	//  状态码的描述信息
+	private String message="OK";
 	
 	public HttpServletResponse(HttpServletRequest request, OutputStream out) {
 		super();
@@ -32,7 +37,7 @@ public class HttpServletResponse {
 		// 从 web.xml 文件中取 contentType， 替代之前的硬编码判断
 		String contentType = webXmlParser.getContentType(suffix);
 		
-		String resp = "HTTP/1.1 200 OK\r\n";
+		String resp = "HTTP/1.1 "+status+" "+message+"\r\n";
 		resp += "Content-Type: "+contentType+"\r\n";
 		resp += "\r\n";
 		out.write(resp.getBytes());
@@ -56,6 +61,12 @@ public class HttpServletResponse {
 		}
 		fis.close();
 		
+	}
+
+
+	public void setStatus(int status, String message) {
+		this.status = status;
+		this.message = message;
 	}
 
 }

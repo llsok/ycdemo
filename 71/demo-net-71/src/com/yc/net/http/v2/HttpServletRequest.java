@@ -50,5 +50,10 @@ public class HttpServletRequest {
 	public String getHeader(String header){
 		return headerMap.get(header);
 	}
+
+	// 设置 URL
+	public void setRequestURL(String requestURL) {
+		this.requestURL = requestURL;
+	}
 	
 }
