@@ -21,14 +21,101 @@
 		return false;
 	}
 	
+	var xmlhttp;
+	// ajax 验证用户名是否存在
+	try {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+	} catch (e) {
+		try {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new XMLHttpRequest();
+			} catch (e) {
+			}
+		}
+	}
 	//校验用户名是否存在
 	function checkUserName(){
-		// ajax 验证用户名是否存在
+		
+		// 获取用户填写的用户名
+		var name = document.getElementById("username").value;
+		
+		name = name.replace(/\s/gi,"");
+		if(name == ''){
+			alert("请填写用户名！");
+			return;
+		}
+		
+		if(xmlhttp!=null){
+			// 定义请求地址
+			var url ="doCheckUsername.jsp?username="+name;
+					
+			// 以 POST 方式 开启连接
+			// POST 请求 更安全（编码）  提交的数据大小没有限制
+			xmlhttp.open("POST",url,true);
+			
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var msg = xmlhttp.responseText.replace(/\s/gi,"");
+					alert(msg);
+				}
+			};
+
+			// 发送请求
+			xmlhttp.send(null);
+		}else{
+			alert("不能创建XMLHttpRequest对象实例")
+		}
 	}
 	function changeImg(){
 		// 更新验证码
 	}
-</script>
+	
+	function reg(){
+		var username = document.getElementById("username").value;
+		var password = document.getElementById("password").value;
+		var repassword = document.getElementById("repassword").value;
+		var email = document.getElementById("email").value;
+		var phone = document.getElementById("phone").value;
+		var name = document.getElementById("name").value;
+		var sex = $("input[type='radio'][checked]").val();
+		
+		if(xmlhttp!=null){
+			// 定义请求地址
+			var url ="doReg.jsp?username="+username 
+					+ "&password=" + password
+					+ "&repassword=" + repassword
+					+ "&email=" + email
+					+ "&phone=" + phone
+					+ "&sex=" + sex;
+			// 以 POST 方式 开启连接
+			// POST 请求 更安全（编码）  提交的数据大小没有限制
+			xmlhttp.open("POST",url,true);
+			
+			// 设置回调函数   // 当收到服务器的响应时，会触发该函数（回调函数）
+			// 每次的状态改变都会调用该方法
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					var json = xmlhttp.responseText.replace(/\s/gi,"");
+					eval("var user = " + json);
+					console.info(user);
+					alert(user.msg);  // msg 时扩展的 属性
+				}
+			};
+
+			// 发送请求
+			xmlhttp.send(null);
+		}else{
+			alert("不能创建XMLHttpRequest对象实例")
+		}
+		
+		
+	}
+
+	</script>
 </head>
 <body>
 	<div class="container header">
@@ -152,7 +239,7 @@
 					<form id="registerForm"
 						action="reg.html"
 						method="post" novalidate="novalidate"
-						onsubmit="return checkForm();">
+						onsubmit="reg(); return false;">
 						<table>
 							<tbody>
 								<tr>
@@ -188,7 +275,7 @@
 								</tr>
 								<tr>
 									<th>姓名:</th>
-									<td><input type="text" name="name" class="text"
+									<td><input type="text" id="name" name="name" class="text"
 										maxlength="200">
 									</td>
 								</tr>
