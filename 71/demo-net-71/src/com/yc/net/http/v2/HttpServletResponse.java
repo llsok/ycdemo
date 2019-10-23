@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -109,6 +110,15 @@ public class HttpServletResponse {
 	
 	public void setContentType(String contentType){
 		this.headerMap.put("Content-Type", contentType);
+	}
+
+	
+	/**
+	 * 如何定义   PrintWriter ，在commit 要考虑  和 文件输出的配合问题
+	 * @return
+	 */
+	public PrintWriter getWriter() {
+		return null;
 	}
 
 }
