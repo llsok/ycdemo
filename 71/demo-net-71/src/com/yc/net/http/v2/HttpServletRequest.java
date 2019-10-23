@@ -55,5 +55,9 @@ public class HttpServletRequest {
 	public void setRequestURL(String requestURL) {
 		this.requestURL = requestURL;
 	}
+
+	public RequestDispatcher getRequestDispatcher(String webPath) {
+		return new RequestDispatcher(webPath);
+	}
 	
 }

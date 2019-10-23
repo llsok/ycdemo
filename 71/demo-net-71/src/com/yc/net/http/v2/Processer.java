@@ -13,8 +13,10 @@ public class Processer {
 	private HashMap<String,HttpServlet> servletContainer = new HashMap<>();
 	
 	{
-		// 添加一个Servlet
-		servletContainer.put("/hello.s", new HelloServlet());
+		// 添加一个Servlet 实现响应重定向
+		servletContainer.put("/redirect.s", new RedirectServlet());
+		// 添加一个Servlet 实现请求转发
+		servletContainer.put("/forward.s", new ForwardServlet());
 	}
 	
 	public void process(Socket socket){

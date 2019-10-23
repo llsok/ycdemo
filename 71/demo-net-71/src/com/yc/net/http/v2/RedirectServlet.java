@@ -1,6 +1,6 @@
 package com.yc.net.http.v2;
 
-public class HelloServlet extends HttpServlet {
+public class RedirectServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
