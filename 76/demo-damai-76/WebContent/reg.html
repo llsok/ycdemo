@@ -80,8 +80,8 @@
 		var repassword = document.getElementById("repassword").value;
 		var email = document.getElementById("email").value;
 		var phone = document.getElementById("phone").value;
-		var name = document.getElementById("name").value;
-		var sex = $("input[type='radio'][checked]").val();
+		var name = $("#name").val();  // 使用 jquery 选择器搞定！！！
+		var sex = $("input[name='sex']:checked").val(); // checked选择器写法记错了，已修改
 		
 		if(xmlhttp!=null){
 			// 定义请求地址
