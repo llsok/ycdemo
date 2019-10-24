@@ -18,7 +18,7 @@
 	
 <div class="span5">
 		<div class="logo">
-			<a href="index.html">
+			<a href="index.jsp">
 				<img src="image/r___________renleipic_01/logo.png" alt="依依不舍"/>
 			</a>
 		</div>
@@ -33,10 +33,10 @@
 				
 				
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<a href="login.html">登录</a>|
+					<a href="login.jsp">登录</a>|
 				</li>
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
-					<a href="reg.html">注册</a>|
+					<a href="reg.jsp">注册</a>|
 				</li>
 				
 				
@@ -60,7 +60,7 @@
 			</ul>
 		</div>
 		<div class="cart">
-			<a  href="cart.html">购物车</a>
+			<a  href="cart.jsp">购物车</a>
 		</div>
 			<div class="phone">
 				客服热线:
@@ -73,48 +73,48 @@
 <div class="span24">
 		<ul class="mainNav">
 					<li>
-						<a href="index.html">首页</a>
+						<a href="index.jsp">首页</a>
 						|
 					</li>
 					
 					<li>
-<a href="clist.html?1&pageIndex=1">
+<a href="clist.jsp?1&pageIndex=1">
 					女装男装
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?2&pageIndex=1">
+<a href="clist.jsp?2&pageIndex=1">
 					鞋靴箱包
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?3&pageIndex=1">
+<a href="clist.jsp?3&pageIndex=1">
 					运动户外
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?4&pageIndex=1">
+<a href="clist.jsp?4&pageIndex=1">
 					珠宝配饰
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?5&pageIndex=1">
+<a href="clist.jsp?5&pageIndex=1">
 					手机数码
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?6&pageIndex=1">
+<a href="clist.jsp?6&pageIndex=1">
 					家电办公
 </a>
 					|</li>
 					
 					<li>
-<a href="clist.html?7&pageIndex=1">
+<a href="clist.jsp?7&pageIndex=1">
 					护肤彩妆
 </a>
 					|</li>

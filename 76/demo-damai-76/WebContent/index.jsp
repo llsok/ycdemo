@@ -13,93 +13,8 @@
 </head>
 <body>
 
-<div class="container header">
-	
-	
-<div class="span5">
-		<div class="logo">
-			<a href="index.html">
-				<img src="image/r___________renleipic_01/logo.png" alt="依依不舍"/>
-			</a>
-		</div>
-	</div>
-	<div class="span9">
-<div class="headerAd">
-	<img src="image/header.jpg" width="320" height="50" alt="正品保障" title="正品保障"/>
-</div>	</div>
-<div class="span10 last">
-		<div class="topNav clearfix">
-			<ul>
-				
-					<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<%if(session.getAttribute("loginedUser")==null){%>
-						<a href="login.jsp">登录</a>|
-					<%} else { %>
-						<%-- JSP 注释 ：使用 EL 表达式 输出 session 中的 loginedUser 的 username --%>
-						${loginedUser.username}|
-					<%} %>
-					</li>
-					<li id="headerLogin" class="headerLogin" style="display: list-item;">
-						<a href="olist.html">我的订单</a>|
-					</li>
-					<li id="headerRegister" class="headerRegister" style="display: list-item;">
-					<a href="index.html">退出</a>|
-				</li>
-				
-				
-				
-				
-				<li id="headerUsername" class="headerUsername">
-					${loginedUser.username}
-				</li>
-				<li id="headerLogout" class="headerLogout">
-					<a>[退出]</a>|
-				</li>
-						<li>
-							<a>会员中心</a>
-							|
-						</li>
-						<li>
-							<a>购物指南</a>
-							|
-						</li>
-						<li>
-							<a>关于我们</a>
-							
-						</li>
-			</ul>
-		</div>
-		<div class="cart">
-			<a  href="cart.html">购物车</a>
-		</div>
-			<div class="phone">
-				客服热线:
-				<strong>96008/53277764</strong>
-			</div>
-	</div>
-	
-
-
-<div class="span24">
-		<ul class="mainNav">
-					<li>
-						<a href="index.html">首页</a>
-						|
-					</li>
-					
-					<%
-						String cSql = "select * from category";
-						List<Map<String,Object>> clist = DBHelper.selectList(cSql);
-						for(Map<String,Object> row : clist) {
-					%>
-					<li><a href="clist.jsp?cid=<%=row.get("cid")%>"><%=row.get("cname")%></a>|</li>
-					<%}%>
-							
-		</ul>
-	</div>
-
-
-</div>	
+<!-- 页头          HTML注释           JSP 指令引入 -->	
+<%@ include file="/common/header.jsp" %>
 
 <div class="container index">
 		
@@ -147,7 +62,7 @@
 							for(Map<String,Object> m : list) {
 						%>
 							<li>
-								<a target="_blank" href="detail.html?1"><img src="<%=m.get("image") %>" style="display: block;"></a>
+								<a target="_blank" href="detail.jsp?1"><img src="<%=m.get("image") %>" style="display: block;"></a>
 							</li>
 						<%}%>
 						</ul>
@@ -180,43 +95,43 @@
 						 <ul class="tabContent" style="display: block;">
 						 
 									<li>
-										<a href="detail.html?72" target="_blank"><img src="products/1/cs10011.jpg" style="display: block;"></a>
+										<a href="detail.jsp?72" target="_blank"><img src="products/1/cs10011.jpg" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?57" target="_blank"><img src="products/1/cs60006.png" style="display: block;"></a>
+										<a href="detail.jsp?57" target="_blank"><img src="products/1/cs60006.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?4" target="_blank"><img src="products/1/cs10004.jpg" style="display: block;"></a>
+										<a href="detail.jsp?4" target="_blank"><img src="products/1/cs10004.jpg" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?45" target="_blank"><img src="products/1/cs50004.png" style="display: block;"></a>
+										<a href="detail.jsp?45" target="_blank"><img src="products/1/cs50004.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?51" target="_blank"><img src="products/1/cs50010.png" style="display: block;"></a>
+										<a href="detail.jsp?51" target="_blank"><img src="products/1/cs50010.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?68" target="_blank"><img src="products/1/cs70007.png" style="display: block;"></a>
+										<a href="detail.jsp?68" target="_blank"><img src="products/1/cs70007.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?60" target="_blank"><img src="products/1/cs60009.png" style="display: block;"></a>
+										<a href="detail.jsp?60" target="_blank"><img src="products/1/cs60009.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?30" target="_blank"><img src="products/1/cs30010.png" style="display: block;"></a>
+										<a href="detail.jsp?30" target="_blank"><img src="products/1/cs30010.png" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?6" target="_blank"><img src="products/1/cs10006.jpg" style="display: block;"></a>
+										<a href="detail.jsp?6" target="_blank"><img src="products/1/cs10006.jpg" style="display: block;"></a>
 									</li>
 						
 									<li>
-										<a href="detail.html?2" target="_blank"><img src="products/1/cs10002.jpg" style="display: block;"></a>
+										<a href="detail.jsp?2" target="_blank"><img src="products/1/cs10002.jpg" style="display: block;"></a>
 									</li>
 						
 						</ul>
@@ -266,53 +181,8 @@
 			</div>
 		</div>
 	</div>
-<div class="container footer">
-	<div class="span24">
-		<div class="footerAd">
-					<img src="image/footer.jpg" width="950" height="52" alt="我们的优势" title="我们的优势">
-</div>	</div>
-	<div class="span24">
-		<ul class="bottomNav">
-					<li>
-						<a>关于我们</a>
-						|
-					</li>
-					<li>
-						<a>联系我们</a>
-						|
-					</li>
-					<li>
-						<a>招贤纳士</a>
-						|
-					</li>
-					<li>
-						<a>法律声明</a>
-						|
-					</li>
-					<li>
-						<a>友情链接</a>
-						|
-					</li>
-					<li>
-						<a target="_blank">支付方式</a>
-						|
-					</li>
-					<li>
-						<a target="_blank">配送方式</a>
-						|
-					</li>
-					<li>
-						<a>服务声明</a>
-						|
-					</li>
-					<li>
-						<a>广告声明</a>
-						
-					</li>
-		</ul>
-	</div>
-	<div class="span24">
-		<div class="copyright">Copyright © 2005-2013 大麦商城 版权所有</div>
-	</div>
-</div>
+
+<%-- 页脚         JSP 注释              JSP 动作标签  --%>
+<jsp:include page="/common/footer.jsp"></jsp:include>
+
 </body></html>

@@ -14,7 +14,7 @@
 	
 <div class="span5">
 		<div class="logo">
-			<a href="index.html">
+			<a href="index.jsp">
 				<img src="image/r___________renleipic_01/logo.png" alt="依依不舍"/>
 			</a>
 		</div>
@@ -29,10 +29,10 @@
 				
 				
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<a href="login.html">登录</a>|
+					<a href="login.jsp">登录</a>|
 				</li>
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
-					<a href="reg.html">注册</a>|
+					<a href="reg.jsp">注册</a>|
 				</li>
 				
 				
@@ -56,7 +56,7 @@
 			</ul>
 		</div>
 		<div class="cart">
-			<a  href="cart.html">购物车</a>
+			<a  href="cart.jsp">购物车</a>
 		</div>
 			<div class="phone">
 				客服热线:
@@ -71,7 +71,7 @@
 <div class="span24">
 		<ul class="mainNav">
 					<li>
-						<a href="index.html">首页</a>
+						<a href="index.jsp">首页</a>
 						|
 					</li>
 					
@@ -128,7 +128,7 @@
 						<ul>
 						
 						<li>
-										<a href="detail.html?1">
+										<a href="detail.jsp?1">
 											<img src="products/1/cs10001.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -143,7 +143,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?2">
+										<a href="detail.jsp?2">
 											<img src="products/1/cs10002.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -158,7 +158,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?3">
+										<a href="detail.jsp?3">
 											<img src="products/1/cs10003.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -173,7 +173,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?4">
+										<a href="detail.jsp?4">
 											<img src="products/1/cs10004.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -188,7 +188,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?5">
+										<a href="detail.jsp?5">
 											<img src="products/1/cs10005.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -203,7 +203,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?6">
+										<a href="detail.jsp?6">
 											<img src="products/1/cs10006.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -218,7 +218,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?7">
+										<a href="detail.jsp?7">
 											<img src="products/1/cs10007.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -233,7 +233,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?8">
+										<a href="detail.jsp?8">
 											<img src="products/1/cs10008.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -248,7 +248,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?9">
+										<a href="detail.jsp?9">
 											<img src="products/1/cs10009.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -263,7 +263,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?10">
+										<a href="detail.jsp?10">
 											<img src="products/1/cs10010.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -278,7 +278,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?72">
+										<a href="detail.jsp?72">
 											<img src="products/1/cs10011.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -293,7 +293,7 @@
 									</li>
 						
 						<li>
-										<a href="detail.html?11">
+										<a href="detail.jsp?11">
 											<img src="products/1/cs20001.jpg" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
@@ -321,33 +321,33 @@
 			
 				
 				
-					<a href="clist.html?1&pageIndex=2">2</a>
+					<a href="clist.jsp?1&pageIndex=2">2</a>
 				
 			
 				
 				
-					<a href="clist.html?1&pageIndex=3">3</a>
+					<a href="clist.jsp?1&pageIndex=3">3</a>
 				
 			
 				
 				
-					<a href="clist.html?1&pageIndex=4">4</a>
+					<a href="clist.jsp?1&pageIndex=4">4</a>
 				
 			
 				
 				
-					<a href="clist.html?1&pageIndex=5">5</a>
+					<a href="clist.jsp?1&pageIndex=5">5</a>
 				
 			
 				
 				
-					<a href="clist.html?1&pageIndex=6">6</a>
+					<a href="clist.jsp?1&pageIndex=6">6</a>
 				
 			
 				
 			
-				<a class="nextPage" href="clist.html?1&pageIndex=2">&nbsp;</a>
-				<a class="lastPage" href="clist.html?1&pageIndex=6">&nbsp;</a>
+				<a class="nextPage" href="clist.jsp?1&pageIndex=2">&nbsp;</a>
+				<a class="lastPage" href="clist.jsp?1&pageIndex=6">&nbsp;</a>
 				
 	</div>
 			</form>
