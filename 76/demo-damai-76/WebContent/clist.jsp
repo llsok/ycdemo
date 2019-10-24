@@ -52,11 +52,17 @@
 				<div id="result" class="result table clearfix">
 						<ul>
 						<%
-							String sql = "select * from product a join categorysecond b " 
+							String sql = "select a.* from product a join categorysecond b " 
 								+ " on a.csid = b.csid"
 								+ " where 1=1";
 							String cid = request.getParameter("cid");
 							String csid = request.getParameter("csid");
+							// 第几页
+							String pageParam = request.getParameter("page");
+							int iPage = pageParam == null ? 1 : Integer.parseInt(pageParam);
+							// 每页行数
+							int rows = 12;
+							
 							String queryId;
 							if(csid!=null){
 								sql += " and b.csid=?";
@@ -66,8 +72,8 @@
 								queryId = cid;
 							}
 							
-							List<Map<String,Object>> plist = DBHelper.selectList(sql, queryId);
-							for(Map<String,Object> p : plist){
+							DBHelper.Page pPage = DBHelper.selectPageForMysql(sql,iPage,rows, queryId);
+							for(Map<String,Object> p : pPage.getData()){
 						%>
 						
 							<li>
@@ -90,43 +96,25 @@
 				</div>
 	
 	<div class="pagination">
-	第1/6
+		第<%=pPage.getPage() %>/<%=pPage.getLastPage()%>
+		
+				<% String condition = csid != null ? "csid=" + csid : ("cid=" + cid);%>
 	
-	
-				
-					<span class="currentPage">1</span>
-				
-				
+				<a class="firstPage" href="clist.jsp?<%=condition %>&page=1">&nbsp;</a>
+				<a class="previousPage" href="clist.jsp?<%=condition %>&page=<%=pPage.getPreviousPage()%>">&nbsp;</a>
 			
+					<%for(int i=1; i<=pPage.getLastPage() ; i++){ %>
+					
+						<%if(pPage.getPage()==i){ %>
+							<span class="currentPage"><%=i%></span>
+						<%} else { %>
+							<a href="clist.jsp?<%=condition %>&page=<%=i%>"><%=i%></a>
+						<%} %>
 				
-				
-					<a href="clist.jsp?1&pageIndex=2">2</a>
-				
+					<%} %>
 			
-				
-				
-					<a href="clist.jsp?1&pageIndex=3">3</a>
-				
-			
-				
-				
-					<a href="clist.jsp?1&pageIndex=4">4</a>
-				
-			
-				
-				
-					<a href="clist.jsp?1&pageIndex=5">5</a>
-				
-			
-				
-				
-					<a href="clist.jsp?1&pageIndex=6">6</a>
-				
-			
-				
-			
-				<a class="nextPage" href="clist.jsp?1&pageIndex=2">&nbsp;</a>
-				<a class="lastPage" href="clist.jsp?1&pageIndex=6">&nbsp;</a>
+				<a class="nextPage" href="clist.jsp?<%=condition %>&page=<%=pPage.getNextPage()%>">&nbsp;</a>
+				<a class="lastPage" href="clist.jsp?<%=condition %>&page=<%=pPage.getLastPage()%>">&nbsp;</a>
 				
 	</div>
 			</form>

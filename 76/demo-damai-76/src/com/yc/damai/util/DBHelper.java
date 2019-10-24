@@ -355,17 +355,17 @@ public class DBHelper {
     			+ "(select a.*,rownum rn from ("+sql+") a where rownum < "+endRow+") a"
     			+ " where a.rn > " + startRow;
     	List<Map<String,Object>> data = selectList(pageSql,params);
-        return new Page(total, data);
+        return new Page(total, page, rows, data);
     }
 
     public static Page selectPageForMysql(String sql, int page, int rows, Object... params) {
-    	String totalSql = "select count(*) from ("+sql+")";   
+    	String totalSql = "select count(*) from ("+sql+") a";   
     	Object totalObj = selectValue(totalSql, params);
     	long total = Long.parseLong(totalObj.toString());
     	int startRow = (page - 1 ) * rows;
-    	String pageSql = "select count(*) from ("+sql+") limit " + startRow + ", " + rows;
+    	String pageSql = "select * from ("+sql+") a limit " + startRow + ", " + rows;
     	List<Map<String,Object>> data = selectList(pageSql,params);
-        return new Page(total, data);
+        return new Page(total, page, rows, data);
     }
 
     /**
@@ -376,9 +376,13 @@ public class DBHelper {
         private List<Map<String,Object>> data;
         // 鎬昏锟�?
         private long total;
+		private int page;
+		private int rows;
 
-        public Page(long total, List<Map<String,Object>> data) {
+        public Page(long total, int page, int rows, List<Map<String,Object>> data) {
             this.data = data;
+            this.page = page;
+            this.rows = rows;
             this.total = total;
         }
 
@@ -388,6 +392,28 @@ public class DBHelper {
 
         public long getTotal() {
             return total;
+        }
+        
+        public int getPage(){
+        	return page;
+        }
+        
+        public int getFirstPage(){
+        	return 1;
+        }
+        
+        public int getPreviousPage(){
+        	return page > 1 ? page - 1 : 1;
+        }
+        
+        public int getNextPage(){
+        	int lastpage = getLastPage();
+        	return page < lastpage ? page + 1 : lastpage;
+        }
+        
+        public int getLastPage(){
+        	long lastPage = total / rows;
+        	return (int) (total % rows == 0 ?  lastPage : (lastPage + 1));
         }
 
     }
