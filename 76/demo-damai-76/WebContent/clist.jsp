@@ -1,3 +1,5 @@
+<%@page import="java.util.*"%>
+<%@page import="com.yc.damai.util.DBHelper"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html>
@@ -73,47 +75,13 @@
 						|
 					</li>
 					
-					<li>
-<a href="clist.html?1&pageIndex=1">
-					女装男装
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?2&pageIndex=1">
-					鞋靴箱包
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?3&pageIndex=1">
-					运动户外
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?4&pageIndex=1">
-					珠宝配饰
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?5&pageIndex=1">
-					手机数码
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?6&pageIndex=1">
-					家电办公
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?7&pageIndex=1">
-					护肤彩妆
-</a>
-					|</li>
+					<%
+						String cSql = "select * from category";
+						List<Map<String,Object>> clist = DBHelper.selectList(cSql);
+						for(Map<String,Object> row : clist) {
+					%>
+					<li><a href="clist.jsp?cid=<%=row.get("cid")%>"><%=row.get("cname")%></a>|</li>
+					<%}%>
 							
 		</ul>
 	</div>
@@ -125,196 +93,25 @@
 
 		<div class="span6">
 			<div class="hotProductCategory">
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=1">女装男装</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=1">潮流女装</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=2">初冬羽绒</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=3">毛呢大衣</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=4">温暖毛衣</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=5">精选男装</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=6">冬季外套</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=7">羽绒服</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=2">鞋靴箱包</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=9">女鞋</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=10">短靴</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=11">男鞋</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=12">女包</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=13">男包</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=14">服饰配件</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=3">运动户外</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=15">运动鞋</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=16">运动服</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=17">户外运动</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=18">健身装备</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=19">骑行装备</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=4">珠宝配饰</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=20">珠宝首饰</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=21">时尚饰品</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=22">品质手表</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=23">眼镜配饰</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=5">手机数码</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=24">手机</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=25">平板</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=26">电脑</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=27">相机</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=6">家电办公</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=28">大家电</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=29">厨房电器</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=30">生活电器</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=31">个户电器</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=32">办公耗材</a>
-									</dd>
-							
-						</dl>
-			
-						<dl>
-							<dt>
-								<a href="clist.html?cid=7">护肤彩妆</a>
-							</dt>
-							
-									<dd>
-										<a href="clist.html?csid=33">美容护肤</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=34">强效保养</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=35">超值彩妆</a>
-									</dd>
-							
-									<dd>
-										<a href="clist.html?csid=36">换季保养</a>
-									</dd>
-							
-						</dl>
-			
+				<%
+					String csSql = "select * from categorysecond";
+					List<Map<String,Object>> cslist = DBHelper.selectList(csSql);
+					// clist 在上面查询过了
+					for(Map<String,Object> c : clist) {
+				%>			
+				<dl>
+					<dt>
+						<a href="???"><%=c.get("cname") %></a>
+					</dt>
+					<%for(Map<String,Object> cs : cslist){%>
+						<%if(cs.get("cid").equals(c.get("cid"))){%>
+						<dd>
+							<a href="???"><%=cs.get("csname") %></a>
+						</dd>
+						<%} %>
+					<%} %>
+				</dl>
+				<%} %>
 		</div>
 </div>
 		
