@@ -17,6 +17,8 @@ public class Processer {
 		servletContainer.put("/redirect.s", new RedirectServlet());
 		// 添加一个Servlet 实现请求转发
 		servletContainer.put("/forward.s", new ForwardServlet());
+		
+		servletContainer.put("/hello.s", new HelloServlet());
 	}
 	
 	public void process(Socket socket){

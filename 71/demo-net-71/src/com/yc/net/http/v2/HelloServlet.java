@@ -13,6 +13,9 @@ public class HelloServlet extends HttpServlet {
 		/**
 		 * 作业
 		 */
+		
+		response.setContentType("text/html");
+		
 		PrintWriter pw = response.getWriter();
 		
 		pw.print("<h1>Hello world!</h1>");

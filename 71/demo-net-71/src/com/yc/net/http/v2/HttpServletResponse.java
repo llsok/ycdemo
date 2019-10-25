@@ -1,5 +1,6 @@
 package com.yc.net.http.v2;
 
+import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,9 +44,13 @@ public class HttpServletResponse {
 					request.getRequestURL().lastIndexOf(".")+1);
 		
 		// 从 web.xml 文件中取 contentType， 替代之前的硬编码判断
-		String contentType = webXmlParser.getContentType(suffix);
-		// 设置 响应类型
-		setContentType(contentType);
+		
+		// 判断有设置content-type
+		if(headerMap.containsKey("Content-Type") == false){
+			// 设置 响应类型
+			String contentType = webXmlParser.getContentType(suffix);
+			setContentType(contentType);
+		}
 		
 		String resp = "HTTP/1.1 "+status+" "+message+"\r\n";
 		//resp += "Content-Type: "+contentType+"\r\n";
@@ -58,23 +63,27 @@ public class HttpServletResponse {
 		
 		// 响应重定向不需要写 body 
 		if(status < 300 || status > 399){
-			String rootPath = "/Tomcat/webapps/photo";
-			String filePath = request.getRequestURL();
-			// 判断访问文件是否存在			
-			String diskPath = rootPath + filePath;
-			if(new File(diskPath).exists() == false){
-				diskPath = rootPath + "/404.html";
+			if(caw.toString().isEmpty()){
+				String rootPath = "/Tomcat/webapps/photo";
+				String filePath = request.getRequestURL();
+				// 判断访问文件是否存在			
+				String diskPath = rootPath + filePath;
+				if(new File(diskPath).exists() == false){
+					diskPath = rootPath + "/404.html";
+				}
+				
+				FileInputStream fis = new FileInputStream(diskPath);
+				
+				byte[] buf = new byte[1024];
+				int count;
+				// 向浏览器发送报文
+				while((count = fis.read(buf))>0){
+					out.write(buf, 0, count);
+				}
+				fis.close();
+			} else {
+				out.write(caw.toString().getBytes());
 			}
-			
-			FileInputStream fis = new FileInputStream(diskPath);
-			
-			byte[] buf = new byte[1024];
-			int count;
-			// 向浏览器发送报文
-			while((count = fis.read(buf))>0){
-				out.write(buf, 0, count);
-			}
-			fis.close();
 		}
 		
 	}
@@ -117,8 +126,11 @@ public class HttpServletResponse {
 	 * 如何定义   PrintWriter ，在commit 要考虑  和 文件输出的配合问题
 	 * @return
 	 */
+	
+	CharArrayWriter caw = new CharArrayWriter();
+	PrintWriter pw = new PrintWriter(caw);
 	public PrintWriter getWriter() {
-		return null;
+		return pw;
 	}
 
 }
