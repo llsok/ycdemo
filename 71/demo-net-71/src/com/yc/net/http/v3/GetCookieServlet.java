@@ -18,8 +18,10 @@ public class GetCookieServlet extends HttpServlet {
 		
 		Cookie[] cookies = request.getCookies();
 		
-		for(Cookie c : cookies){
-			pw.print(c.getName() + " = " + c.getValue() + "<br>");
+		if(cookies!=null){
+			for(Cookie c : cookies){
+				pw.print(c.getName() + " = " + c.getValue() + "<br>");
+			}
 		}
 		
 		
