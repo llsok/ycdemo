@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost-root:root
-Source Server Version : 50018
+Source Server         : localhost_3306
+Source Server Version : 50022
 Source Host           : localhost:3306
-Source Database       : demo-shop
+Source Database       : demo-damai
 
 Target Server Type    : MYSQL
-Target Server Version : 50018
+Target Server Version : 50022
 File Encoding         : 65001
 
-Date: 2019-10-16 13:51:12
+Date: 2019-10-25 19:47:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,11 +70,10 @@ CREATE TABLE `cart` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cartitem`;
 CREATE TABLE `cartitem` (
-  `ciid` int(11) NOT NULL auto_increment,
-  `cartid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `count` int(11) NOT NULL,
-  `subTotal` double(11,2) NOT NULL,
+  `ciid` int(11) NOT NULL auto_increment COMMENT '购物车ID',
+  `uid` int(11) NOT NULL COMMENT '用户ID',
+  `pid` int(11) NOT NULL COMMENT '商品ID',
+  `count` int(11) NOT NULL COMMENT '商品数量',
   PRIMARY KEY  (`ciid`),
   KEY `pid` (`pid`),
   CONSTRAINT `cartitem_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product` (`pid`) ON DELETE NO ACTION
@@ -83,8 +82,8 @@ CREATE TABLE `cartitem` (
 -- ----------------------------
 -- Records of cartitem
 -- ----------------------------
-INSERT INTO `cartitem` VALUES ('1', '0', '1', '1', '228.00');
-INSERT INTO `cartitem` VALUES ('2', '0', '2', '1', '589889998.91');
+INSERT INTO `cartitem` VALUES ('1', '0', '1', '1');
+INSERT INTO `cartitem` VALUES ('2', '0', '2', '1');
 
 -- ----------------------------
 -- Table structure for category
