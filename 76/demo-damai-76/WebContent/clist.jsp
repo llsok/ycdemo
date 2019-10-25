@@ -15,30 +15,9 @@
 
 <div class="container productList">
 	
+		<%-- 左边的子类 --%>
+		<%@ include file="/common/cslist.jsp" %>
 
-		<div class="span6">
-			<div class="hotProductCategory">
-				<%
-					String csSql = "select * from categorysecond";
-					List<Map<String,Object>> cslist = DBHelper.selectList(csSql);
-					// clist 在上面查询过了
-					for(Map<String,Object> c : clist) {
-				%>			
-				<dl>
-					<dt>
-						<a href="???"><%=c.get("cname") %></a>
-					</dt>
-					<%for(Map<String,Object> cs : cslist){%>
-						<%if(cs.get("cid").equals(c.get("cid"))){%>
-						<dd>
-							<a href="clist.jsp?csid=<%=cs.get("csid")%>"><%=cs.get("csname") %></a>
-						</dd>
-						<%} %>
-					<%} %>
-				</dl>
-				<%} %>
-		</div>
-</div>
 		
 		<div class="span18 last">
 			
@@ -77,7 +56,7 @@
 						%>
 						
 							<li>
-								<a href="detail.jsp?1">
+								<a href="detail.jsp?pid=<%=p.get("pid")%>">
 									<img src="<%=p.get("image") %>" width="170" height="170"  style="display: inline-block;"/>
 									   
 									<span style='color:green'>

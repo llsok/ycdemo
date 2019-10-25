@@ -79,6 +79,7 @@
 					<%
 						String cSql = "select * from category";
 						List<Map<String,Object>> clist = DBHelper.selectList(cSql);
+						pageContext.setAttribute("clist", clist);
 						for(Map<String,Object> row : clist) {
 					%>
 					<li><a href="clist.jsp?cid=<%=row.get("cid")%>"><%=row.get("cname")%></a>|</li>
