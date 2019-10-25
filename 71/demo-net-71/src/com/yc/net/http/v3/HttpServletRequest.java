@@ -59,5 +59,28 @@ public class HttpServletRequest {
 	public RequestDispatcher getRequestDispatcher(String webPath) {
 		return new RequestDispatcher(webPath);
 	}
+
+	private Cookie[] cookies; 
+	public Cookie[] getCookies() {
+		
+		String cookieStr = headerMap.get("Cookie");
+		
+		if(cookieStr != null){
+			String[] cookieItems = cookieStr.split(";");
+			cookies = new Cookie[cookieItems.length];
+			int i=0;
+			for(String cookieItem : cookieItems){
+				String[] cookieNameValue = cookieItem.split("=");
+				String name = cookieNameValue[0];
+				String value = cookieNameValue[1];
+				cookies[i] = new Cookie(name,value);
+				i++;
+			}
+			
+			
+		}
+		
+		return cookies;
+	}
 	
 }

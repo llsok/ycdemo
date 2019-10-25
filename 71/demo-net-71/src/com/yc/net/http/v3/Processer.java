@@ -21,6 +21,8 @@ public class Processer {
 		servletContainer.put("/hello.s", new HelloServlet());
 		
 		servletContainer.put("/cookie.s", new CookieServlet());
+		
+		servletContainer.put("/user/getcookie.s", new GetCookieServlet());
 	}
 	
 	public void process(Socket socket){
