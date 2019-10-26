@@ -82,8 +82,8 @@ CREATE TABLE `cartitem` (
 -- ----------------------------
 -- Records of cartitem
 -- ----------------------------
-INSERT INTO `cartitem` VALUES ('1', '0', '1', '1');
-INSERT INTO `cartitem` VALUES ('2', '0', '2', '1');
+INSERT INTO `cartitem` VALUES ('1', '2', '1', '1');
+INSERT INTO `cartitem` VALUES ('2', '2', '2', '1');
 
 -- ----------------------------
 -- Table structure for category

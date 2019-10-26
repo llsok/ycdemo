@@ -39,9 +39,14 @@
 						<th>操作</th>
 					</tr>
 					<%
-						String sql = "select b.*,a.ciid,a.count from cartitem a "
-								+ " join product b on a.pid=b.pid where uid=?";
 						Map<String,Object> user = (Map<String,Object>)session.getAttribute("loginedUser");
+						// 计算购物车总金额
+						String sql = "select sum(b.shop_price*a.count) from cartitem a "
+								+ " join product b on a.pid=b.pid where uid=?";
+						Object sum = DBHelper.selectValue(sql, user.get("uid"));
+						// 查询购物车商品
+						sql = "select b.*,a.ciid,a.count from cartitem a "
+								+ " join product b on a.pid=b.pid where uid=?";
 						List<Map<String,Object>> list = DBHelper.selectList(sql, user.get("uid"));
 						for(Map<String,Object> cartitem : list){
 							pageContext.setAttribute("c", cartitem);
@@ -78,8 +83,8 @@
 							<em>
 								登录后确认是否享有优惠
 							</em>
-					赠送积分: <em id="effectivePoint">11017.0</em>
-					商品金额: <strong id="effectivePrice">11017.0</strong>
+					赠送积分: <em id="effectivePoint"><%=sum%></em>
+					商品金额: <strong id="effectivePrice"><%=sum%></strong>
 				</div>
 				<div class="bottom">
 					<a href="cart.jsp" id="clear" class="clear">清空购物车</a>
