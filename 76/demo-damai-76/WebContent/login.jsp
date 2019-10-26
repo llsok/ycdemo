@@ -141,7 +141,7 @@
 							<font color="red"><%=request.getAttribute("msg")%></font>
 						<%}%>
 					</div>
-					<form id="loginForm" action="dologin.jsp"  method="post" novalidate="novalidate">
+					<form id="loginForm" action="dologin.s"  method="post" novalidate="novalidate">
 						<table>
 							<tbody><tr>
 								<th>
