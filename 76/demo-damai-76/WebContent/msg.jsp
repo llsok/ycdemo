@@ -19,7 +19,8 @@
       <tr>
         <td style="width:98"><img src="images/IconTexto_WebDev_009.jpg" width="128" height="128" /></td>
         <td style="padding-top:30px"><font style="font-weight:bold; color:#FF0000">	<ul class="actionMessage">
-                <li><span>信息提示页面，请在此处展示信息给用户查看</span></li>
+        		<%-- 使用 EL 表达式 输出 request 的对象属性 msg， 等效于 request.getAttribute("msg") --%>
+                <li><span>${msg}</span></li>
 	</ul>
 </font><br />
             <br />
