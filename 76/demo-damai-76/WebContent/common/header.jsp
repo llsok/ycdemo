@@ -32,7 +32,7 @@
 						<a href="olist.jsp">我的订单</a>|
 					</li>
 					<li id="headerRegister" class="headerRegister" style="display: list-item;">
-					<a href="index.jsp">退出</a>|
+					<a href="logout.s">退出</a>|
 				</li>
 				
 				
