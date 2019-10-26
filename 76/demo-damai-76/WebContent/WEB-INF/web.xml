@@ -20,5 +20,18 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+	
+	<!-- 配置 Servlet -->
+	<servlet>
+		<servlet-name>hello wolrd servlet</servlet-name>
+		<!-- 类路径   ctrl + 鼠标 验证类路径是否正确 -->
+		<servlet-class>com.yc.damai.servlet.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hello wolrd servlet</servlet-name>
+		<!-- servlet 的访问路径    127.0.0.1/demo-damai-76/hello.s  -->
+		<url-pattern>/hello.s</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>
