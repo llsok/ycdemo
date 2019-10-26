@@ -25,7 +25,7 @@
 						<a href="login.jsp">登录</a>|
 					<%} else { %>
 						<%-- JSP 注释 ：使用 EL 表达式 输出 session 中的 loginedUser 的 username --%>
-						${loginedUser.username}|
+						${loginedUser.name}|
 					<%} %>
 					</li>
 					<li id="headerLogin" class="headerLogin" style="display: list-item;">
