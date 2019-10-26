@@ -31,8 +31,10 @@
 				oid);
 	}
 	
-	// 清空购物车！！！！
+	// 清空购物车！！！！注意：是当前用户的购物车
+	DBHelper.update("delete from cartitem where uid=?", uid);
 
+	request.setAttribute("msg", "订单提交成功！您的订单编号：" + oid);
 	request.getRequestDispatcher("msg.jsp").forward(request, response);
 
 %>
