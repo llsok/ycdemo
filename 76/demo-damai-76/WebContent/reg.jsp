@@ -154,7 +154,7 @@
 				
 				<li id="headerUsername" class="headerUsername"></li>
 				<li id="headerLogout" class="headerLogout">
-					<a>[退出]</a>|
+					<a href="logout.s">[退出]</a>|
 				</li>
 						<li>
 							<a>会员中心</a>

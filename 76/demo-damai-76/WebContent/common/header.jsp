@@ -25,14 +25,14 @@
 						<a href="login.jsp">登录</a>|
 					<%} else { %>
 						<%-- JSP 注释 ：使用 EL 表达式 输出 session 中的 loginedUser 的 username --%>
-						${loginedUser.username}|
+						${loginedUser.name}|
 					<%} %>
 					</li>
 					<li id="headerLogin" class="headerLogin" style="display: list-item;">
 						<a href="olist.jsp">我的订单</a>|
 					</li>
 					<li id="headerRegister" class="headerRegister" style="display: list-item;">
-					<a href="index.jsp">退出</a>|
+					<a href="logout.s">退出</a>|
 				</li>
 				
 				
@@ -79,6 +79,7 @@
 					<%
 						String cSql = "select * from category";
 						List<Map<String,Object>> clist = DBHelper.selectList(cSql);
+						pageContext.setAttribute("clist", clist);
 						for(Map<String,Object> row : clist) {
 					%>
 					<li><a href="clist.jsp?cid=<%=row.get("cid")%>"><%=row.get("cname")%></a>|</li>

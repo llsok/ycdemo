@@ -26,9 +26,14 @@ import java.util.Map;
 import java.util.Properties;
 
 public class DBHelper {
-	private static String url;
-	private static String user;
-	private static String[] password;
+	private static String driver="com.mysql.jdbc.Driver";
+	private static String url="jdbc:mysql://127.0.0.1/test";
+	private static String user="root";
+	/**
+	 * 	设置几个常用的默认密码，获取连接时会依次尝试连接，然后返回连接正确的连接
+	 *	解决在不同数据库环境（教室、办公室、笔记本。。。）不用改配置就能正常运行的问题
+	 */
+	private static String[] password = { "a", "root", "123" };
 
 	static {
 		InputStream in = DBHelper.class.getClassLoader().getResourceAsStream("jdbc.properties");
@@ -46,32 +51,34 @@ public class DBHelper {
 		} catch (Exception e) {
 			throw new RuntimeException("数据库驱动加载失败！", e);
 		} finally {
-			Utils.close(in);
+			IOUtils.close(in);
 		}
 	}
 
 	/**
 	 * 创建连接
-	 * 
-	 * @return
-	 * @throws SQLException
 	 */
 	public static Connection getConnection() {
+		// 尝试使用配置的多个密码依次尝试连接，返回第一个正确的连接
 		for (int i = 0; i < password.length; i++) {
 			String p = password[i];
 			try {
+				// 获取连接，如果没有异常，则是连接正确
 				Connection conn = DriverManager.getConnection(url, user, p);
-				if(i>0) {
+				if (i > 0) {
+					// 将正确的密码放在数组的第一个位置
 					String tmp = password[i];
 					password[i] = password[0];
 					password[0] = tmp;
 				}
 				return conn;
 			} catch (SQLException e) {
+				System.out.println("第"+(i+1)+"次连接失败，原因：" + e.getMessage());
 				continue;
 			}
 		}
-		throw new RuntimeException(String.format("获取数据库连接失败！连接URL：%s\t用户名：%s\t密码：%s", 
+		throw new RuntimeException(String.format(
+				"获取数据库连接失败！连接URL：%s\t用户名：%s\t密码：%s",
 				DBHelper.url, DBHelper.user, Arrays.toString(DBHelper.password)));
 	}
 	
@@ -84,16 +91,19 @@ public class DBHelper {
 	}
 	
 	public static void init(String driver, String url, String user, String password) {
-		if( driver != null ) {
+		// 如果传入参数为空，则使用静态变量的原值
+		DBHelper.driver = driver == null ? DBHelper.driver : url;
+		DBHelper.url = url == null ? DBHelper.url : url;
+		DBHelper.user = user == null ? DBHelper.user : user;
+		DBHelper.password = password == null ? DBHelper.password : password.split(";");
+		// 加载驱动
+		if( DBHelper.driver != null ) {
 			try {
-				Class.forName(driver);
+				Class.forName(DBHelper.driver);
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException("数据库驱动加载失败！", e);
 			}
 		}
-		DBHelper.url = url == null ? DBHelper.url : url;
-		DBHelper.user = user == null ? DBHelper.user : user;
-		DBHelper.password = password == null ? DBHelper.password : password.split(";");
 	}
 	
 	public static void executeByReader(Reader reader) {
@@ -120,7 +130,7 @@ public class DBHelper {
 		} catch (SQLException e) {
 			throw new RuntimeException("数据库操作失败!", e);
 		} finally {
-			Utils.close(reader, br, conn);
+			IOUtils.close(reader, br, conn);
 		}
 	}
 	public static void executeByText(String sqltext) {
@@ -162,14 +172,9 @@ public class DBHelper {
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			// 异常转型
-			throw new RuntimeException("SQL执行错误�?", e);
+			throw new RuntimeException("SQL执行错误！", e);
 		} finally {
-			// 打印关闭异常
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			IOUtils.close(conn);
 		}
 	}
 
@@ -206,7 +211,7 @@ public class DBHelper {
 					row.put(ColumnName, rs.getObject(ColumnName));
 				}
 				if(rs.next()){
-					throw new RuntimeException("结果数大�?1!");
+					throw new RuntimeException("结果数大于1！");
 				} else {
 					return row;
 				}
@@ -217,12 +222,7 @@ public class DBHelper {
 			// 异常转型
 			throw new RuntimeException("SQL执行错误�?", e);
 		} finally {
-			// 打印关闭异常
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			IOUtils.close(conn);
 		}		
 	}
 
@@ -264,14 +264,9 @@ public class DBHelper {
 			return ret;
 		} catch (SQLException e) {
 			// 异常转型
-			throw new RuntimeException("SQL执行错误�?", e);
+			throw new RuntimeException("SQL执行错误!", e);
 		} finally {
-			// 打印关闭异常
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			IOUtils.close(conn);
 		}
 	}
 
@@ -304,29 +299,21 @@ public class DBHelper {
 			}
 		} catch (SQLException e) {
 			// 异常转型
-			throw new RuntimeException("SQL执行错误�?", e);
+			throw new RuntimeException("SQL执行错误！", e);
 		} finally {
-			// 打印关闭异常
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			IOUtils.close(conn);
 		}	
     }
 	
-	/**
-     * ============以下是高级部�? ( 选做 ) ============
-     * 分页查询指定sql语句, 返回的数据封装在Page对象�?
-     * 方法调用示例 : 
-     * selectPage("select * from emp where empno  > ?" , 2 , 5, 1000)
-     * @param sql
-     * @param page        查询的页�?
-     * @param rows        每页的行�?
-     * @param params    参数列表
+    /**
+     * Oracle 分页查询
+     * @param sql		要执行分页查询的 sql 语句
+     * @param page		第几页
+     * @param rows		每页行数
+     * @param params	sql语句的查询参数数组
      * @return
      */
-    public static Page selectPageForOracle(String sql, int page, int rows, Object... params) {
+    public static PageBean selectPageForOracle(String sql, int page, int rows, Object... params) {
     	String totalSql = "select count(*) from ("+sql+")";   
     	Object totalObj = selectValue(totalSql, params);
     	long total = Long.parseLong(totalObj.toString());
@@ -336,30 +323,43 @@ public class DBHelper {
     			+ "(select a.*,rownum rn from ("+sql+") a where rownum < "+endRow+") a"
     			+ " where a.rn > " + startRow;
     	List<Map<String,Object>> data = selectList(pageSql,params);
-        return new Page(total, data);
+        return new PageBean(total, page, rows, data);
     }
 
-    public static Page selectPageForMysql(String sql, int page, int rows, Object... params) {
-    	String totalSql = "select count(*) from ("+sql+")";   
+    /**
+     * MySQL 分页查询
+     * @param sql		要执行分页查询的 sql 语句
+     * @param page		第几页
+     * @param rows		每页行数
+     * @param params	sql语句的查询参数数组
+     */
+    public static PageBean selectPageForMysql(String sql, int page, int rows, Object... params) {
+    	String totalSql = "select count(*) from ("+sql+") a";   
     	Object totalObj = selectValue(totalSql, params);
     	long total = Long.parseLong(totalObj.toString());
     	int startRow = (page - 1 ) * rows;
-    	String pageSql = "select count(*) from ("+sql+") limit " + startRow + ", " + rows;
+    	String pageSql = "select * from ("+sql+") a limit " + startRow + ", " + rows;
     	List<Map<String,Object>> data = selectList(pageSql,params);
-        return new Page(total, data);
+        return new PageBean(total, page, rows, data);
     }
 
     /**
      * 分页查询结果封装类（共有的静态的内部类）
      */
-    public static class Page {
-        // 当前页数�?
+    public static class PageBean {
+        // 分页查询数据
         private List<Map<String,Object>> data;
-        // 总行�?
+        // 总行数
         private long total;
+        // 当前页数
+		private int page;
+		// 每页行数
+		private int rows;
 
-        public Page(long total, List<Map<String,Object>> data) {
+        public PageBean(long total, int page, int rows, List<Map<String,Object>> data) {
             this.data = data;
+            this.page = page;
+            this.rows = rows;
             this.total = total;
         }
 
@@ -370,19 +370,42 @@ public class DBHelper {
         public long getTotal() {
             return total;
         }
+        
+        public int getPage(){
+        	return page;
+        }
+        
+        public int getFirstPage(){
+        	return 1;
+        }
+        
+        public int getPreviousPage(){
+        	return page > 1 ? page - 1 : 1;
+        }
+        
+        public int getNextPage(){
+        	int lastpage = getLastPage();
+        	return page < lastpage ? page + 1 : lastpage;
+        }
+        
+        public int getLastPage(){
+        	long lastPage = total / rows;
+        	return (int) (total % rows == 0 ?  lastPage : (lastPage + 1));
+        }
 
     }
 
+
 	/**
-	 * 判断参数 param 是否为空 , 不为空则返回条件 condition, 并且�? param 加到 params �?
-	 * 如果为空, 则放回空字符�? ( "" ), 用于拼接sql
-	 * 该方法可能会被多�? dao 类中使用 , 因此�?后要放到 DBHelper 中去,成为�?个工具方�?
-	 * @param param      参数�?
+	 * 判断参数 param 是否为 null , 
+	 * 如果 param 不为空，则返回条件 condition, 并且将 param 加到 params 中
+	 * 如果 param 为空， 则返回 "" 字符串
+	 * @param param      参数值
 	 * @param params     参数集合
-	 * @param condition  条件sql
+	 * @param condition  条件sql， 例如： and age = ?
 	 * @return
 	 */
-	public static String buildCondition(Object param, ArrayList<Object> params, String condition) {
+	public static String appendCondition(Object param, ArrayList<Object> params, String condition) {
 		if(param!=null) {
 			if(param instanceof String) {
 				String sparam = (String) param;
