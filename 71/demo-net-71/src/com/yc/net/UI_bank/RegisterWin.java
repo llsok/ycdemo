@@ -34,6 +34,7 @@ public class RegisterWin extends Dialog {
 	// 需要用到的属性
 	private DataOutputStream dos;
 	private DataInputStream dis;
+	private Socket server;
 
 	/**
 	 * Create the dialog.
@@ -43,11 +44,10 @@ public class RegisterWin extends Dialog {
 	 * @param dos 
 	 * @param dis 
 	 */
-	public RegisterWin(Shell parent, int style, DataOutputStream dos, DataInputStream dis) {
+	public RegisterWin(Shell parent, int style,Socket server) {
 		super(parent, style);
 		setText("SWT Dialog");
-		this.dos=dos;
-		this.dis=dis;
+		this.server=server;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class RegisterWin extends Dialog {
 	 * @throws UnknownHostException 
 	 */
 	private void createContents() throws UnknownHostException, IOException {
-		shell = new Shell(getParent(), getStyle());
+		shell = new Shell(getParent(), SWT.DIALOG_TRIM);
 		shell.setSize(450, 300);
 		shell.setText("开户");
 
@@ -98,10 +98,10 @@ public class RegisterWin extends Dialog {
 		text_user = new Text(shell, SWT.BORDER);
 		text_user.setBounds(167, 50, 239, 23);
 
-		text_pwd = new Text(shell, SWT.BORDER);
+		text_pwd = new Text(shell, SWT.BORDER | SWT.PASSWORD);
 		text_pwd.setBounds(167, 108, 239, 23);
 
-		text_cPwd = new Text(shell, SWT.BORDER);
+		text_cPwd = new Text(shell, SWT.BORDER | SWT.PASSWORD);
 		text_cPwd.setBounds(167, 172, 239, 23);
 
 		Button Btn_register = new Button(shell, SWT.NONE);
@@ -110,38 +110,82 @@ public class RegisterWin extends Dialog {
 		Btn_register.setText("开户");
 
 		Button Btn_cancel = new Button(shell, SWT.NONE);
+		
 		Btn_cancel.setBounds(296, 225, 110, 36);
 		Btn_cancel.setText("取消");
 		// 开户
 		Btn_register.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				int choice;
 				String command = "register";
 				String user = text_user.getText();
 				String pwd = text_pwd.getText();
 				String configurePwd = text_cPwd.getText();
-				try {
-					dos.writeUTF(command);
-					dos.writeUTF(user);
-					dos.writeUTF(pwd);
-					dos.writeUTF(configurePwd);
-					String status=dis.readUTF();
-					if(status.equals("开户成功")) {
-						MessageBox mb=new MessageBox(shell,SWT.OK);
-						mb.setText("系统提示");
-						mb.setMessage(status);
-						int choice = mb.open();
-						if(choice==1) {
-							shell.close();
-						}
+				MessageBox mb=new MessageBox(shell,SWT.OK|SWT.ICON_INFORMATION);
+				mb.setText("系统提示");
+				if(user==null||user.trim().isEmpty()) {
+					mb.setMessage("注册用户名不能为空");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_user.setText("");
+						text_pwd.setText("");
+						text_cPwd.setText("");
+						text_user.setFocus();
 					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				}else if(pwd.equals(configurePwd)==false) {
+					mb.setMessage("两次密码输入不一致");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_pwd.setText("");
+						text_cPwd.setText("");
+						text_pwd.setFocus();
+					}
+				}else {
+					try {
+						dos.writeUTF(command);
+						dos.writeUTF(user);
+						dos.writeUTF(pwd);
+						dos.flush();
+						String status=dis.readUTF();
+						if(status.equals("开户成功")) {
+							mb.setMessage(status);
+							choice = mb.open();
+							if(choice==1) {
+								shell.close();
+							}
+						}else {
+							mb.setMessage(status);
+							choice = mb.open();
+							if(choice==1) {
+								text_user.setText("");
+								text_pwd.setText("");
+								text_cPwd.setText("");
+								text_user.setFocus();
+							}
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
+				
 				
 			}
 		});
+		//取消开户
+		Btn_cancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shell.close();
+			}
+		});
+		connectServer();
 	}
 
-	
+	private void connectServer() throws UnknownHostException, IOException {
+		InputStream in = server.getInputStream();
+		OutputStream out = server.getOutputStream();
+		dos = new DataOutputStream(out);
+		dis = new DataInputStream(in);
+	}
 }

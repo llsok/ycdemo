@@ -52,15 +52,20 @@ public class Server {
 									login(dis.readUTF(), dis.readUTF());
 									break;
 								case "register":
-									register(dis.readUTF(), dis.readUTF(), dis.readUTF());
+									register(dis.readUTF(), dis.readUTF());
 									break;
 								case "diposit":
 									diposit(dis.readUTF(), dis.readUTF());
 									break;
 								case "withdraw":
-									withdraw(dis.readUTF(), dis.readFloat());
+									withdraw(dis.readUTF(), dis.readUTF());
 									break;
 								case "transfer":
+									transfer(dis.readUTF(), dis.readUTF(), dis.readUTF());
+									break;
+								case "exit":
+									logOut();
+									break;
 								}
 							} catch (EOFException e) {
 								break;
@@ -74,46 +79,56 @@ public class Server {
 		}
 
 	}
-
-	public void register(String user, String pwd, String configurePwd) throws IOException {
-		if(pwd!=configurePwd) {
-			dos.writeUTF("两次密码输入不正确");
-		}else {
-			dao.register(user, pwd);
-			dos.writeUTF("开户成功");
-		}
-		
+	
+	// 开户
+	private void register(String user, String pwd) throws IOException {
+		String status=dao.register(user, pwd);
+		dos.writeUTF(status);
 		dos.flush();
 	}
 
-	public void login(String user, String pwd) throws IOException {
+	// 登录
+	private void login(String user, String pwd) throws IOException {
 		List<Map<String, Object>> ret = dao.login(user, pwd);
 		if (ret.size() > 0) {
-			dos.writeUTF("登录成功");
-			dos.writeUTF(user);
+			dos.writeUTF("登录成功 " + user);
+			System.out.println("登录成功");
 			dos.flush();
 		} else {
 			dos.writeUTF("登录失败，请检查账号和密码是否正确");
+			System.out.println("登录失败，请检查账号和密码是否正确");
 			dos.flush();
 		}
 	}
 
+	// 退出
+	private void logOut() throws IOException {
+		dos.writeUTF("退出");
+		System.out.println("退出");
+		dos.flush();
+	}
+
 	// 存款
-	public void diposit(String cardno, String money) throws IOException {
+	private void diposit(String cardno, String money) throws IOException {
 		dao.update(cardno, Float.parseFloat(money));
 		dos.writeUTF("存款成功");
+		System.out.println("存款成功");
 		dos.flush();
 	}
 
 	// 取款
-	public void withdraw(String cardno, float money) throws IOException {
-		dao.update(cardno, -money);
+	private void withdraw(String cardno, String money) throws IOException {
+		dao.update(cardno, -Float.parseFloat(money));
 		dos.writeUTF("取款成功");
+		System.out.println("存款成功");
 		dos.flush();
 	}
 
 	// 转账
-	public void transfer(String cardno1, String cardno2, float money) {
-
+	private void transfer(String cardno1, String cardno2, String money) throws IOException {
+		String status = dao.transfer(cardno1, cardno2, Float.parseFloat(money));
+		System.out.println(status);
+		dos.writeUTF(status);
+		dos.flush();
 	}
 }
