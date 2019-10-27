@@ -92,7 +92,7 @@
 		
 		if(xmlhttp!=null){
 			// 定义请求地址
-			var url ="doreg.s?username="+username 
+			var url ="user.s?op=reg&username="+username 
 					+ "&password=" + password
 					+ "&repassword=" + repassword
 					+ "&email=" + email

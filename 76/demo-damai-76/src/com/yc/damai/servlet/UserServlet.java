@@ -18,13 +18,34 @@ import com.yc.damai.biz.BizException;
 import com.yc.damai.biz.UserBiz;
 import com.yc.damai.util.DBHelper;
 
-@WebServlet("/doreg.s")
-public class UserServlet extends HttpServlet {
+/**
+ * user.s?op=reg  注册
+ * user.s?op=login  登录
+ * user.s?op=query  查询
+ * user.s?op=remove  移除
+ */
+@WebServlet("/user.s")
+public class UserServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private UserBiz biz = new UserBiz();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+    /**
+     * 子类的业务方法必须是  public 访问域
+     */
+	
+	// 查询
+	public void query(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	// 登录
+	public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	// 注册
+	public void reg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
 		// 数据装载
@@ -51,10 +72,6 @@ public class UserServlet extends HttpServlet {
 		String json = gson.toJson(result);
 		response.getWriter().print(json);
 		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }
