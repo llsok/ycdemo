@@ -9,10 +9,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -29,14 +27,12 @@ public class MainWin {
 	private static Socket server;
 	private Text text_money;
 	private Text text_accountId;
-	private static DataOutputStream dos;
-	private static DataInputStream dis;
+	private DataOutputStream dos;
+	private DataInputStream dis;
 
-	public MainWin(String id, Socket server, DataOutputStream dos, DataInputStream dis) {
+	public MainWin(String id, Socket server) {
 		this.id = id;
 		this.server = server;
-		this.dos = dos;
-		this.dis = dis;
 	}
 
 	/**
@@ -46,7 +42,7 @@ public class MainWin {
 	 */
 	public static void main(String[] args) {
 		try {
-			MainWin window = new MainWin(id, server, dos, dis);
+			MainWin window = new MainWin(id, server);
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,10 +51,11 @@ public class MainWin {
 
 	/**
 	 * Open the window.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
+	 * 
+	 * @throws IOException
+	 * @throws UnknownHostException
 	 */
-	public void open() throws UnknownHostException, IOException {
+	public void open() {
 		Display display = Display.getDefault();
 		createContents();
 		shlAtm.open();
@@ -72,10 +69,11 @@ public class MainWin {
 
 	/**
 	 * Create contents of the window.
-	 * @throws IOException 
-	 * @throws UnknownHostException 
+	 * 
+	 * @throws IOException
+	 * @throws UnknownHostException
 	 */
-	protected void createContents() throws UnknownHostException, IOException {
+	protected void createContents() {
 		shlAtm = new Shell();
 		shlAtm.setSize(449, 244);
 		shlAtm.setText("ATM");
@@ -87,17 +85,19 @@ public class MainWin {
 		Btn_withdraw.setText("取款");
 
 		Button Btn_diposit = new Button(shlAtm, SWT.NONE);
-		
+
 		Btn_diposit.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 13, SWT.NORMAL));
 		Btn_diposit.setBounds(238, 26, 185, 33);
 		Btn_diposit.setText("存款");
 
 		Button Btn_transfer = new Button(shlAtm, SWT.NONE);
+		
 		Btn_transfer.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 13, SWT.NORMAL));
 		Btn_transfer.setBounds(10, 83, 185, 32);
 		Btn_transfer.setText("转账");
 
 		Button button_3 = new Button(shlAtm, SWT.NONE);
+
 		button_3.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 13, SWT.NORMAL));
 		button_3.setBounds(238, 84, 185, 30);
 		button_3.setText("退出");
@@ -120,58 +120,163 @@ public class MainWin {
 		Btn_withdraw.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String command="diposit";
-				String money=text_money.getText();
-				try {
-					dos.writeUTF(command);
-					dos.writeUTF(id);
-					dos.writeUTF(money);
-				}catch (IOException e1) {
-					e1.printStackTrace();
+				int choice;
+				String money = text_money.getText();
+				String command = "withdraw";
+				MessageBox mb = new MessageBox(shlAtm, SWT.OK);
+				mb.setText("系统提示");
+				if(money==""||money.trim().isEmpty()) {
+					mb.setMessage("请输入取款金额");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_money.setText("");
+						text_money.setFocus();
+					}
+				}else {
+					try {
+						dos.writeUTF(command);
+						dos.writeUTF(id);
+						dos.writeUTF(money);
+						dos.flush();
+						String status = dis.readUTF();
+						if (status.equals("取款成功")) {
+							mb.setMessage(status);
+							mb.open();
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
 				}
-			
+				
 			}
 		});
-		
-		//存款
+
+		// 存款
 		Btn_diposit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				int choice;
+				String command = "diposit";
+				String money = text_money.getText();
+				MessageBox mb = new MessageBox(shlAtm, SWT.OK);
+				mb.setText("系统提示");
+				if(money==""||money.trim().isEmpty()) {
+					mb.setMessage("请输入存款金额");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_money.setText("");
+						text_money.setFocus();
+					}
+				}else {
+					try {
+						dos.writeUTF(command);
+						dos.writeUTF(id);
+						dos.writeUTF(money);
+						dos.flush();
+						String status = dis.readUTF();
+						if (status.equals("存款成功")) {
+							mb.setMessage(status);
+							mb.open();
+						}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+				
 			}
 		});
-		connectServer(server);
+
+		// 退出
+		button_3.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String command = "exit";
+				try {
+					dos.writeUTF(command);
+					dos.flush();
+					String status = dis.readUTF();
+					if (status.equals("退出")) {
+						MessageBox mb = new MessageBox(shlAtm, SWT.OK | SWT.CANCEL);
+						mb.setText("系统提示");
+						mb.setMessage("您是否要退出ATM");
+						int choice = mb.open();
+						if (choice == SWT.OK) {
+							shlAtm.close();
+							server.close();
+						}
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		//转账
+		Btn_transfer.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				MessageBox mb=new MessageBox(shlAtm,SWT.OK);
+				mb.setText("系统提示");
+				//choice 用来接收用户点击弹窗的返回值
+				int choice;
+				String command = "transfer";
+				String money =text_money.getText();
+				String accountId=text_accountId.getText();
+				if(accountId=="") {
+					mb.setMessage("转入账号不能为空");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_accountId.setFocus();
+					}
+				}else if(money=="") {
+					mb.setMessage("转入金额不能为空");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_money.setFocus();
+					}
+				}else if(accountId==id){
+					mb.setMessage("不能向自己账户转账！");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						text_accountId.setFocus();
+					}
+				}else {
+					mb.setMessage("您确定要向账户："+accountId+"转入金额："+money+"元？");
+					choice=mb.open();
+					if(choice==SWT.OK) {
+						try {
+							dos.writeUTF(command);
+							dos.writeUTF(id);
+							dos.writeUTF(accountId);
+							dos.writeUTF(money);
+							dos.flush();
+							String status=dis.readUTF();
+							//提示弹窗
+							mb.setText("系统提示");
+							mb.setMessage(status);
+							mb.open();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				
+			}
+		});
+
+		try {
+			connectServer();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 	}
 
-	private void connectServer(Socket server) throws UnknownHostException, IOException {
-		System.out.println("成功连接服务器");
-		InetAddress addr = server.getInetAddress();
-		System.out.println("服务器主机地址：" + addr.getHostAddress());
-		System.out.println("服务器ip地址" + Arrays.toString(addr.getAddress()));
-		
-		InputStream in=server.getInputStream();
+	private void connectServer() throws UnknownHostException, IOException {
+		InputStream in = server.getInputStream();
 		OutputStream out = server.getOutputStream();
 		
 		dos = new DataOutputStream(out);
 		dis = new DataInputStream(in);
-		new Thread() {
-			boolean running=true;{
-				String status;
-				status=dis.readUTF();
-				if(status.equals("存款成功")) {
-					shlAtm.getDisplay().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							MessageBox mb=new MessageBox(shlAtm,SWT.OK);
-							mb.setText("系统提示");
-							mb.setMessage(status);
-							mb.open();
-						}
-					});
-				}else if(status.equals("")) {
-					
-				}
-			}
-			
-		}.start();
 	}
 }
