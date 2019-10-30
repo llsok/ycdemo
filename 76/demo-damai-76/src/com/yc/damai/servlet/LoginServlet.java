@@ -70,6 +70,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (user != null) {
 			HttpSession session = request.getSession();
+			System.out.println(session.getId());
 			session.setAttribute("loginedUser", user);
 			response.sendRedirect("index.jsp");
 		} else {

@@ -32,7 +32,7 @@
     </init-param>
     <init-param>
       <param-name>end-time</param-name>
-      <param-value>20</param-value>
+      <param-value>22</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
