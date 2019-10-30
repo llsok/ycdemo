@@ -2,33 +2,9 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="swing2swt.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/com.ibm.icu_62.1.0.v20180727-1652.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.core.commands_3.9.200.v20180827-1727.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.core.runtime_3.15.0.v20180817-1401.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.equinox.common_3.10.100.v20180827-1235.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.equinox.registry_3.8.100.v20180827-1235.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.jface_3.14.100.v20180828-0836.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.jface.text_3.14.0.v20180824-1140.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.osgi_3.13.100.v20180827-1536.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.swt.win32.win32.x86_64_3.108.0.v20180904-1901.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.text_3.7.0.v20180822-1511.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.ui.forms_3.7.300.v20180828-1350.jar"/>
-	<classpathentry kind="lib" path="lib/64位 SWT 的 JAR 包/org.eclipse.ui.workbench_3.112.0.v20180906-1121.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/com.ibm.icu_56.1.0.v201601250100.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.core.commands_3.8.1.v20161221-1651.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.core.runtime_3.12.0.v20160606-1342.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.equinox.common_3.8.0.v20160509-1230.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.equinox.registry_3.6.100.v20160223-2218.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.jface_3.12.2.v20170113-2113.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.jface.text_3.11.2.v20170220-1911.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.osgi_3.11.3.v20170209-1843.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.swt.win32.win32.x86_3.105.3.v20170228-0512.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.text_3.6.0.v20160503-1849.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.ui.forms_3.7.1.v20161220-1635.jar"/>
-	<classpathentry kind="lib" path="lib/32位 SWT 的 JAR 包/org.eclipse.ui.workbench_3.108.3.v20170216-1539.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.48.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j/jaxen-1.1.6.jar"/>
+	<classpathentry kind="lib" path="../../helper/WebContent/WEB-INF/lib/dom4j/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="../../helper/WebContent/WEB-INF/lib/dom4j/jaxen-1.1.6.jar"/>
+	<classpathentry kind="lib" path="../../helper/WebContent/WEB-INF/lib/64位 SWT 的 JAR 包/org.eclipse.swt.win32.win32.x86_64_3.108.0.v20180904-1901.jar"/>
+	<classpathentry kind="lib" path="../../helper/WebContent/WEB-INF/lib/mysql-connector-java-5.1.47.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
