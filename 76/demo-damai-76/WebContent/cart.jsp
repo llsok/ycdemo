@@ -11,14 +11,6 @@
 <script type="text/javascript" src="js/common.js"></script>
 
 </head>
-<%
-	if(session.getAttribute("loginedUser") == null){
-		request.setAttribute("msg", "请先登录系统！");
-		request.getRequestDispatcher("login.jsp").forward(request, response);
-		return;
-	}
-
-%>
 
 <body>
 <%@ include file="/common/header.jsp" %>

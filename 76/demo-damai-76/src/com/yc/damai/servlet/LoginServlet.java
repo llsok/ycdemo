@@ -39,6 +39,10 @@ public class LoginServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		request.getSession();
+		
+		
 		String beginTimeParam = this.getInitParameter("begin-time");
 		String endTimeParam = this.getInitParameter("end-time");
 		
