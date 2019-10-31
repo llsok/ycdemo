@@ -8,26 +8,39 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.yc.damai.bean.Product;
 
 public class ProductMapperTest {
 	
-	@Test
-	public void testSelectAll() throws IOException{
-		// ³õÊ¼»¯ MyBatis ¿ó½¨
+	private SqlSession session;
+	
+	@Before
+	public void before() throws IOException{
+		// åˆå§‹åŒ– MyBatis çŸ¿å»º
 		String resource = "mybatis.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
-		// SqlSessionFactoryBuilder »á»°¹¤³§µÄ¹¹½¨Æ÷
-		// SqlSessionFactory  »á»°¹¤³§
-		// SqlSession   »á»°
+		// SqlSessionFactoryBuilder ä¼šè¯å·¥å‚çš„æ„å»ºå™¨
+		// SqlSessionFactory  ä¼šè¯å·¥å‚
+		// SqlSession   ä¼šè¯
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-		SqlSession session = sqlSessionFactory.openSession();
+		session = sqlSessionFactory.openSession();
+	}
+	
+	@Test
+	public void testSelectAll() throws IOException{
 		List<Product> list = session.selectList("com.yc.damai.dao.ProductMapper.selectAll");
 		System.out.println(list.size());
-		
 		System.out.println(list.get(0));
+	}
+	
+	
+	@Test
+	public void testSelectByPid() throws IOException{
+		Product p = session.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println(p);
 	}
 
 }
