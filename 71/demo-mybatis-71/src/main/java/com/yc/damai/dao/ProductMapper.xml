@@ -35,7 +35,10 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		select * from product where pid = #{pid}
 	</select>
 	
-	
+	<insert id="create">
+		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
+		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
 	
 	
 	
