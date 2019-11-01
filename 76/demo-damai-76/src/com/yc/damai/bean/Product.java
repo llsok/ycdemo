@@ -6,13 +6,32 @@ public class Product {
 	
 	private Integer pid;
 	private String pname;
-	private Double marketPrice ;
-	private Double shopPrice;
+	private Double market_price ;
+	private Double shop_price;
 	private String image;
 	private String pdesc;
-	private Integer isHot;
+	private Integer is_hot;
 	private Timestamp pdate;
 	private Integer csid;
+	
+	public Double getMarket_price() {
+		return market_price;
+	}
+	public void setMarket_price(Double market_price) {
+		this.market_price = market_price;
+	}
+	public Double getShop_price() {
+		return shop_price;
+	}
+	public void setShop_price(Double shop_price) {
+		this.shop_price = shop_price;
+	}
+	public Integer getIs_hot() {
+		return is_hot;
+	}
+	public void setIs_hot(Integer is_hot) {
+		this.is_hot = is_hot;
+	}
 	public Integer getPid() {
 		return pid;
 	}
@@ -24,18 +43,6 @@ public class Product {
 	}
 	public void setPname(String pname) {
 		this.pname = pname;
-	}
-	public Double getMarketPrice() {
-		return marketPrice;
-	}
-	public void setMarketPrice(Double marketPrice) {
-		this.marketPrice = marketPrice;
-	}
-	public Double getShopPrice() {
-		return shopPrice;
-	}
-	public void setShopPrice(Double shopPrice) {
-		this.shopPrice = shopPrice;
 	}
 	public String getImage() {
 		return image;
@@ -49,12 +56,6 @@ public class Product {
 	public void setPdesc(String pdesc) {
 		this.pdesc = pdesc;
 	}
-	public Integer getIsHot() {
-		return isHot;
-	}
-	public void setIsHot(Integer isHot) {
-		this.isHot = isHot;
-	}
 	public Timestamp getPdate() {
 		return pdate;
 	}
@@ -66,12 +67,6 @@ public class Product {
 	}
 	public void setCsid(Integer csid) {
 		this.csid = csid;
-	}
-	@Override
-	public String toString() {
-		return "Product [pid=" + pid + ", pname=" + pname + ", marketPrice=" + marketPrice + ", shopPrice=" + shopPrice
-				+ ", image=" + image + ", pdesc=" + pdesc + ", isHot=" + isHot + ", pdate=" + pdate + ", csid=" + csid
-				+ "]";
 	}
 
 }
