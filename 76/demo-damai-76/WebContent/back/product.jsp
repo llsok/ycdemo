@@ -59,6 +59,11 @@ function save(){
 			}
 		}
 	});
+ 	
+}
+
+function selectCsid(category){
+	$('#csid').combobox('reload','../categorysecond.s?op=queryByCid&cid=' + category.cid );
 }
 
 </script>
@@ -139,8 +144,18 @@ function save(){
 		data-options="label:'商城价：'">
 	<input class="easyui-radiobutton" name="is_hot" value="1" label="热卖：">
 	<input class="easyui-radiobutton" name="is_hot" value="0" label="非热卖："><br>
-	<input class="easyui-textbox" name="csid" style="width:300px" type="number"
-		data-options="label:'类别：'">
+	<input class="easyui-combobox" name="cid" style="width:300px"
+		data-options="label:'主类别：',
+			url:'../category.s?op=queryAll',
+			textField:'cname',
+			valueField:'cid',
+			onSelect:selectCsid">
+	<input id="csid" class="easyui-combobox" name="csid" style="width:300px"
+		data-options="label:'子类别：',
+			url:'../categorysecond.s?op=queryByCid',
+			textField:'csname',
+			valueField:'csid'
+		">
 	<input class="easyui-textbox" name="pdesc" style="width:300px" type="number"
 		data-options="label:'描述：',multiline:true">
 	</form>
