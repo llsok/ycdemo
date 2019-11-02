@@ -1,0 +1,74 @@
+.title_span01 {
+			font: "微软雅黑";
+			font-size: 20px;
+			color: red;
+		}
+		a{
+			text-decoration:none;
+		}
+		.header_01 {
+			float: left;
+			margin-left: 10px;
+			margin-bottom: 10px;
+		}
+		
+		.header_02 {
+			font-size: 18px;
+			float: left;
+			margin-left: 2px;
+			margin-top: 35px;
+		}
+		
+		.header_04 {
+			font-size: 18px;
+			float: right;
+			margin-top: 30px;
+		}
+		
+		.header_03 {
+			font-size: 18px;
+			float: right;
+			margin-top: 30px;
+			margin-right: 20px;
+		}
+		
+		.header_03_bt {
+			width: auto;
+		}
+		
+		.ball_footer {
+			text-align: center;
+		}
+		.header_04 input{
+			width: 100px;
+		}
+		
+		
+	.previousPage {
+		width: 30px;
+		padding: 0px;
+		background: url(img/common.gif) 0px -180px no-repeat;
+	}
+	
+	
+	.nextPage {
+		width: 30px;
+		padding: 0px;
+		background: url(img/common.gif) 0px -210px no-repeat;
+	}
+	
+	.firstPage {
+		width: 30px;
+		padding: 0px;
+		background: url(img/common.gif) -60px -180px no-repeat;
+	}
+
+	.lastPage {
+		width: 30px;
+		padding: 0px;
+		background: url(img/common.gif) -60px -210px no-repeat;
+	}
+	.ball_table01{
+			text-align: center;
+			font-size: 18px;
+		}
