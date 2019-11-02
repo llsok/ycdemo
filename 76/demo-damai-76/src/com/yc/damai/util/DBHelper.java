@@ -66,14 +66,14 @@ public class DBHelper {
 	 * @throws NamingException 
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() {
+	public static Connection getConnection() throws SQLException {
 		// 创建JNDI 上下文对象
 		try{
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/mysql/damai");
 			return ds.getConnection();
 		} catch (Exception e ){
-			throw new RuntimeException(e);
+			throw new SQLException(e);
 		}
 		
 		/*for (int i = 0; i < password.length; i++) {
