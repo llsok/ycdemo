@@ -33,6 +33,32 @@ function add(){
 	$('#dlg').dialog('open');
 	// 将改行数据填写到表单控件中
 	$("#editForm").form('clear');
+	// 补丁
+	$("#op").val("save");
+}
+
+function save(){
+ 	$('#editForm').form('submit', {
+ 		//  get 请求会删除 url 地址里面的请求参数
+		url: "../product.s",
+		success: function(json){
+			eval("var result = " + json);
+			if(result.code == 1){
+				// 冒泡提示信息
+				$.messager.show({
+					title:'系统提示',
+					msg:result.msg,
+					timeout:3000,
+					showType:'slide'
+				});
+				$('#dlg').dialog('close');
+				// 表格重新加载数据（查询）
+				$("#dg").datagrid("reload");
+			} else {
+				$.messager.alert('系统提示',result.msg,'error');
+			}
+		}
+	});
 }
 
 </script>
@@ -85,15 +111,38 @@ function add(){
 
 <!-- 对话框：商品信息编辑 -->
 <div id="dlg" class="easyui-dialog" title="Basic Dialog" 
-	data-options="iconCls:'icon-save',closed:true" 
+	data-options="
+		iconCls:'icon-save',
+		closed:true,
+		buttons: [{
+					text:'保存',
+					iconCls:'icon-ok',
+					handler:function(){
+						save();
+					}
+				},{
+					text:'放弃',
+					iconCls:'icon-cancel',
+					handler:function(){
+						$('#dlg').dialog('close');
+					}
+				}]
+		" 
 	style="width:400px;height:400px;padding:10px">
 	<form action="????" id="editForm">
+	<input id="op" name="op" value="save" type="hidden">
 	<input class="easyui-textbox" name="pid" style="width:300px"
 		data-options="label:'商品ID：'">
 	<input class="easyui-textbox" name="pname" style="width:300px"
 		data-options="label:'名称：'">
 	<input class="easyui-textbox" name="shop_price" style="width:300px" type="number"
 		data-options="label:'商城价：'">
+	<input class="easyui-radiobutton" name="is_hot" value="1" label="热卖：">
+	<input class="easyui-radiobutton" name="is_hot" value="0" label="非热卖："><br>
+	<input class="easyui-textbox" name="csid" style="width:300px" type="number"
+		data-options="label:'类别：'">
+	<input class="easyui-textbox" name="pdesc" style="width:300px" type="number"
+		data-options="label:'描述：',multiline:true">
 	</form>
 </div>
 
