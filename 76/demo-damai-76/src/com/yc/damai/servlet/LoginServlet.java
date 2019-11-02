@@ -39,6 +39,10 @@ public class LoginServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		
+		request.getSession();
+		
+		
 		String beginTimeParam = this.getInitParameter("begin-time");
 		String endTimeParam = this.getInitParameter("end-time");
 		
@@ -66,6 +70,7 @@ public class LoginServlet extends HttpServlet {
 
 		if (user != null) {
 			HttpSession session = request.getSession();
+			System.out.println(session.getId());
 			session.setAttribute("loginedUser", user);
 			response.sendRedirect("index.jsp");
 		} else {
