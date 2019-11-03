@@ -5,30 +5,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 public class DBHelper {
 	private static String url;
@@ -66,14 +64,14 @@ public class DBHelper {
 	 * @throws NamingException 
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() {
+	public static Connection getConnection() throws SQLException {
 		// 创建JNDI 上下文对象
 		try{
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/mysql/damai");
 			return ds.getConnection();
 		} catch (Exception e ){
-			throw new RuntimeException(e);
+			throw new SQLException(e);
 		}
 		
 		/*for (int i = 0; i < password.length; i++) {
@@ -443,6 +441,26 @@ public class DBHelper {
 		} else {
 			return "";
 		}
+	}
+	
+	/**
+	 * 将 List<Map<String,Object>> 转换成 List<T>  T 表示一个未知的实体类
+	 * @param list	要转换的数据的集合
+	 * @param cls	实体类的类对象
+	 * @return
+	 */
+	public static <T> List<T> populate(List<Map<String,Object>> list, Class<T> cls){
+		List<T> retList = new ArrayList<T>();
+		for(Map<String,Object> row : list){
+			try {
+				T p = cls.newInstance();   // 等效于 new T();
+				BeanUtils.populate(p, row);
+				retList.add(p);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return retList;
 	}
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {

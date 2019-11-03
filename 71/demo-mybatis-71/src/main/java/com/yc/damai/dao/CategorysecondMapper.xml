@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace 命名空间  其实就是映射文件在项目中地址 -->
+<mapper namespace="com.yc.damai.dao.CategorysecondMapper">
+
+	<resultMap type="com.yc.damai.bean.Categorysecond" id="baseMap">
+		<!-- 一对一   fetchType="lazy" 惰性加载 延迟加载-->
+		<association property="category" autoMapping="true" column="cid"
+			select="selectCategoryByCid" fetchType="lazy"></association>
+	</resultMap>
+	
+	<select id="selectByCid" resultMap="baseMap">
+		select * from categorysecond where cid=#{cid}
+	</select>
+	
+	<select id="selectCategoryByCid" resultType="com.yc.damai.bean.Category">
+		select * from category where cid=#{cid}
+	</select>
+	
+</mapper>

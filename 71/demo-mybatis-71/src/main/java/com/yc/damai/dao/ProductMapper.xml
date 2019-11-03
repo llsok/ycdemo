@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace 命名空间  其实就是映射文件在项目中地址 -->
+<mapper namespace="com.yc.damai.dao.ProductMapper">
+
+<!-- 
+log4j   log for java
+根日志输出，使用 debug 模式
+log4j.rootLogger = debug,stdout
+
+log4j.appender.stdout = org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target = System.out
+log4j.appender.stdout.layout = org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n
+
+ -->
+ 
+ 	<!-- 手动映射配置 -->
+ 	<resultMap id="baseMapper" type="com.yc.damai.bean.Product">
+ 		<!-- property 定义实体类 属性名     column 数据库的字段名 -->
+ 		<result property="marketPrice" column="market_price"></result>
+ 		<result property="shopPrice" column="shop_price"></result>
+ 		<result property="isHot" column="is_hot"></result>
+ 	</resultMap>
+
+	<!-- 查询所有商品 -->
+	<select id="selectAll" resultMap="baseMapper">
+		select * from product
+	</select>
+	
+	<!-- 根据商品id 查一个商品   命名参数   #{pid} -->
+	<select id="selectByPid" resultMap="baseMapper">
+		select * from product where pid = #{pid}
+	</select>
+	
+	<insert id="create">
+		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
+		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
