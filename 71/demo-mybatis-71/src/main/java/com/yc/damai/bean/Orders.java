@@ -1,6 +1,7 @@
 package com.yc.damai.bean;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Orders {
 	
@@ -13,6 +14,15 @@ public class Orders {
 	private String phone;
 	private Long uid;
 	private String name;
+	
+	private List<Orderitem> items;
+	
+	public List<Orderitem> getItems() {
+		return items;
+	}
+	public void setItems(List<Orderitem> items) {
+		this.items = items;
+	}
 	public Long getOid() {
 		return oid;
 	}
@@ -60,6 +70,11 @@ public class Orders {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "Orders [oid=" + oid + ", total=" + total + ", ordertime=" + ordertime + ", state=" + state + ", addr="
+				+ addr + ", phone=" + phone + ", uid=" + uid + ", name=" + name + ", items=" + items + "]";
 	}
 	
 	

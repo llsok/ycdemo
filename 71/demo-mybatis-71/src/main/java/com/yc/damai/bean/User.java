@@ -1,5 +1,7 @@
 package com.yc.damai.bean;  // vo  entity ...
 
+import java.util.List;
+
 /**
  * 用户实体类（对应 user表）
  * @author Administrator
@@ -18,6 +20,16 @@ public class User {
 	private String code;
 	private String addr;
 	
+	private List<Orders> orders;
+	
+	
+	
+	public List<Orders> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<Orders> orders) {
+		this.orders = orders;
+	}
 	public Long getUid() {
 		return uid;
 	}

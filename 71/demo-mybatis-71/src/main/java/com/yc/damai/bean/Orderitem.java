@@ -7,6 +7,17 @@ public class Orderitem {
 	private Float subtotal;
 	private Long pid;
 	private Long oid;
+	
+	
+	private Product product;
+	
+	
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 	public Long getItemid() {
 		return itemid;
 	}
