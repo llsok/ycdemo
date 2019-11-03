@@ -23,23 +23,29 @@
     <servlet-name>hello wolrd servlet</servlet-name>
     <url-pattern>/hello.s</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>登录的servlet</servlet-name>
     <servlet-class>com.yc.damai.servlet.LoginServlet</servlet-class>
     <init-param>
-    	<param-name>begin-time</param-name>
-    	<param-value>8</param-value>
+      <param-name>begin-time</param-name>
+      <param-value>8</param-value>
     </init-param>
     <init-param>
-    	<param-name>end-time</param-name>
-    	<param-value>20</param-value>
+      <param-name>end-time</param-name>
+      <param-value>22</param-value>
     </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>登录的servlet</servlet-name>
     <url-pattern>/dologin.s</url-pattern>
   </servlet-mapping>
-  
-  
+  <filter>
+    <filter-name>权限访问控制过滤器</filter-name>
+    <filter-class>com.yc.damai.servlet.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>权限访问控制过滤器</filter-name>
+    <url-pattern>/cart.jsp</url-pattern>
+    <url-pattern>/olist.jsp</url-pattern>
+  </filter-mapping>
 </web-app>

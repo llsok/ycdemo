@@ -21,6 +21,10 @@
 			<ul>
 				
 					<li id="headerLogin" class="headerLogin" style="display: list-item;">
+						当前在线人数：${onlineUserSet==null? 0 : onlineUserSet.size()}个
+					</li>
+					
+					<li id="headerLogin" class="headerLogin" style="display: list-item;">
 					<%if(session.getAttribute("loginedUser")==null){%>
 						<a href="login.jsp">登录</a>|
 					<%} else { %>
