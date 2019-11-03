@@ -76,6 +76,36 @@ function fmtImage(value,row,index){
 	return "<img src='../"+value+"' height='40px'>";
 }
 
+// easyui 的表单提交不能上传文件
+function save(){
+	// 创建表单对象（实现文件上传）  传入 html 表单元素
+    var formData = new FormData($('#editForm')[0]);
+    $.ajax({
+        url:'../product.s?op=save', 
+        type:'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success:function(result){
+        	//eval("var result = " + json);
+			if(result.code == 1){
+				// 冒泡提示信息
+				$.messager.show({
+					title:'系统提示',
+					msg:result.msg,
+					timeout:3000,
+					showType:'slide'
+				});
+				$('#dlg').dialog('close');
+				// 表格重新加载数据（查询）
+				$("#dg").datagrid("reload");
+			} else {
+				$.messager.alert('系统提示',result.msg,'error');
+			}
+        }
+    })
+}
+
 </script>
 </head>
 <body>
@@ -168,6 +198,10 @@ function fmtImage(value,row,index){
 		">
 	<input class="easyui-textbox" name="pdesc" style="width:300px" type="number"
 		data-options="label:'描述：',multiline:true">
+		
+	<input class="easyui-filebox" style="width:300px" name="imageFile"
+		data-options="label:'上传图片：'">
+	
 	</form>
 	
 </div>
