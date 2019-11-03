@@ -66,6 +66,16 @@ function selectCsid(category){
 	$('#csid').combobox('reload','../categorysecond.s?op=queryByCid&cid=' + category.cid );
 }
 
+function fmtHot(value,row,index){
+	// 格式化
+	return value==0? "非热卖" : "热卖";
+}
+
+function fmtImage(value,row,index){
+	// products/1/cs10001.jpg 
+	return "<img src='../"+value+"' height='40px'>";
+}
+
 </script>
 </head>
 <body>
@@ -83,9 +93,9 @@ function selectCsid(category){
 			<th data-options="field:'pid',width:80">ID</th>
 			<th data-options="field:'pname',width:100">名称</th>
 			<th data-options="field:'shop_price',width:100">商场价</th>
-			<th data-options="field:'image',width:100">图片</th>
+			<th data-options="field:'image',width:100,formatter:fmtImage">图片</th>
 			<th data-options="field:'pdate',width:100">日期</th>
-			<th data-options="field:'is_hot',width:100">热卖标志</th>
+			<th data-options="field:'is_hot',width:100,formatter:fmtHot">热卖标志</th>
 		</tr>
 	</thead>
 </table>
@@ -159,6 +169,7 @@ function selectCsid(category){
 	<input class="easyui-textbox" name="pdesc" style="width:300px" type="number"
 		data-options="label:'描述：',multiline:true">
 	</form>
+	
 </div>
 
 <!-- 
