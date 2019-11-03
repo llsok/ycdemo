@@ -47,5 +47,6 @@
 	<!-- 映射文件配置-->
 	<mappers>
 		<mapper resource="com/yc/damai/dao/ProductMapper.xml" />
+		<mapper resource="com/yc/damai/dao/CategoryMapper.xml" />
 	</mappers>
 </configuration>
