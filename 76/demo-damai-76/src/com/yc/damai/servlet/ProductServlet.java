@@ -57,15 +57,19 @@ public class ProductServlet extends BaseServlet {
 		// 执行上传
 		su.upload();
 		
-		Files files = su.getFiles();
-		
-		String filename = files.getFile(0).getFileName();
-		
-		// 使用application（应用上下文对象） web路径 转换成 磁盘路径
-		// getServletContext（）  === application
-		String diskPath = getServletContext().getRealPath("/products/upload");
-		files.getFile(0).saveAs(diskPath+"/"+filename);
-		String webPath = "products/upload/" + filename;
+		// 判断是否有上传的文件
+		String webPath = null;
+		if(su.getFiles().getSize() > 0 ){
+			Files files = su.getFiles();
+			
+			String filename = files.getFile(0).getFileName();
+			
+			// 使用application（应用上下文对象） web路径 转换成 磁盘路径
+			// getServletContext（）  === application
+			String diskPath = getServletContext().getRealPath("/products/upload");
+			files.getFile(0).saveAs(diskPath+"/"+filename);
+			webPath = "products/upload/" + filename;
+		}
 		
 		Product p = new Product();
 		
@@ -80,7 +84,9 @@ public class ProductServlet extends BaseServlet {
 		}
 		
 		BeanUtils.populate(p, paramMap);
-		p.setImage(webPath);
+		if(webPath!=null){
+			p.setImage(webPath);
+		}
 		
 		Result result;
 		try {

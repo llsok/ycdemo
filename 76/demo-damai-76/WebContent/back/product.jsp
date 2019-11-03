@@ -24,6 +24,13 @@ function edit(){
 		return;
 	}
 	$('#dlg').dialog('open');
+	// 清空表单中的值
+	$("#editForm").form('clear');
+	
+	// 补丁
+	$("#op").val("save");
+	$("#productImage").val(row.image);
+	
 	// 将改行数据填写到表单控件中
 	$("#editForm").form('load',row);
 }
@@ -31,10 +38,11 @@ function edit(){
 function add(){
 	// 获取表格当前选中的行  row 就是  Product 实体对象   ===》 json 对象
 	$('#dlg').dialog('open');
-	// 将改行数据填写到表单控件中
+	// 清空表单中的值
 	$("#editForm").form('clear');
 	// 补丁
 	$("#op").val("save");
+	$("#productImage").val("");
 }
 
 function save(){
@@ -176,6 +184,7 @@ function save(){
 	style="width:400px;height:400px;padding:10px">
 	<form action="????" id="editForm">
 	<input id="op" name="op" value="save" type="hidden">
+	<input id="productImage" name="image" type="hidden">
 	<input class="easyui-textbox" name="pid" style="width:300px"
 		data-options="label:'商品ID：'">
 	<input class="easyui-textbox" name="pname" style="width:300px"
