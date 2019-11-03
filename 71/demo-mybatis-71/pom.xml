@@ -44,6 +44,13 @@
 		</dependency>
 	</dependencies>
 
-
+	<!-- 
+		2019.11.03 作业：实现大麦商城购物流程：
+		1、实现用户登录
+		2、首页商品信息展示（index.html）
+		3、商品详情展示（detail.html）
+		4、加入购物车和查看购物车（cart.html）
+		5、支付页面（pay.html）
+	 -->
 	
 </project>
