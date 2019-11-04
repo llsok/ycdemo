@@ -54,6 +54,7 @@ public class ProductServlet extends BaseServlet {
 		su.setAllowedFilesList("jpg,png,gif,bmp");
 		// 限定大小
 		su.setMaxFileSize(1024 * 1024 * 10);
+		su.setCharset("utf-8");
 		// 执行上传
 		su.upload();
 		

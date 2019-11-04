@@ -182,7 +182,7 @@ function save(){
 				}]
 		" 
 	style="width:400px;height:400px;padding:10px">
-	<form action="????" id="editForm">
+	<form action="????" id="editForm" enctype="multipart/form-data" method="post">
 	<input id="op" name="op" value="save" type="hidden">
 	<input id="productImage" name="image" type="hidden">
 	<input class="easyui-textbox" name="pid" style="width:300px"
