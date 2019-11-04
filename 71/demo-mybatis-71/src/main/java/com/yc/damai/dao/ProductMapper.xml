@@ -67,5 +67,62 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		
 	</select>
 	
+	<select id="selectByFlag" resultType="com.yc.damai.bean.Product">
+	
+		<!-- 查询 is_hot  
+			flag 参数== 1： 精确查询 is_hot = ?  
+			flag 参数== 2： 精确查询 is_hot like ?
+			flag 参数== 3： 精确查询 is_hot is null ?
+			flag 参数== 4： 精确查询 is_hot is not null ?
+		-->
+		select * from product
+		
+		<where>
+			<choose>
+				<when test="flag == 1">
+					is_hot = #{isHot}
+				</when>
+				<when test="flag == 2">
+					is_hot like #{isHot}
+				</when>
+				<when test="flag == 3">
+					is_hot is null
+				</when>
+				<when test="flag == 4">
+					is_hot is not null
+				</when>
+				<otherwise>
+					is_hot = 1
+				</otherwise>
+			</choose>
+		</where>
+				
+	</select>
+	
+	
+	<update id="modify">
+		update product
+		<set>
+			<if test="pname != null">
+				pname=#{pname},
+			</if>
+			<if test="pdesc != null">
+				pdesc=#{pdesc},
+			</if>
+			<if test="image != null">
+				image=#{image},
+			</if>
+		</set>
+		
+		where pid=#{pid}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

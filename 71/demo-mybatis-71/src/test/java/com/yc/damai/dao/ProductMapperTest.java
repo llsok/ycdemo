@@ -3,12 +3,14 @@ package com.yc.damai.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,27 +98,47 @@ public class ProductMapperTest {
 	
 	@Test
 	public void testSelectByObj(){
-		
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj");
-		
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",null);
-		
 		Product p = new Product();
-		
 		// MyBatis 缓存机制
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
-		
 		p.setPname("%zs%");
-		
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
-		
 		p.setPdesc("%好衣服%");
-
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
 		
 	}
 	
+	@Test
+	public void testSelectByFlag(){
+		
+		HashMap<String,Object> param = new HashMap<String,Object>();
+		param.put("isHot", 1);
+		param.put("flag", 1);
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
+		param.put("flag", 2);
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
+		param.put("flag", 3);
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
+		param.put("flag", 4);
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
+	}
 	
+
+	@Test
+	public void testModify(){
+		Product p = new Product();
+		p.setPid(2);
+		p.setPname("七匹狼");
+		session.update("com.yc.damai.dao.ProductMapper.modify",p);
+		session.commit();
+	}
+	
+	@After
+	public void after(){
+		session.close();
+	}
 	
 	
 	
