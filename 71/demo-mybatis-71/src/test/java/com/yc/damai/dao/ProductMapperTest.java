@@ -3,6 +3,7 @@ package com.yc.damai.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -133,6 +134,19 @@ public class ProductMapperTest {
 		p.setPname("七匹狼");
 		session.update("com.yc.damai.dao.ProductMapper.modify",p);
 		session.commit();
+	}
+	
+	@Test
+	public void testSelectInCsid(){
+		//int[] csids = {1,2,3,4};
+		
+		List<Integer> csids = new ArrayList<>();
+		csids.add(1);
+		csids.add(2);
+		csids.add(3);
+		csids.add(4);
+		csids.add(5);
+		session.selectList("com.yc.damai.dao.ProductMapper.selectInCsid",csids);
 	}
 	
 	@After

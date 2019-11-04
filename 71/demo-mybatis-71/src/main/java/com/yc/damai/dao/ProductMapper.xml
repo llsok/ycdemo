@@ -113,15 +113,25 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 				image=#{image},
 			</if>
 		</set>
-		
 		where pid=#{pid}
 	</update>
 	
+	<select id="selectInCsid" resultType="com.yc.damai.bean.Product">
+		select 
+		<include refid="baseColumns"></include>
+		from product
+		<where>
+			<!-- open 生成语句前面的部分 -->
+			<foreach collection="collection" item="item" 
+			      open="csid in (" separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
+	</select>
 	
-	
-	
-	
-	
+	<sql id="baseColumns">
+		pname,image,shop_price
+	</sql>
 	
 	
 	
