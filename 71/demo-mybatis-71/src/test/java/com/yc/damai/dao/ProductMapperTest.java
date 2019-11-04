@@ -69,6 +69,10 @@ public class ProductMapperTest {
 			
 			Assert.assertEquals(1, count);
 			
+			Assert.assertNotNull(p.getPid());
+			
+			
+			
 			// 提交
 			session.commit();
 			
@@ -120,6 +124,10 @@ public class ProductMapperTest {
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
 		param.put("flag", 2);
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
+		
+		// 加入排序字段
+		param.put("ordername","shop_price");
+		
 		param.put("flag", 3);
 		session.selectList("com.yc.damai.dao.ProductMapper.selectByFlag",param);
 		param.put("flag", 4);
@@ -147,6 +155,13 @@ public class ProductMapperTest {
 		csids.add(4);
 		csids.add(5);
 		session.selectList("com.yc.damai.dao.ProductMapper.selectInCsid",csids);
+	}
+	
+	@Test
+	public void testSelect(){
+		String sql = "select * from user";
+		List<?> list = session.selectList("com.yc.damai.dao.ProductMapper.select",sql);
+		System.out.println(list);
 	}
 	
 	@After

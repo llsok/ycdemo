@@ -35,11 +35,21 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		select * from product where pid = #{pid}
 	</select>
 	
-	<insert id="create">
+	<!-- useGeneratedKeys 开启自增列返回值功能  keyColumn 自增列名 keyProperty 对应的属性名-->
+	<insert id="create" useGeneratedKeys="true" 
+		keyColumn="pid" keyProperty="pid">
 		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
 		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
 	</insert>
 	
+	<!-- Oracle 获取 序列值 使用 selectKey -->
+	<insert id="createByOracle" useGeneratedKeys="true">
+		<selectKey keyColumn="pid" keyProperty="pid" order="BEFORE">
+			select seq_pid.nextval from dual
+		</selectKey>
+		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
+		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
 	
 	<!-- 动态SQL相关标签 
 		<if></if>
@@ -96,9 +106,12 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 				</otherwise>
 			</choose>
 		</where>
-				
+		
+		<!-- 排序 ordername 表示 排序的字段名  ${} -->
+		<if test="ordername != null">
+			order by ${ordername}
+		</if>	
 	</select>
-	
 	
 	<update id="modify">
 		update product
@@ -133,6 +146,9 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		pname,image,shop_price
 	</sql>
 	
-	
+	<!-- 统计查询  复杂的查询 -->
+	<select id="select" resultType="map" >
+		${sql}
+	</select>
 	
 </mapper>
