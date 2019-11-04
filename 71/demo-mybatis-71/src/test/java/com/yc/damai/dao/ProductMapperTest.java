@@ -89,6 +89,33 @@ public class ProductMapperTest {
 	 */
 	
 	
+	/**
+	 * MyBatis 动态SQL
+	 * 
+	 */
+	
+	@Test
+	public void testSelectByObj(){
+		
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj");
+		
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",null);
+		
+		Product p = new Product();
+		
+		// MyBatis 缓存机制
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
+		
+		p.setPname("%zs%");
+		
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
+		
+		p.setPdesc("%好衣服%");
+
+		session.selectList("com.yc.damai.dao.ProductMapper.selectByObj",p);
+		
+	}
+	
 	
 	
 	

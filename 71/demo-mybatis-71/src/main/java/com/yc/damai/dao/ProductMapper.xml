@@ -41,19 +41,31 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 	</insert>
 	
 	
+	<!-- 动态SQL相关标签 
+		<if></if>
+		<choose></choose>
+		<foreach></foreach>
+		<where></where>
+		<set></set>
+		<sql></sql>
+		<include></include>
+		<selectKey></selectKey> -->
 	
+	<!-- 传入的参数 是实体对象 -->
+	<select id="selectByObj" resultType="com.yc.damai.bean.Product">
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		select * from product
+		
+		<where>
+			<if test="pname != null">
+				and pname like #{pname}
+			</if>
+			<if test="pdesc != null">
+				and pdesc like #{pdesc}
+			</if>
+		</where>
+		
+	</select>
 	
 	
 </mapper>

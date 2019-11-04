@@ -54,6 +54,7 @@ public class ProductServlet extends BaseServlet {
 		su.setAllowedFilesList("jpg,png,gif,bmp");
 		// 限定大小
 		su.setMaxFileSize(1024 * 1024 * 10);
+		su.setCharset("utf-8");
 		// 执行上传
 		su.upload();
 		
@@ -80,6 +81,7 @@ public class ProductServlet extends BaseServlet {
 		while(es.hasMoreElements()){
 			String paramName = es.nextElement();
 			String paramValue = su.getRequest().getParameter(paramName);
+			paramValue = new String(paramValue.getBytes("iso-8859-1"));
 			paramMap.put(paramName, paramValue);
 		}
 		
