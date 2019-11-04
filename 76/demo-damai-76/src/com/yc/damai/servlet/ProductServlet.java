@@ -80,7 +80,12 @@ public class ProductServlet extends BaseServlet {
 		while(es.hasMoreElements()){
 			String paramName = es.nextElement();
 			String paramValue = su.getRequest().getParameter(paramName);
-			paramMap.put(paramName, paramValue);
+			/**
+			 * smartupload 会对表单数据使用gbk格式编码，当前工程是utf-8编码，要手动转
+			   *   不过，即使是手动转了也还是会出现少量乱码，是 gbk 与 utf-8 两个字符集的兼容性问题，小问题忽略
+			   *    另外，smartupload 提供的 setCharset 方法执行会直接报错，应该是bug
+			 */
+			paramMap.put(paramName, new String(paramValue.getBytes("gbk"),"utf-8"));
 		}
 		
 		BeanUtils.populate(p, paramMap);
