@@ -65,7 +65,7 @@
 					</dl>
 			</div>
 				<div class="action">
-					<form action="doAddCart.jsp" method="post">
+					<form action="cart.s?op=add" method="post">
 						<input type="hidden" name="pid" value="${p.pid}"/>
 						<dl class="quantity">
 							<dt>购买数量:</dt>

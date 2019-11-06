@@ -45,6 +45,7 @@
   </filter>
   <filter-mapping>
     <filter-name>权限访问控制过滤器</filter-name>
+    <url-pattern>/cart.s</url-pattern>
     <url-pattern>/cart.jsp</url-pattern>
     <url-pattern>/olist.jsp</url-pattern>
   </filter-mapping>
