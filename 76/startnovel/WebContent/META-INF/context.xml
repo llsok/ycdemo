@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <Context>
+ 	<Resource
+ 		auth="Container"
+ 		driverClassName="com.mysql.jdbc.Driver"
+ 		maxIdle="30"
+ 		maxTotal="50"
+ 		maxWaitMillis="-1"
+ 		name="mysql/novel"
+ 		username="root"
+ 		password="a"
+ 		type="javax.sql.DataSource"
+ 		url="jdbc:mysql://127.0.0.1:3306/novel"
+ 	/>
+ 
+ </Context>
