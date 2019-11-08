@@ -35,25 +35,120 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		select * from product where pid = #{pid}
 	</select>
 	
-	<insert id="create">
+	<!-- useGeneratedKeys 开启自增列返回值功能  keyColumn 自增列名 keyProperty 对应的属性名-->
+	<insert id="create" useGeneratedKeys="true" 
+		keyColumn="pid" keyProperty="pid">
 		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
 		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
 	</insert>
 	
+	<!-- Oracle 获取 序列值 使用 selectKey -->
+	<insert id="createByOracle" useGeneratedKeys="true">
+		<selectKey keyColumn="pid" keyProperty="pid" order="BEFORE">
+			select seq_pid.nextval from dual
+		</selectKey>
+		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
+		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
 	
+	<!-- 动态SQL相关标签 
+		<if></if>
+		<choose></choose>
+		<foreach></foreach>
+		<where></where>
+		<set></set>
+		<sql></sql>
+		<include></include>
+		<selectKey></selectKey> -->
 	
+	<!-- 传入的参数 是实体对象 -->
+	<select id="selectByObj" resultType="com.yc.damai.bean.Product">
 	
+		select * from product
+		
+		<where>
+			<if test="pname != null">
+				and pname like #{pname}
+			</if>
+			<if test="pdesc != null">
+				and pdesc like #{pdesc}
+			</if>
+		</where>
+		
+	</select>
 	
+	<select id="selectByFlag" resultType="com.yc.damai.bean.Product">
 	
+		<!-- 查询 is_hot  
+			flag 参数== 1： 精确查询 is_hot = ?  
+			flag 参数== 2： 精确查询 is_hot like ?
+			flag 参数== 3： 精确查询 is_hot is null ?
+			flag 参数== 4： 精确查询 is_hot is not null ?
+		-->
+		select * from product
+		
+		<where>
+			<choose>
+				<when test="flag == 1">
+					is_hot = #{isHot}
+				</when>
+				<when test="flag == 2">
+					is_hot like #{isHot}
+				</when>
+				<when test="flag == 3">
+					is_hot is null
+				</when>
+				<when test="flag == 4">
+					is_hot is not null
+				</when>
+				<otherwise>
+					is_hot = 1
+				</otherwise>
+			</choose>
+		</where>
+		
+		<!-- 排序 ordername 表示 排序的字段名  ${} -->
+		<if test="ordername != null">
+			order by ${ordername}
+		</if>	
+	</select>
 	
+	<update id="modify">
+		update product
+		<set>
+			<if test="pname != null">
+				pname=#{pname},
+			</if>
+			<if test="pdesc != null">
+				pdesc=#{pdesc},
+			</if>
+			<if test="image != null">
+				image=#{image},
+			</if>
+		</set>
+		where pid=#{pid}
+	</update>
 	
+	<select id="selectInCsid" resultType="com.yc.damai.bean.Product">
+		select 
+		<include refid="baseColumns"></include>
+		from product
+		<where>
+			<!-- open 生成语句前面的部分 -->
+			<foreach collection="collection" item="item" 
+			      open="csid in (" separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
+	</select>
 	
+	<sql id="baseColumns">
+		pname,image,shop_price
+	</sql>
 	
-	
-	
-	
-	
-	
-	
+	<!-- 统计查询  复杂的查询 -->
+	<select id="select" resultType="map" >
+		${sql}
+	</select>
 	
 </mapper>

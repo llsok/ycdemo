@@ -24,6 +24,13 @@ function edit(){
 		return;
 	}
 	$('#dlg').dialog('open');
+	// 清空表单中的值
+	$("#editForm").form('clear');
+	
+	// 补丁
+	$("#op").val("save");
+	$("#productImage").val(row.image);
+	
 	// 将改行数据填写到表单控件中
 	$("#editForm").form('load',row);
 }
@@ -31,10 +38,11 @@ function edit(){
 function add(){
 	// 获取表格当前选中的行  row 就是  Product 实体对象   ===》 json 对象
 	$('#dlg').dialog('open');
-	// 将改行数据填写到表单控件中
+	// 清空表单中的值
 	$("#editForm").form('clear');
 	// 补丁
 	$("#op").val("save");
+	$("#productImage").val("");
 }
 
 function save(){
@@ -66,6 +74,46 @@ function selectCsid(category){
 	$('#csid').combobox('reload','../categorysecond.s?op=queryByCid&cid=' + category.cid );
 }
 
+function fmtHot(value,row,index){
+	// 格式化
+	return value==0? "非热卖" : "热卖";
+}
+
+function fmtImage(value,row,index){
+	// products/1/cs10001.jpg 
+	return "<img src='../"+value+"' height='40px'>";
+}
+
+// easyui 的表单提交不能上传文件
+function save(){
+	// 创建表单对象（实现文件上传）  传入 html 表单元素
+    var formData = new FormData($('#editForm')[0]);
+    $.ajax({
+        url:'../product.s?op=save', 
+        type:'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success:function(result){
+        	//eval("var result = " + json);
+			if(result.code == 1){
+				// 冒泡提示信息
+				$.messager.show({
+					title:'系统提示',
+					msg:result.msg,
+					timeout:3000,
+					showType:'slide'
+				});
+				$('#dlg').dialog('close');
+				// 表格重新加载数据（查询）
+				$("#dg").datagrid("reload");
+			} else {
+				$.messager.alert('系统提示',result.msg,'error');
+			}
+        }
+    })
+}
+
 </script>
 </head>
 <body>
@@ -83,9 +131,9 @@ function selectCsid(category){
 			<th data-options="field:'pid',width:80">ID</th>
 			<th data-options="field:'pname',width:100">名称</th>
 			<th data-options="field:'shop_price',width:100">商场价</th>
-			<th data-options="field:'image',width:100">图片</th>
+			<th data-options="field:'image',width:100,formatter:fmtImage">图片</th>
 			<th data-options="field:'pdate',width:100">日期</th>
-			<th data-options="field:'is_hot',width:100">热卖标志</th>
+			<th data-options="field:'is_hot',width:100,formatter:fmtHot">热卖标志</th>
 		</tr>
 	</thead>
 </table>
@@ -134,8 +182,9 @@ function selectCsid(category){
 				}]
 		" 
 	style="width:400px;height:400px;padding:10px">
-	<form action="????" id="editForm">
+	<form action="????" id="editForm" enctype="multipart/form-data" method="post">
 	<input id="op" name="op" value="save" type="hidden">
+	<input id="productImage" name="image" type="hidden">
 	<input class="easyui-textbox" name="pid" style="width:300px"
 		data-options="label:'商品ID：'">
 	<input class="easyui-textbox" name="pname" style="width:300px"
@@ -158,7 +207,12 @@ function selectCsid(category){
 		">
 	<input class="easyui-textbox" name="pdesc" style="width:300px" type="number"
 		data-options="label:'描述：',multiline:true">
+		
+	<input class="easyui-filebox" style="width:300px" name="imageFile"
+		data-options="label:'上传图片：'">
+	
 	</form>
+	
 </div>
 
 <!-- 
