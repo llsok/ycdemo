@@ -173,5 +173,36 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		select * from product where pname=#{pname} and is_hot=#{isHot}
 	</select> -->
 	
+	<select id="selectByCondition" resultType="com.yc.damai.bean.Product">
+		select a.* from product a join categorysecond b on a.csid = b.csid
+		<where>
+			<if test="pname!=null">
+				and pname = #{pname}
+			</if>
+			
+			<if test="begin!=null and end != null">
+				and pdate between #{begin} and #{end}
+			</if>
+			
+			<choose>
+				<when test="priceType==1">
+					and shop_price &lt;= 100
+				</when>
+				<when test="priceType==2">
+					and shop_price between 101 and 500
+				</when>
+			</choose>
+			<if test="cidList!=null">
+				<foreach collection="cidList" item="cid"
+					open="and b.cid in (" close=")" separator=",">
+					#{cid}	
+				</foreach>
+			</if>
+			<!-- and b.cid in (?,?,?,?,?) -->
+		
+		</where>
+
+	</select>
+	
 	
 </mapper>

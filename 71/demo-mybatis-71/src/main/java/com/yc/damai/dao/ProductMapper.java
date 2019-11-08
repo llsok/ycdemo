@@ -1,5 +1,6 @@
 package com.yc.damai.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,10 @@ public interface ProductMapper {
 	public List<Map<String,Object>> selectBySQL(String sql);
 	
 	
+	public List<Product> selectByCondition(@Param("pname")String pname,
+			@Param("begin")Timestamp begin,@Param("end")Timestamp end, 
+			@Param("priceType")Integer priceType,
+			@Param("cidList") Integer[] cidList);
 	
 	
 	

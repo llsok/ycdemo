@@ -221,4 +221,16 @@ public class ProductMapperTest {
 	}
 	
 
+	@Test
+	public void testSelectByCondition(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		Integer[] cidList = {1,2,3};
+		pm.selectByCondition("???", null, null, 1, null);
+		pm.selectByCondition("???", null, null, 1, cidList);
+		Timestamp begin = new Timestamp(System.currentTimeMillis());
+		Timestamp end = new Timestamp(System.currentTimeMillis());
+		pm.selectByCondition("???", begin, end, 1, cidList);
+	}
+	
+
 }
