@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -206,10 +207,18 @@ public class ProductMapperTest {
 		
 		pm.selectByPid(1);
 		
-		pm.selectByPnameAndIsHot("女装", 1);
+		List<Product> list = pm.selectByPnameAndIsHot("%韩版%", 1);
+		
+		System.out.println(list);
 	}
 	
-	
+	@Test
+	public void testSelectBySQL(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		String sql = "select max(shop_price) maxp , min(shop_price) minp from product";
+		List<Map<String,Object>> list = pm.selectBySQL(sql);
+		System.out.println(list);
+	}
 	
 
 }

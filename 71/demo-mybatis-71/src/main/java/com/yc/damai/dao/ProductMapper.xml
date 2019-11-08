@@ -29,14 +29,14 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
  	</resultMap>
 
 	<!-- 查询所有商品 -->
-	<select id="selectAll" resultMap="baseMapper">
+<!-- 	<select id="selectAll" resultMap="baseMapper">
 		select * from product
-	</select>
+	</select> -->
 	
 	<!-- 根据商品id 查一个商品   命名参数   #{pid} -->
-	<select id="selectByPid" resultMap="baseMapper">
+	<!-- <select id="selectByPid" resultMap="baseMapper">
 		select * from product where pid = #{pieeeeeeed}
-	</select>
+	</select> -->
 	
 	<!-- useGeneratedKeys 开启自增列返回值功能  keyColumn 自增列名 keyProperty 对应的属性名-->
 	<insert id="create" useGeneratedKeys="true" 
@@ -159,7 +159,7 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 	<select id="getBlogCountByName" statementType="CALLABLE"  parameterType="java.util.HashMap">
 		<![CDATA[
 			{call proc_getBlogCountByAuthor (
-			
+				
 				#{username,  mode=IN,  jdbcType=VARCHAR },
 				
 				#{blogCount,
@@ -169,9 +169,9 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		]]>
 	</select>
 	
-	<select id="selectByPnameAndIsHot" resultType="com.yc.damai.bean.Product">
+	<!-- <select id="selectByPnameAndIsHot" resultType="com.yc.damai.bean.Product">
 		select * from product where pname=#{pname} and is_hot=#{isHot}
-	</select>
+	</select> -->
 	
 	
 </mapper>
