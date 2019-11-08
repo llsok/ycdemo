@@ -5,6 +5,9 @@
   <!-- namespace 命名空间  其实就是映射文件在项目中地址 -->
 <mapper namespace="com.yc.damai.dao.ProductMapper">
 
+<!-- 开启二级缓存 -->
+<cache></cache>
+
 <!-- 
 log4j   log for java
 根日志输出，使用 debug 模式
