@@ -198,6 +198,17 @@ public class ProductMapperTest {
 
 	}
 	
+	@Test
+	public void testSelectAllForInterface(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		
+		pm.selectAll();
+		
+		pm.selectByPid(1);
+		
+		pm.selectByPnameAndIsHot("女装", 1);
+	}
+	
 	
 	
 

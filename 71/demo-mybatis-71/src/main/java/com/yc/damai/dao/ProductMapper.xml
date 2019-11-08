@@ -35,7 +35,7 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 	
 	<!-- 根据商品id 查一个商品   命名参数   #{pid} -->
 	<select id="selectByPid" resultMap="baseMapper">
-		select * from product where pid = #{pid}
+		select * from product where pid = #{pieeeeeeed}
 	</select>
 	
 	<!-- useGeneratedKeys 开启自增列返回值功能  keyColumn 自增列名 keyProperty 对应的属性名-->
@@ -153,5 +153,25 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 	<select id="select" resultType="map" >
 		${sql}
 	</select>
+	
+	
+	<!-- MyBatis 调用存储过程  -->
+	<select id="getBlogCountByName" statementType="CALLABLE"  parameterType="java.util.HashMap">
+		<![CDATA[
+			{call proc_getBlogCountByAuthor (
+			
+				#{username,  mode=IN,  jdbcType=VARCHAR },
+				
+				#{blogCount,
+					mode=OUT,
+					jdbcType=INTEGER}
+			)}
+		]]>
+	</select>
+	
+	<select id="selectByPnameAndIsHot" resultType="com.yc.damai.bean.Product">
+		select * from product where pname=#{pname} and is_hot=#{isHot}
+	</select>
+	
 	
 </mapper>
