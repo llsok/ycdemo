@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,19 +31,11 @@
 						<th>小计</th>
 						<th>操作</th>
 					</tr>
-					<%
-						Map<String,Object> user = (Map<String,Object>)session.getAttribute("loginedUser");
-						// 计算购物车总金额
-						String sql = "select sum(b.shop_price*a.count) from cartitem a "
-								+ " join product b on a.pid=b.pid where uid=?";
-						Object sum = DBHelper.selectValue(sql, user.get("uid"));
-						// 查询购物车商品
-						sql = "select b.*,a.ciid,a.count from cartitem a "
-								+ " join product b on a.pid=b.pid where uid=?";
-						List<Map<String,Object>> list = DBHelper.selectList(sql, user.get("uid"));
-						for(Map<String,Object> cartitem : list){
-							pageContext.setAttribute("c", cartitem);
-					%>
+					<%-- 定义一个金额统计变量 sum, 相当于 pageContext.setAttribute("sum",0) --%>
+					<c:set var="sum" value="0"></c:set>
+					<%-- CartServlet 将用户的购物车商品信息推送过来，属性名为 cartItems，这里对其循环展示 --%>
+					<c:forEach items="${cartItems}" var="c">
+						<c:set var="sum" value="${sum + c.count}"></c:set>
 						<tr>
 							<td width="60">
 								<img src="${c.image}">
@@ -63,9 +56,7 @@
 								<a href="cart.jsp?pid=1" class="delete">删除</a>
 							</td>
 						</tr>
-					
-					<%} %>
-				
+					</c:forEach>
 				</tbody></table>
 				
 				<dl id="giftItems" class="hidden" style="display: none;">
@@ -75,8 +66,8 @@
 							<em>
 								登录后确认是否享有优惠
 							</em>
-					赠送积分: <em id="effectivePoint"><%=sum%></em>
-					商品金额: <strong id="effectivePrice"><%=sum%></strong>
+					赠送积分: <em id="effectivePoint">${sum}</em>
+					商品金额: <strong id="effectivePrice">${sum}</strong>
 				</div>
 				<div class="bottom">
 					<a href="cart.jsp" id="clear" class="clear">清空购物车</a>

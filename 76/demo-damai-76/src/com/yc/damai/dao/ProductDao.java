@@ -30,4 +30,13 @@ public class ProductDao {
 				,p.getIs_hot(),p.getCsid(),p.getPid());
 	}
 
+	public List<Map<String, Object>> selectForCart(List<String> pList) {
+		// 将集合转成字符串，输出格式为[1,2,3,4]
+		String pids = pList.toString();
+		// // 将集合字符串[1,2,3,4] 转成 (1,2,3,3)
+		pids = pids.replace("[", "(").replace("]", ")");
+		String sql = "select * from product where pid in " + pids;
+		return DBHelper.selectList(sql);
+	}
+
 }
