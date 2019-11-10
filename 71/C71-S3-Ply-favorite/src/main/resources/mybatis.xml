@@ -21,36 +21,13 @@
 				<property name="password" value="a" />
 			</dataSource>
 		</environment>
-		
-		<environment id="test">
-			<!-- 事务管理配置  jdbc -->
-			<transactionManager type="JDBC" />
-			<!-- 连接参数   type="POOLED" 基于连接池 -->
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://127.0.0.1/demo-damai" />
-				<property name="username" value="root" />
-				<property name="password" value="a" />
-			</dataSource>
-		</environment>
-		
-		<environment id="product">
-			<!-- 事务管理配置  jdbc -->
-			<transactionManager type="JDBC" />
-			<!-- 连接参数   type="POOLED" 基于连接池 -->
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://127.0.0.1/demo-damai" />
-				<property name="username" value="root" />
-				<property name="password" value="a" />
-			</dataSource>
-		</environment>
-		
 	</environments>
 	
 	<!-- 映射文件配置-->
 	<mappers>
 		<!-- <mapper resource="com/yc/damai/dao/ProductMapper.xml" /> -->
-		<mapper class="com.yc.favorite.dao.TagMapper"/>
+		<!-- <mapper class="com.yc.favorite.dao.TagMapper"/> -->
+		<!-- 配置包路径 包下所有接口都会被注册进来 -->
+		<package name="com.yc.favorite.dao"/>
 	</mappers>
 </configuration>
