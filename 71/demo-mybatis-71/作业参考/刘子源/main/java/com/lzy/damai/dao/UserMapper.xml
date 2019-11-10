@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatisorg/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzy.damai.dao.UserMapper">
+	<select id="selectAll" resultMap="baseMap">
+		select * from user
+	</select>
+
+	<select id="selectByuid" resultMap="baseMap">
+		select * from user where
+		uid=#{uid}
+	</select>
+
+	<select id="create">
+		insert into user
+		values(null,#{username},#{password},#{name},#{email},#{phone},#{sex},#{state},#{code},#{addr})
+	</select>
+	<delete  id="delete">
+		DELETE FROM user WHERE uid=#{uid}
+	</delete >
+	<select id="login" resultMap="baseMap">
+		select * from user where
+		username=#{username} and password = #{password}
+	</select>
+	
+	<select id="selectById" resultMap="baseMap">
+		select * from user where uid = #{uid}
+	</select>
+	
+	
+	<!-- 手动映射配置 -->
+	<resultMap type="com.lzy.damai.bean.User" id="baseMap">
+		<id property="uid" column="uid"></id>
+		<collection property="orders" autoMapping="true" column="uid"
+			select="com.lzy.damai.dao.OrderMapper.selectByUid" fetchType="lazy"></collection>
+	</resultMap>
+	
+</mapper>

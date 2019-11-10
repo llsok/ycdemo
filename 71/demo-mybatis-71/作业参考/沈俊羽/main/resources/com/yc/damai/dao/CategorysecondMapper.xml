@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间， 映射文件在项目中的地址 -->
+<mapper namespace="com.yc.damai.dao.CategorysecondMapper">
+
+	<resultMap type="com.yc.damai.bean.Categorysecond" id="baseMap">
+		<!-- 一对一关联查询 -->
+		<association property="category" column="cid" autoMapping="true" fetchType="lazy"
+		 select="selectCategoryByCid"></association>
+	</resultMap>
+	<!-- autoMapping="true"自动关联 
+		 select属性指定被关联的表的查询sql的id 
+		 fetchType="lazy" 延迟加载,什么时候使用什么时候查询 -->
+
+	<select id="selectByCid" resultMap="baseMap">
+		select * from categorysecond where cid=#{cid}
+	</select>
+	
+	<select id="selectCategoryByCid" resultType="com.yc.damai.bean.Category">
+		select * from category where cid=#{cid}
+	</select>
+</mapper>

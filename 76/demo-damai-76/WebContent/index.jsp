@@ -62,7 +62,7 @@
 							for(Map<String,Object> m : list) {
 						%>
 							<li>
-								<a target="_blank" href="detail.jsp?1"><img src="<%=m.get("image") %>" style="display: block;"></a>
+								<a target="_blank" href="detail.jsp?pid=<%=m.get("pid")%>"><img src="<%=m.get("image") %>" style="display: block;"></a>
 							</li>
 						<%}%>
 						</ul>

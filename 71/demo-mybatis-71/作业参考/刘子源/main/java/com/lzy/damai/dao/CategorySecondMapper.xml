@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatisorg/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzy.damai.dao.CategorySecondMapper">
+	<!-- 自定义映射关系 -->
+	<resultMap type="com.lzy.damai.bean.CategorySecond"
+		id="baseMap">
+		<!-- 一对一 fetchType="lazy" 惰性加载，延迟加载 -->
+		<association property="category" autoMapping="true"
+			column="cid" select="selectCategoryByCid" fetchType="lazy">
+
+		</association>
+	</resultMap>
+
+	<select id="selectByCid" resultMap="baseMap">
+		select * from categorysecond where cid=#{cid}
+	</select>
+
+	<select id="selectCategoryByCid"
+		resultType="com.lzy.damai.bean.Category">
+		select * from category where cid=#{cid}
+	</select>
+</mapper>

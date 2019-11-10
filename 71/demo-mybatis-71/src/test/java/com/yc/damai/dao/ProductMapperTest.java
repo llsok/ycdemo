@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -21,6 +22,7 @@ import com.yc.damai.bean.Product;
 public class ProductMapperTest {
 	
 	private SqlSession session;
+	private SqlSession session1;
 	
 	@Before
 	public void before() throws IOException{
@@ -32,6 +34,7 @@ public class ProductMapperTest {
 		// SqlSession   会话
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		session = sqlSessionFactory.openSession();
+		session1 = sqlSessionFactory.openSession();
 	}
 	
 	@Test
@@ -46,6 +49,13 @@ public class ProductMapperTest {
 	@Test
 	public void testSelectByPid() throws IOException{
 		Product p = session.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println(p);
+		System.out.println("==============1==========");
+		session.update("com.yc.damai.dao.ProductMapper.modify",p);
+		session.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println("==============2==========");
+		session.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println("==============3==========");
 		System.out.println(p);
 		session.close();
 	}
@@ -167,10 +177,60 @@ public class ProductMapperTest {
 	@After
 	public void after(){
 		session.close();
+		session1.close();
 	}
 	
 	
+	@Test
+	public void testCache() throws IOException{
+		
+		// Cache Hit Ratio [com.yc.damai.dao.ProductMapper]: 0.0
+		// 缓存命中
+		
+		Product p = session.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println(p);
+		System.out.println("==============1==========");
+		
+		// 必须关闭或提交，才能二级缓存才会缓存会话的数据
+		session.close();
+		
+		session1.selectOne("com.yc.damai.dao.ProductMapper.selectByPid", 56);
+		System.out.println("==============2==========");
+
+	}
 	
+	@Test
+	public void testSelectAllForInterface(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		
+		pm.selectAll();
+		
+		pm.selectByPid(1);
+		
+		List<Product> list = pm.selectByPnameAndIsHot("%韩版%", 1);
+		
+		System.out.println(list);
+	}
+	
+	@Test
+	public void testSelectBySQL(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		String sql = "select max(shop_price) maxp , min(shop_price) minp from product";
+		List<Map<String,Object>> list = pm.selectBySQL(sql);
+		System.out.println(list);
+	}
+	
+
+	@Test
+	public void testSelectByCondition(){
+		ProductMapper pm = session.getMapper(ProductMapper.class);
+		Integer[] cidList = {1,2,3};
+		pm.selectByCondition("???", null, null, 1, null);
+		pm.selectByCondition("???", null, null, 1, cidList);
+		Timestamp begin = new Timestamp(System.currentTimeMillis());
+		Timestamp end = new Timestamp(System.currentTimeMillis());
+		pm.selectByCondition("???", begin, end, 1, cidList);
+	}
 	
 
 }

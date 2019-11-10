@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace 命名空间  其实就是映射文件在项目中地址 -->
+<mapper namespace="com.lzy.damai.dao.OrderMapper">
+
+	<resultMap type="com.lzy.damai.bean.Orders" id="baseMap">
+		<!-- id 用于指定主键 -->
+		<id column="oid" property="oid"/>
+		<result column="total" property="total"/>
+	
+		<collection property="items" autoMapping="true" column="oid"
+			select="com.lzy.damai.dao.OrderitemMapper.selectByOid" fetchType="lazy"></collection>
+	</resultMap>
+	
+	<select id="selectByUid" resultMap="baseMap">
+		select * from orders where uid=#{uid}
+	</select>
+	
+	<!-- useGeneratedKeys 开启自增列返回值功能 keyColumn 自增列名 keyProperty 对应的属性名 -->
+	<insert id="create" useGeneratedKeys="true" keyColumn="oid" keyProperty="oid">
+		insert into orders
+		values(null,#{total},#{ordertime},#{state},#{addr},#{phone},#{uid},#{name})
+	</insert>
+	
+	
+	
+</mapper>

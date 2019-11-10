@@ -32,7 +32,7 @@
 		String filename = null;//文件名
 		String diskPath = null;//磁盘路径
 		String realName = null;//文件路径
-		for (int i = 0; i < files.getCount() - 1; i++) {
+		for (int i = 0; i < files.getCount(); i++) {
 			//为防止上传的文件名重复，将文件名修改为唯一
 			//获取系统当前时间
 			SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
@@ -45,32 +45,24 @@
 			//将文件真实路径添加到list集合中
 			fileList.add(realName);
 		}
-		String result = "";//读取txt文件的数据并保存到该字符串中
 		File file = null;
 		BufferedReader br;
 		InputStreamReader reader;
-		String s = null;
+		String s = null;//读取txt文件的数据并保存到该字符串中
 		List<String[]> listS = new ArrayList<String[]>(); //将存的元素的数组添加到集合中
 		String[] params = null;//存储一条数据中的所有元素
-		String[] sql = null;//存储每一条数据
 		for (String f : fileList) {
 			file = new File(f);//创建文件对象
 			try {
-				reader = new InputStreamReader(new FileInputStream(file), "utf-8");
+				//注意txt的文本格式 ，如果为utf—8则需要修改文本格式
+				reader = new InputStreamReader(new FileInputStream(file));
 				br = new BufferedReader(reader);
-				while ((s = br.readLine()) != null) {
-					result = result + s;
-				}
 				//从文件中读取数据并存入数据库中
-				sql = result.split("/");
-				if (sql.length != 0) {
-					for (String number : sql) {
-						params = number.split(":");
-						listS.add(params);
-					}
+				//从文本中一行一行的读取
+				while ((s = br.readLine()) != null) {
+					params = s.split("\\s+");
+					listS.add(params);
 				}
-				//存储完后将result置为空
-				result = "";
 				//关闭流
 				br.close();
 				reader.close();
@@ -99,8 +91,8 @@
 				lottery.setSale(string[9]);
 				lottery.setFirstprize(string[10]);
 				lottery.setSecondeprize(string[11]);
+				list.add(lottery);
 			}
-			list.add(lottery);
 		}
 		//遍历集合将数据存储进数据库
 		LotteryBiz biz = null;//操作Lottery表的事件数组
@@ -117,7 +109,10 @@
 			}
 			msg = "文件上传成功！！！";
 			pageContext.setAttribute("msg", msg);
-		} 
+		}else{
+			msg = "文件上传失败！！！";
+			pageContext.setAttribute("msg", msg);
+		}
 	%>
 	<b>${msg}</b>
 	<br>

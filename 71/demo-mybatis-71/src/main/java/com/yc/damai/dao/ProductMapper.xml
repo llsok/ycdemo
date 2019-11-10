@@ -5,6 +5,9 @@
   <!-- namespace 命名空间  其实就是映射文件在项目中地址 -->
 <mapper namespace="com.yc.damai.dao.ProductMapper">
 
+<!-- 开启二级缓存 -->
+<cache></cache>
+
 <!-- 
 log4j   log for java
 根日志输出，使用 debug 模式
@@ -26,14 +29,14 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
  	</resultMap>
 
 	<!-- 查询所有商品 -->
-	<select id="selectAll" resultMap="baseMapper">
+<!-- 	<select id="selectAll" resultMap="baseMapper">
 		select * from product
-	</select>
+	</select> -->
 	
 	<!-- 根据商品id 查一个商品   命名参数   #{pid} -->
-	<select id="selectByPid" resultMap="baseMapper">
-		select * from product where pid = #{pid}
-	</select>
+	<!-- <select id="selectByPid" resultMap="baseMapper">
+		select * from product where pid = #{pieeeeeeed}
+	</select> -->
 	
 	<!-- useGeneratedKeys 开启自增列返回值功能  keyColumn 自增列名 keyProperty 对应的属性名-->
 	<insert id="create" useGeneratedKeys="true" 
@@ -151,59 +154,51 @@ log4j.appender.stdout.layout.ConversionPattern = [%-5p] %d{yyyy-MM-dd HH:mm:ss,S
 		${sql}
 	</select>
 	
-	<select id="selectByCondition" resultMap="baseMapper">
+	<!-- MyBatis 调用存储过程  -->
+	<select id="getBlogCountByName" statementType="CALLABLE"  parameterType="java.util.HashMap">
+		<![CDATA[
+			{call proc_getBlogCountByAuthor (
+				
+				#{username,  mode=IN,  jdbcType=VARCHAR },
+				
+				#{blogCount,
+					mode=OUT,
+					jdbcType=INTEGER}
+			)}
+		]]>
+	</select>
+	
+	<!-- <select id="selectByPnameAndIsHot" resultType="com.yc.damai.bean.Product">
+		select * from product where pname=#{pname} and is_hot=#{isHot}
+	</select> -->
+	
+	<select id="selectByCondition" resultType="com.yc.damai.bean.Product">
 		select a.* from product a join categorysecond b on a.csid = b.csid
 		<where>
-			<if test="pname != null">
+			<if test="pname!=null">
 				and pname = #{pname}
 			</if>
-
-			<if test="begin !=null and end != null">
+			
+			<if test="begin!=null and end != null">
 				and pdate between #{begin} and #{end}
 			</if>
-
+			
 			<choose>
-				<when test="priceType == 1">
+				<when test="priceType==1">
 					and shop_price &lt;= 100
 				</when>
-				<when test="priceType == 2">
+				<when test="priceType==2">
 					and shop_price between 101 and 500
 				</when>
-				<when test="priceType == 3">
-					and shop_price between 501 and 1000
-				</when>
-				<when test="priceType == 4">
-					and shop_price between 1001 and 5000
-				</when>
-				<when test="priceType == 5">
-					and shop_price between 5001 and 10000
-				</when>
-				<when test="priceType == 6">
-					and shop_price &gt;= 10001
-				</when>
 			</choose>
-			<choose>
-				<when test="imageType == 1">
-					and image is not null
-				</when>
-				<when test="imageType == 2">
-					and image is null
-				</when>
-			</choose>
-			<if test="hotList != null">
-				<foreach collection="hotList" item="hot"
-					open="and is_hot in (" close=")" separator=",">
-					#{hot}
-				</foreach>
-			</if>
-			<if test="cidList != null">
+			<if test="cidList!=null">
 				<foreach collection="cidList" item="cid"
 					open="and b.cid in (" close=")" separator=",">
-					#{cid}
+					#{cid}	
 				</foreach>
 			</if>
 			<!-- and b.cid in (?,?,?,?,?) -->
-
+		
 		</where>
 
 	</select>

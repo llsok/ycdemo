@@ -1,8 +1,11 @@
 package com.yc.damai.bean;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Product {
+public class Product implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private Integer pid;
 	private String pname;
