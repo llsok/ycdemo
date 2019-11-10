@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间， 映射文件在项目中的地址 -->
+<mapper namespace="com.yc.damai.dao.UserMapper">
+
+	<resultMap type="com.yc.damai.bean.User" id="baseMap">
+		<collection property="orders" autoMapping="true" column="uid"
+			select="com.yc.damai.dao.OrdersMapper.selectByUid" fetchType="lazy"></collection>
+	</resultMap>
+
+	<select id="selectById" resultMap="baseMap">
+		select * from user where uid = #{uid}
+	</select>
+
+	
+	<select id="selectUser" resultType="com.yc.damai.bean.User">
+		select * from user where username like #{username}
+	</select>
+	
+	<select id="userLogin" resultType="com.yc.damai.bean.User">
+		select * from user where username=#{username} and password=#{password}
+	</select>
+	
+	<insert id="register">
+		insert into user values(null,#{username},#{password},#{name},#{email},#{phone},#{sex},#{state},#{code},#{addr})
+	</insert>
+	
+	<update id="updateUserPwd">
+		update user set password=#{password} where uid=#{uid}
+	</update>
+	
+	<delete id="deleteUser">
+		delete from user where uid=#{uid}
+	</delete>
+	
+</mapper>

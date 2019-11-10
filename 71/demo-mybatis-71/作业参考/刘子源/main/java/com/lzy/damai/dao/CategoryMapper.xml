@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatisorg/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzy.damai.dao.CategoryMapper">
+	<!-- 自定义映射关系 -->
+	<resultMap type="com.lzy.damai.bean.Category" id="baseMap">
+		<!-- select 属性用于指定被关联的表的查询sql的id -->
+		<collection property="csItems" column="cid"
+			autoMapping="true" select="selectCsitemByCid">
+
+		</collection>
+	</resultMap>
+
+	<select id="selectById" resultMap="baseMap">
+		select * from category where
+		cid=#{cid}
+	</select>
+
+	<select id="selectCsitemByCid" resultType="com.lzy.damai.bean.CategorySecond">
+		select * from categorysecond where cid=#{cid}
+	</select>
+</mapper>

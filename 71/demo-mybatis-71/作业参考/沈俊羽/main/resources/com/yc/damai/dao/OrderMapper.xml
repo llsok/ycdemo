@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间， 映射文件在项目中的地址 -->
+<mapper namespace="com.yc.damai.dao.OrdersMapper">
+
+	<resultMap type="com.yc.damai.bean.Orders" id="baseMap">
+		<!-- id 用于指定主键 -->
+		<id column="oid" property="oid"/>
+		<result column="total" property="total"/>
+
+		<collection property="items" autoMapping="true" column="oid"
+			select="com.yc.damai.dao.OrderitemMapper.selectByOid" fetchType="lazy"></collection>
+	</resultMap>
+
+	<select id="selectByUid" resultMap="baseMap">
+		select * from orders where uid=#{uid}
+	</select>
+	
+	<select id="selectNextId" resultType="Integer">
+		SELECT auto_increment FROM information_schema.tables where table_schema="demo-damai" and table_name="orders"
+	</select>
+	
+	<insert id="createOrders">
+		insert into orders values(#{oid},#{total},#{ordertime},#{state},#{addr},#{phone},#{uid},#{name})
+	</insert>
+</mapper>

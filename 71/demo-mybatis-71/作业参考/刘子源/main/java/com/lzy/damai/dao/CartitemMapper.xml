@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatisorg/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzy.damai.dao.CartitemMapper">
+
+	<select id="selectByUid" resultMap="baseMap">
+	select * from cartitem where uid=#{uid}
+	</select>
+	<!-- useGeneratedKeys 开启自增列返回值功能 keyColumn 自增列名 keyProperty 对应的属性名 -->
+	<insert id="create" useGeneratedKeys="true" keyColumn="uid" keyProperty="uid">
+		insert into cartitem
+		values(null,#{uid},#{pid},#{count})
+	</insert>
+<!-- 手动映射配置 -->
+	<resultMap type="com.lzy.damai.bean.Cartitem" id="baseMap">
+		<association property="product" autoMapping="true" column="pid"
+			select="com.lzy.damai.dao.ProductMapper.selectBypid" fetchType="lazy"></association>
+		<association property="user" autoMapping="true" column="uid"
+			select="com.lzy.damai.dao.UserMapper.selectByuid" fetchType="lazy"></association>
+	</resultMap>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间， 映射文件在项目中的地址 -->
+<mapper namespace="com.yc.damai.dao.OrderitemMapper">
+
+	<resultMap type="com.yc.damai.bean.Orderitem" id="baseMap">
+		<association property="product" autoMapping="true" column="pid"
+			select="com.yc.damai.dao.ProductMapper.selectById" fetchType="lazy"></association>
+	</resultMap>
+
+	<select id="selectByOid" resultMap="baseMap">
+		select * from orderitem where oid=#{oid}
+	</select>
+	
+	<insert id="createItem">
+		insert into orderitem values(null,#{count},#{subtotal},#{pid},#{oid})
+	</insert>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间， 映射文件在项目中的地址 -->
+<mapper namespace="com.yc.damai.dao.CartitemMapper">
+
+	<select id="selectCartByIds" resultType="com.yc.damai.bean.Cartitem">
+		select * from cartitem where uid=#{user.uid} and pid=#{product.pid}
+	</select>
+	
+	<insert id="addCart">
+		insert into cartitem values(null,#{user.uid},#{product.pid},#{count})
+	</insert>
+	
+	<update id="updateCount">
+		update cartitem set count=count+#{count} where ciid=#{ciid}
+	</update>
+	
+	<resultMap type="com.yc.damai.bean.Cartitem" id="baseMap">
+		<id property="ciid" column="ciid"/>
+		<result property="count" column="count"/>
+		<collection property="user" column="uid" select="com.yc.damai.dao.UserMapper.selectById" autoMapping="true" fetchType="lazy"></collection>
+		<collection property="product" column="pid" select="com.yc.damai.dao.ProductMapper.selectById" autoMapping="true" fetchType="lazy"></collection>
+	</resultMap>
+	
+	<select id="selectByUid" resultMap="baseMap">
+		select * from cartitem where uid=#{uid}
+	</select>
+	
+	<delete id="deleteCartitem">
+		delete from cartitem where ciid=#{ciid}
+	</delete>
+</mapper>

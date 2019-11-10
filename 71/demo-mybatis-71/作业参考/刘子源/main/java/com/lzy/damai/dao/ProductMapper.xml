@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+"http://mybatisorg/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lzy.damai.dao.ProductMapper">
+
+<!-- 开启二级缓存 -->
+	<cache></cache>
+
+	<!-- 
+	<select id="selectAll" resultMap="baseMapper">
+		select * from product
+	</select>
+	 -->
+
+	<!-- 
+	<select id="selectBypid" resultMap="baseMapper">
+		select * from product where
+		pid=#{pid}
+	</select>
+ 	-->
+ 	
+ 	
+	<!-- useGeneratedKeys 开启自增列返回值功能 keyColumn 自增列名 keyProperty 对应的属性名 -->
+	<insert id="create" useGeneratedKeys="true" keyColumn="pid" keyProperty="pid">
+		insert into product
+		values(null,#{pname},#{marketPrice},#{shopPrice},#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
+	
+	<select id="selectByCondition" resultMap="baseMapper">
+		select a.* from product a join categorysecond b on a.csid = b.csid
+		<where>
+			<if test="pname !='' ">
+				and pname = #{pname}
+			</if>
+			<choose>
+				<when test="from !=null">
+					and pdate &gt; #{from}
+				</when>
+				<when test="to !=null">
+					and pdate &lt; #{from}
+				</when>
+				<when test="from !=null and to != null">
+					and pdate between #{from} and #{end}
+				</when>
+			</choose>
+			<choose>
+				<when test="priceType == 1">
+					and shop_price &lt;= 100
+				</when>
+				<when test="priceType == 2">
+					and shop_price between 101 and 500
+				</when>
+				<when test="priceType == 3">
+					and shop_price between 501 and 1000
+				</when>
+				<when test="priceType == 4">
+					and shop_price between 1001 and 5000
+				</when>
+				<when test="priceType == 5">
+					and shop_price between 5001 and 10000
+				</when>
+				<when test="priceType == 6">
+					and shop_price &gt;= 10001
+				</when>
+			</choose>
+			
+			<choose>
+				<when test="imageType == 1">
+					and image is not null
+				</when>
+				<when test="imageType == 2">
+					and image is null
+				</when>
+			</choose>
+			
+			<if test="hotList != null">
+				<foreach collection="hotList" item="hot"
+					open="and is_hot in (" close=")" separator=",">
+					#{hot}
+				</foreach>
+			</if>
+			
+			<if test="cidList != null">
+				<foreach collection="cidList" item="cid"
+					open="and b.cid in (" close=")" separator=",">
+					#{cid}
+				</foreach>
+			</if>
+			
+
+		</where>
+
+	</select>
+	
+	
+	
+	<!-- Oracle 获取 序列值 使用 selectKey -->
+	<insert id="createByOracle" useGeneratedKeys="true">
+		<selectKey keyColumn="pid" keyProperty="pid" order="BEFORE">
+			select seq_pid.nextval from dual
+		</selectKey>
+		insert into product values(null,#{pname},#{marketPrice},#{shopPrice},
+		#{image},#{pdesc},#{isHot},#{pdate},#{csid})
+	</insert>
+	
+	<select id="selectByObj" resultType="com.lzy.damai.bean.Product">
+		select * from product
+		<where>
+			<if test="pname !=null">
+				and pname like #{pname}
+			</if>
+			<if test="pdesc !=null">
+				and pname like #{pname}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByFlag"
+		resultType="com.lzy.damai.bean.Product">
+		<!--查询isHot flag ==1：精确查询 is_hot =? flag ==2：模糊查询 is_hot like ? flag ==3：为空查询 
+			is_hot is null ? flag ==4：非空查询 is_hot is not null ？ -->
+		select * from product
+		<where>
+			<choose>
+				<when test="flag==1">
+					is_hot=#{isHot}
+				</when>
+				<when test="flag==2">
+					is_hot like #{isHot}
+				</when>
+				<when test="flag==3">
+					is_hot is null
+				</when>
+				<when test="flag==4">
+					is_hot is not null
+				</when>
+				<otherwise>
+					is_hot=1
+				</otherwise>
+			</choose>
+		</where>
+		
+		<!-- 排序 ordername 表示 排序的字段名  ${} -->
+		<if test="ordername != null">
+			order by ${ordername}
+		</if>	
+		
+	</select>
+	<update id="modify">
+		update product
+		<set>
+			<if test="pname !=null">
+				pname=#{pname},
+			</if>
+			<if test="pdesc !=null">
+				pdesc=#{pdesc},
+			</if>
+			<if test="image !=null">
+				image=#{image},
+			</if>
+		</set>
+		where pid=#{pid}
+	</update>
+
+	<select id="selectInCsid"
+		resultType="com.lzy.damai.bean.Product">
+		select
+		<include refid="baseColumns"></include>
+		from product
+		<where>
+			<!-- open 生成语句前面部分 -->
+			<foreach collection="collection" item="item" open="csid in("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</where>
+	</select>
+	<sql id="baseColumns">
+		pname,image,shop_price
+	</sql>
+	
+	<!-- 统计查询  复杂的查询 -->
+  	<select id="select" resultType="map" >
+		${sql}
+	</select>
+<!--
+	<select id="selectByPnameAndIsHot" resultType="com.lzy.damai.bean.Product">
+		select *from product where panme=#{pname} and is_hot=#{isHot}
+	</select>
+	-->
+	<!-- 手动映射配置 -->
+	<resultMap id="baseMapper" type="com.lzy.damai.bean.Product">
+		<!-- property 定义实体类 属性名 column 数据库的字段名 -->
+		<result property="marketPrice" column="market_price"></result>
+		<result property="shopPrice" column="shop_price"></result>
+		<result property="isHot" column="is_hot"></result>
+	</resultMap>
+</mapper>
