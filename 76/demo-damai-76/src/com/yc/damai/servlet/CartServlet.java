@@ -13,7 +13,7 @@ import com.yc.damai.biz.CartBiz;
 
 @WebServlet("/cart.s")
 public class CartServlet extends BaseServlet {
-	
+
 	private CartBiz biz = new CartBiz();
 	
 	public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,7 +21,10 @@ public class CartServlet extends BaseServlet {
 		Map<String, Object> user = (Map<String, Object>) session.getAttribute("loginedUser");
 		String uid = ""+user.get("uid");
 		String pid = request.getParameter("pid");
-		biz.addCart(uid, pid);
+		// 默认给购物车添加一件商品
+		biz.addCart(uid, pid, 1);
+		// 查询当前用户的购物车商品
+		request.setAttribute("cartItems", biz.queryByUid(uid));
 		request.getRequestDispatcher("cart.jsp").forward(request, response);
 	}
 
