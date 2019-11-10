@@ -1,5 +1,7 @@
 package com.yc.favorite.bean;
 
+import java.util.List;
+
 public class Tag implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -7,6 +9,14 @@ public class Tag implements java.io.Serializable{
 	private String tName;
 	private Integer tCount;
 	
+	private List<Favorite> fList;
+	
+	public List<Favorite> getfList() {
+		return fList;
+	}
+	public void setfList(List<Favorite> fList) {
+		this.fList = fList;
+	}
 	public Integer gettId() {
 		return tId;
 	}
