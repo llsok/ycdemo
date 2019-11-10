@@ -8,11 +8,9 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 <!-- 开启二级缓存 -->
 	<cache></cache>
 
-	<!-- 
 	<select id="selectAll" resultMap="baseMapper">
 		select * from product
 	</select>
-	 -->
 
 	<!-- 
 	<select id="selectBypid" resultMap="baseMapper">
@@ -46,6 +44,8 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 				</when>
 			</choose>
 			<choose>
+				<when test="priceType==0">
+				</when>
 				<when test="priceType == 1">
 					and shop_price &lt;= 100
 				</when>
@@ -67,6 +67,8 @@ PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
 			</choose>
 			
 			<choose>
+				<when test="imageType==0">
+				</when>
 				<when test="imageType == 1">
 					and image is not null
 				</when>

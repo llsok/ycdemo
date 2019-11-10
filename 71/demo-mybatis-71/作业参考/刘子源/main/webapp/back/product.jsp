@@ -25,8 +25,8 @@ function fmtImage(value,row,index){
 function query(){
 	$('#dg').datagrid('load',{
 		pname:$("#pname").textbox('getValue'),
-		from:$("#from").textbox('getValue'),
-		to:$("#to").textbox('getValue'),
+		from:$("#from").datebox('getValue'),
+		to:$("#to").datebox('getValue'),
 		combo_price:$("#combo_price").combobox('getValue'),
 		combo_pic:$("#combo_pic").combobox('getValue'),
 		hot:$("#hot").checkbox('options').checked,
@@ -60,8 +60,8 @@ function query(){
 		<tr>
 			<th data-options="field:'pid',width:80">ID</th>
 			<th data-options="field:'pname',width:200">名称</th>
-			<th data-options="field:'market_price',width:100"> 市场价</th>
-			<th data-options="field:'shop_price',width:100">商城价</th>
+			<th data-options="field:'marketPrice',width:100"> 市场价</th>
+			<th data-options="field:'shopPrice',width:100">商城价</th>
 			<th data-options="field:'image',width:100,formatter:fmtImage">图片</th>
 			<th data-options="field:'pdate',width:200">上架日期</th>
 			<th data-options="field:'isHot',width:100,formatter:fmtHot">热卖标志</th>

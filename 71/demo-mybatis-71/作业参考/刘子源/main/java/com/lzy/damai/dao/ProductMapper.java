@@ -12,9 +12,9 @@ import org.apache.ibatis.annotations.Select;
 import com.lzy.damai.bean.Product;
 
 public interface ProductMapper {
-	
-	@Select("select * from product")
-	public List<Product>selectAll();
+//	
+//	@Select("select * from product")
+//	public List<Product>selectAll();
 	
 	@Select("select * from product where pid=#{pid}")
 	public Product selectBypid(Integer pid);
@@ -30,9 +30,9 @@ public interface ProductMapper {
 	@Select("${sql}")
 	public List<Map<String,Object>> selectBySQL(String sql);
 	
-	public List<Product> selectByCondition(@Param("panme") String pname,
+	public List<Product> selectByCondition(@Param("pname") String pname,
 			@Param("from")Timestamp from,@Param("to")Timestamp to,
-			@Param("priceType")Double priceType,@Param("image")Double image,
-			@Param("isHot")Integer isHot,@Param("cidlist")List<Integer> cidlist
+			@Param("priceType")Integer priceType,@Param("imageType")Integer image,
+			@Param("hotList")List<Integer> hotList,@Param("cidList")List<Integer> cidList
 );
 }
