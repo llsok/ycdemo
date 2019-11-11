@@ -27,6 +27,7 @@ public interface TagMapper {
 		@Results(
 				id="baseMap",
 				value = {
+					@Result(column = "t_name",property = "tName"),
 					@Result(column = "t_name",property = "favorites",
 							many = @Many(select="com.yc.favorite.dao.FavoriteMapper.selectByTagName",
 							fetchType = FetchType.LAZY)),	
