@@ -21,5 +21,8 @@ public interface FavoriteMapper {
 	
 	@Select("select * from favorite")
 	List<Favorite> selectAll();
+	
+	@Select("select * from favorite where f_tags is null")
+	List<Favorite> selectNotTags();
 
 }

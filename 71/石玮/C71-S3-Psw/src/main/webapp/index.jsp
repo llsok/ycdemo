@@ -33,14 +33,34 @@
     	 搜藏
     </div>
       <%
+      
       SqlSession sess =  MyBatisHelper.getSession();
       TagMapper tm = sess.getMapper(TagMapper.class);
-      FavoriteMapper fm  = sess.getMapper(FavoriteMapper.class);
-      Tag tag = new Tag();
-      // Favorite favorite = new Favorite();
+      FavoriteMapper fm = sess.getMapper(FavoriteMapper.class);
+      List<Favorite> fList = null;
       List<Tag> tlist= tm.selectAll();
-      List<Favorite> flist = fm.selectAll();
-    		  
+      
+      String type = request.getParameter("type");
+      type = type == null ? "1" : type; 
+      
+      switch ( type ){
+      case "1":
+    	  fList = fm.selectAll();
+    	  break;
+      case "2":
+    	  fList = fm.selectNotTags();
+    	  break;
+      case "3":
+    	  String tid = request.getParameter("tid");
+    	  for( Tag tag : tlist){
+    		  if( tag.gettId().toString().equals(tid)){
+    			  fList = tag.getFavorites();
+    			  break;
+    		  }
+    	  }
+      case "4":
+    	  break;
+      }
       
       %>
 	<table cellspacing="0" cellpadding="0" border="0">
@@ -54,18 +74,22 @@
 					<tr><td><a href="#" onclick="add();" style="font-weight:bold;">添加书签</a></td></tr>
 					<tr>
 						<td class="selected_label">
-							<a href="fav.do?op=toList&type=-1">全部</a>
+							<a href="index.jsp?type=1">全部</a>
 						</td>
 					</tr>
 					<tr>
 						<td >
-							<a href="fav.do?op=toList&type=0">未分类</a>
+							<a href="index.jsp?type=2">未分类</a>
 						</td>
 					</tr>
 					
 						<%for(Tag t:tlist){ %>
 						
-					<tr><td><a href="fav.do?op=toList&type=<%=t.gettName()%>"><%=t.gettName()%></a></td></tr>
+					<tr><td>
+					<a href="index.jsp?type=3&tid=<%=t.gettId()%>">
+					<%=t.gettName()%>
+					</a>
+					</td></tr>
 						
 					
 					<%} %>
@@ -81,53 +105,21 @@
 			<!-- 右边fav内容 -->
 				<div class="content_links">
 				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.apache.org/struts/" style="color:blue;font-size:18px;" target="_blank">Apache Struts</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						Struts官方站点
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.apache.org/struts/
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sougaou.com" style="color:blue;font-size:18px;" target="_blank">搜狗</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						aa
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sougaou.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sina.com" style="color:blue;font-size:18px;" target="_blank">新浪</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						国内外著名门户网站
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sina.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.taobao.com" style="color:blue;font-size:18px;" target="_blank">淘宝</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						这是一个好网站在。。
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.taobao.com
-					</div>
-				</div>	
+				<%for(Favorite f : fList){ %>
+					<div style="padding:6px 10px;">	
+						<div>
+							<a href="http://<%=f.getfUrl() %>" style="color:blue;font-size:18px;" target="_blank">
+								<%=f.getfLabel() %>
+							</a>
+						</div>
+						<div style="color:black;font-size:16px;">	
+							<%=f.getfDesc() %>
+						</div>
+						<div style="color:green;font-size:14px;">
+							http://<%=f.getfUrl() %>
+						</div>
+					</div>	
+				<%} %>
 				
 				</div>
 			</td>
