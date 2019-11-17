@@ -2,6 +2,7 @@ package com.yc.spring.bmi;
 
 import org.springframework.stereotype.Component;
 
+@Component
 public class BmiFilter implements Filter {
 
 	private double minHeight;

@@ -3,6 +3,7 @@ package com.yc.spring.bmi;
 import org.springframework.stereotype.Component;
 
 //算法
+@Component
 public class BmiMeasurer implements IMeasurable {
 
 	public double measure(Object obj) {

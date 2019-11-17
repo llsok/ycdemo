@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    ">
+   
+   <!-- 包扫描 -->
+   
+   <context:component-scan base-package="com.yc.spring.bmi"></context:component-scan>
+   
+   <bean id="container" class="com.yc.spring.bmi.Container" 
+   		primary="true" init-method="measure">
+   		<property name="list">
+   			<list>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="宋江"></property>
+   					<property name="height" value="1.6"></property>
+   					<property name="weight" value="80"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="燕青"></property>
+   					<property name="height" value="1.8"></property>
+   					<property name="weight" value="80"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   				<bean class="com.yc.spring.bmi.Person">
+   					<property name="name" value="林冲"></property>
+   					<property name="height" value="1.75"></property>
+   					<property name="weight" value="85"></property>
+   				</bean>
+   			</list>
+   		</property>
+   </bean>
+
+</beans>
