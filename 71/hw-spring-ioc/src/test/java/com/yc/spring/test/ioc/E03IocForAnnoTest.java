@@ -15,7 +15,7 @@ public class E03IocForAnnoTest {
 	Class<?> beanConfigClass;
 	{
 		try {
-			beanConfigClass = Class.forName("com.yc.spring.BeanConfig");
+			beanConfigClass = Class.forName("com.yc.spring.MyConfig");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("请定义注解配置类 (BeanConfig) !!!!",e);
 		}
