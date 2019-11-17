@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd
+     http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="myUser" class="com.yc.spring.bbs.bean.User">
+		<property name="uname" value="武松"></property>
+		<property name="upass" value="abc123"></property>
+		<property name="head" value="20.gif"></property>
+		<property name="gender" value="1"></property>
+	</bean>
+
+	<!-- primary="true" 设置主要bean -->
+	<bean class="com.yc.spring.bbs.bean.User" primary="true">
+		<property name="uname" value="石秀"></property>
+		<property name="upass" value="XYZ890"></property>
+		<property name="head" value="345.gif"></property>
+		<property name="gender" value="0"></property>
+	</bean>
+
+	<bean id="page1" class="com.yc.spring.bbs.bean.Page">
+		<property name="total" value="100"></property>
+		<property name="rows">
+			<list>
+				<value>湖南</value>
+				<value>广东</value>
+				<value>逗你玩</value>
+				<value type="java.lang.Integer">100</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="page2" class="com.yc.spring.bbs.bean.Page">
+		<property name="total" value="200"></property>
+		<property name="rows">
+			<list>
+				<bean class="com.yc.spring.bbs.bean.User">
+					<property name="uname" value="华荣"></property>
+				</bean>
+				<map>
+					<entry key="0734" value="衡阳"></entry>
+					<entry key="0731" value="长沙"></entry>
+				</map>
+				<set>
+					<value type="java.lang.Integer">100</value>
+					<value>呵呵</value>
+					<ref bean="myUser" />
+				</set>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="board" class="com.yc.spring.bbs.bean.Board">
+		<constructor-arg name="boardid" value="100"/>
+		<constructor-arg name="boardname" value="jsp" />
+		<constructor-arg name="parentid" value="200"/>
+		<property name="parent">
+			<bean class="com.yc.spring.bbs.bean.Board">
+				<constructor-arg name="boardid" value="300" />
+				<constructor-arg name="boardname" value="java" />
+				<constructor-arg name="parentid" value="0"/>
+			</bean>
+		</property>
+		<property name="topicList">
+			<list>
+				<null />
+				<null />
+				<null />
+				<bean class="com.yc.spring.bbs.bean.Topic">
+					<property name="uid">
+						<value type="java.lang.Integer">400</value>
+					</property>
+				</bean>
+				<null />
+			</list>
+		</property>
+	</bean>
+
+
+</beans>

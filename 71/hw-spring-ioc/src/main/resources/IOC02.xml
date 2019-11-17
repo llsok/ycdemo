@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop.xsd
+     http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="accountBiz" class="com.yc.spring.bank.biz.impl.AccountBizImpl"/>
+
+	<bean id="record" class="com.yc.spring.bank.bean.Record" />
+
+	<!-- scope  
+		作用域： 
+		singleton  单例（默认单例） 
+		prototype  原型   getBean 都会返回一个 新的对象 
+		request		每次请求作用域中是同一个对象	
+		session		每次会话作用域中是同一个对象
+		global		全局
+	-->
+	<bean id="account" class="com.yc.spring.bank.bean.Account" primary="true" 
+			scope="singleton"/>
+
+	<bean id="account1" class="com.yc.spring.bank.bean.Account" 
+			scope="prototype"></bean>
+			
+	<!-- 静态工厂方法 -->
+	<bean id="account2" class="com.yc.spring.bank.bean.Account"
+		factory-method="getInstance" />
+	
+	<!-- 动态工厂方法 -->
+	<bean id="account3" class="com.yc.spring.bank.bean.Account"
+		factory-bean="accountBiz" factory-method="create" />
+		
+	<!-- 原型 + 工厂方法
+		原型： getBean 都会返回一个 新的对象 ，
+			如果没有配置工厂方法，每次 new 对象
+			如果有配置工厂方法，则每次调用工厂方法来返回对象
+	-->
+	<bean id="account4" class="com.yc.spring.bank.bean.Account"
+		factory-bean="accountBiz" factory-method="create1" scope="prototype" />
+		
+</beans>
