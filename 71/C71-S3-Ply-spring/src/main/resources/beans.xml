@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- bean 标签用于创建对象   = new Hello()  ctrl + 鼠标 -->
+    <bean id="hello" class="com.yc.spring.demo.Hello">
+        <!-- collaborators and configuration for this bean go here -->
+    </bean>
+
+	<!-- primary 设置默认的bean 主bean -->
+ 	<bean id="stu1" class="com.yc.spring.bean.Student" primary="true">
+    	<!-- 注入方式：1构造器注入   2setter注入  3 接口注入
+    	
+    	setter注入  -->
+     	<property name="name" value="张三"></property>
+     	<property name="age" value="18"></property>
+     	<property name="grade" value="3"></property> 
+     	
+     	<property name="computer">
+     		<bean class="com.yc.spring.bean.Computer">
+     			<property name="cpu" value="inter"></property>
+     			<property name="memory" value="16"></property>
+     		</bean>
+     	</property>
+     	
+    </bean>
+    
+    <bean id="it16" class="com.yc.spring.bean.Computer">
+		<property name="cpu" value="amd"></property>
+		<property name="memory" value="8"></property>
+	</bean>
+
+	<bean id="stu2" class="com.yc.spring.bean.Student">
+		<!-- 构造器注入  index 用于设置参数的位置-->
+		<constructor-arg name="name" value="李四" index="1"></constructor-arg>
+		<constructor-arg name="age" value="16" index="0"></constructor-arg>
+		<property name="computer" ref="it16"></property>
+		<property name="hobbys">
+			<list>
+				<value>看书</value>
+				<value>手游</value>
+				<value>篮球</value>
+				<value>围棋</value>
+			</list>
+		</property>
+	</bean>
+	
+
+</beans>
