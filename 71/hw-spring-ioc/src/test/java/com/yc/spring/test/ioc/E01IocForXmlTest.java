@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.yc.spring.bbs.bean.Board;
 import com.yc.spring.bbs.bean.Page;
 import com.yc.spring.bbs.bean.User;
+import com.yc.spring.bbs.biz.UserBiz;
 
 /**
  * 配置Spring，让测试方法全部测试通过
@@ -96,6 +97,40 @@ public class E01IocForXmlTest {
 		Assert.assertEquals(true, set.contains(wuSong));
 		Assert.assertEquals(true, set.contains("呵呵"));
 	}
+	
+	
+	
+	@Test
+	public void test6(){
+		
+		UserBiz ubiz = context.getBean(UserBiz.class);
+		
+		Assert.assertNotNull(ubiz.getuDao());
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

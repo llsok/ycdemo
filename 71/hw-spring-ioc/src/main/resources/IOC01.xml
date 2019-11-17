@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context.xsd
-     http://www.springframework.org/schema/aop
-     http://www.springframework.org/schema/aop/spring-aop.xsd
-     http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd">
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    ">
+    
+    <!-- 加入 context 命名空间 -->
+    
+    <!-- 松 耦合  -->
+   	<!--  <bean id="uDao1" class="com.yc.spring.bbs.dao.UserDao"></bean> -->
+    
+    <!--
+    	 xml 方式的自动装配  autowire
+    	 byName 根据名称（属性名）自动查找 容器中的对象    uDao
+    	byType 根据类型
+    	constructor 根据构造器自动装配
+    -->
+    <!-- <bean id="userBiz" class="com.yc.spring.bbs.biz.UserBiz" autowire="default">
+    	
+    </bean> -->
+    
+    
+    <context:component-scan base-package="com.yc.spring"></context:component-scan>
+    
 
 	<bean id="myUser" class="com.yc.spring.bbs.bean.User">
 		<property name="uname" value="武松"></property>
