@@ -10,13 +10,21 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.aop.Pointcut;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 // 切面也是一个组件
 @Component
 @Aspect
 public class LogAspect {
+	
+	/**
+	 * 切点方法定义 
+	 */
+	@Pointcut("execution(* com.yc.spring.bbs.dao.*.select*(..))")
+	public void mypc(){}
+	
+	
 	
 	// aspectj 表达式，用于对方法拦截的表达式定义
 	// execution 表示要拦截的方法  切点  pointcut
@@ -34,7 +42,7 @@ public class LogAspect {
 	}
 	
 	// 拦截dao包下的所有的 select 方法
-	@After("execution(* com.yc.spring.bbs.dao.*.select*(..))")
+	@After("mypc()") // 引用切点方法
 	public void after(JoinPoint jp){
 		System.out.println("后置增强===方法签名：" + jp.getSignature());
 		System.out.println("后置增强===获取所有参数：" + Arrays.toString(jp.getArgs()));
@@ -45,13 +53,13 @@ public class LogAspect {
 	 * @param jp
 	 * returning 属性用于定义 方法的返回值的名字
 	 */
-	@AfterReturning(returning="ret",pointcut="execution(* com.yc.spring.bbs.dao.*.select*(..))")
+	@AfterReturning(returning="ret",pointcut="mypc()")// 引用切点方法
 	public void afterRutening(JoinPoint jp, Object ret){
 		System.out.println("返回增强===方法签名：" + jp.getSignature());
 		System.out.println("返回增强===获取所有参数：" + Arrays.toString(jp.getArgs()));
 	}
 	
-	@AfterThrowing(throwing="e",pointcut="execution(* com.yc.spring.bbs.dao.*.select*(..))")
+	@AfterThrowing(throwing="e",pointcut="mypc()")// 引用切点方法
 	public void afterThrowing(JoinPoint jp,Exception e){
 		System.out.println("异常增强===方法签名：" + jp.getSignature());
 		System.out.println("异常增强===异常对象：" + e);
@@ -74,5 +82,13 @@ public class LogAspect {
 		}  
 		
 	}
+	
+	/**
+	 * pointcut 注解
+	 * aop xml 配置     11.3 Schema-based AOP support
+	 * 	作业：使用xml配置方式，完成AOP配置
+	 * aspectj 其他配置表达式
+	 * 
+	 */
 
 }
