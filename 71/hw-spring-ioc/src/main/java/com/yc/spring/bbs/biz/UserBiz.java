@@ -18,7 +18,8 @@ public class UserBiz {
 		return uDao;
 	}
 
-	public void create(User user) {
+	public void create(User user) throws InterruptedException {
+		Thread.sleep(200);
 		uDao.insert(user);
 	}
 
@@ -26,7 +27,8 @@ public class UserBiz {
 		uDao.update(user);
 	}
 
-	public void remove(User user) {
+	public void remove(User user) throws InterruptedException {
+		Thread.sleep(300);
 		uDao.delete(user);
 	}
 
