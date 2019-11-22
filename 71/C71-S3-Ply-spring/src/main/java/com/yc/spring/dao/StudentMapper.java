@@ -14,7 +14,7 @@ public interface StudentMapper {
 	@Select("select * from student")
 	public List<Student> selectAll();
 	
-	@Update("update student set age=#{age} grade=#{grade} where sn = #{sn}")
+	@Update("update student set name=#{name}, age=#{age}, grade=#{grade} where sn=#{sn}")
 	public void update(Student student);
 	
 
