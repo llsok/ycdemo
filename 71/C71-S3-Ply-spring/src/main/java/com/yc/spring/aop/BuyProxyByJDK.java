@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  * 2、继承方式		CGLIB 动态代理
  *
  */
-public class BuyProxy implements InvocationHandler{
+public class BuyProxyByJDK implements InvocationHandler{
 	
 	private Object proxyObject; // 被代理对象
 	
@@ -57,7 +57,7 @@ public class BuyProxy implements InvocationHandler{
 		
 		Myself myself = new Myself();
 		
-		BuyProxy buyProxy = new BuyProxy();
+		BuyProxyByJDK buyProxy = new BuyProxyByJDK();
 		
 		// 必须使用 Myself 的实现的接口来接受返回值
 		Buy other = (Buy) buyProxy.proxy(myself);

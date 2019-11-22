@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="myself" class="com.yc.spring.aop.Myself"></bean>
+
+	<bean id="other" class="com.yc.spring.aop.Other"></bean>
+
+	<bean id="buyAspect" class="com.yc.spring.aop.BuyAspect"></bean>
+
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<!-- 切面 = 切点 + 增强 -->
+	<aop:config>
+		<aop:aspect id="myAspect" ref="buyAspect">
+			<aop:pointcut id="myPointcut"
+				expression="execution(* com.yc.spring.aop.Myself.buy(..))" />
+			<!-- 前置增强  beforeBuy 方法名  -->
+			<aop:before method="beforeBuy" pointcut-ref="myPointcut"/>
+		</aop:aspect>
+	</aop:config>
+
+
+
+</beans>

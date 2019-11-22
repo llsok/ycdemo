@@ -4,11 +4,11 @@ public class BuyTest {
 	
 	public static void main(String[] args) {
 		
-		Myself myself = new Myself();
+		//Myself myself = new Myself();
 		
-		Other other = new Other(myself);
+		//Other other = new Other(myself);
 		
-		other.buy();
+		//other.buy();
 		
 	}
 
