@@ -2,10 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
         
    <context:component-scan base-package="com.yc.spring.bank"/>   
 
@@ -21,6 +27,43 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<!-- 定义事务管理器 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 定义Spring的事务增强 -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!-- 定义事务属性 -->
+        <tx:attributes>
+            <!-- 定义方法上的事务属性 -->
+            <tx:method name="get*" read-only="true"/>
+            <!-- * 表示所有方法 
+            	propagation="REQUIRED"  传播特性
+            	isolation="DEFAULT"		隔离级别
+            	timeout="-1" 			超时 -1表示不限时
+            	read-only="false"		只读事务
+            	rollback-for=""			回滚异常		默认情况下：Spring只回滚运行期异常
+            	no-rollback-for=""		不回滚异常
+            	
+            	一般情况下，事务都是加载 业务层
+            -->
+            <tx:method name="*" 
+            	propagation="REQUIRED" 
+            	isolation="READ_COMMITTED"
+            	timeout="-1"
+            	read-only="false" 
+            	rollback-for="com.yc.spring.bank.biz.BizException"
+            	/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 定义 AOP 事务切面 -->
+    <aop:config>
+        <aop:pointcut id="mypc" expression="execution(* com.yc.spring.bank.biz.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="mypc"/>
+    </aop:config>
 	
 
 </beans>
