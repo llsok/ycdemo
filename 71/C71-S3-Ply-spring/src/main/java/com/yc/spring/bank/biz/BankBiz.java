@@ -51,4 +51,38 @@ public class BankBiz {
 
 	}
 	
+	/**
+	 * 开户
+	 */
+	public void regisiter(int accountid, float money) throws BizException{
+		// 新增账号
+		adao.insert(accountid, 0);
+		// 存款
+		diposit(accountid, money);
+	}
+	
+	/**
+	 * 取款，注意要判断账号余额够不够
+	 */
+	public void withdraw(int accountid, float money) throws BizException{
+		
+	}
+	
+	/**
+	 * 转账，将资金从 account1 转到 account2， 
+	 * 意味着 account1 要调用取款方法，account2 要调用存款方法
+	 * 此外，还要计算手续费，按千分之一收取
+	 */
+	public void transfar(int accountid1, int accountid2, float money){
+		
+	}
+	
+	/**
+	 * 作业：
+	 * 1、实现以上空方法，并为每个业务方法设计单元测试并测试通过
+	 * 2、随机生成100个用户，进行随机转账，金额在2000~10000之间，转账 10000 次
+	 * 3、请统计转账所产生手续费，并且测试每个账号的余额，是否与流水表统计一致
+	 * 
+	 */
+
 }
