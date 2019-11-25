@@ -13,13 +13,15 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.yc.spring.bank.BankConfig;
 import com.yc.spring.bank.biz.BankBiz;
 import com.yc.spring.bank.biz.BizException;
 import com.yc.spring.bank.dao.AccountDao;
 import com.yc.spring.bank.dao.oprecordDao;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration("/bank.xml")
+//@ContextConfiguration("/bank.xml")
+@ContextConfiguration(classes = BankConfig.class)
 public class BankTest {
 
 	/** 
@@ -74,7 +76,7 @@ public class BankTest {
 			executor.execute(new Runnable() {
 				@Override
 				public void run() {
-					
+
 					boolean success = false;
 					while (success == false) {
 						// 随机生成取款账号
@@ -90,7 +92,7 @@ public class BankTest {
 						try {
 							bbiz.transfar(aid1, aid2, money);
 							success = true;
-							
+
 							/**
 							 * 划重点：没次成功执行之后，在 finishedList 添加当前序号 index
 							 * 	并通知主线程，主线程在等待 finishedList 对象
@@ -99,12 +101,12 @@ public class BankTest {
 								finishedList.add(index);
 								finishedList.notify();
 							}
-							
+
 							System.out.println(
 									String.format("第 %s 笔转账成功！转出账号：%s，转入账号：%s，转账金额：%s", index + 1, aid1, aid2, money));
 						} catch (Exception e) {
-							System.out.println(String.format("转账失败！转出账号：%s，转入账号：%s，转账金额：%s，原因：%s", index + 1, aid1,
-									aid2, money, e.getMessage()));
+							System.out.println(String.format("转账失败！转出账号：%s，转入账号：%s，转账金额：%s，原因：%s", aid1, aid2, money,
+									e.getMessage()));
 						}
 					}
 				}

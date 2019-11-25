@@ -3,11 +3,24 @@ package com.yc.spring.bank.biz;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yc.spring.bank.dao.AccountDao;
 import com.yc.spring.bank.dao.oprecordDao;
 
 @Service // 业务类组件
+/**
+ * 注解方式使用注解，可以不用配置切点，因为注解直接加到了类上了
+ * 另外： @Transactional 也可以直接加到方法上
+ */
+@Transactional( transactionManager="txManager",
+		propagation = Propagation.REQUIRED,
+		isolation = Isolation.READ_UNCOMMITTED,
+		readOnly=false,
+		timeout = 1000,
+		rollbackFor = BizException.class)
 public class BankBiz {
 
 	@Resource
@@ -34,7 +47,7 @@ public class BankBiz {
 		// 存入金额
 		adao.update(accountid, money);
 
-		//boolean b = true;
+		// boolean b = true;
 		// int i=1/0; // 抛出运行期异常
 		/*if (b) {
 			// 抛出编译器异常
@@ -88,10 +101,10 @@ public class BankBiz {
 		}
 		// 注意：这里“写流水记录”的方法，和取款方法中“写流水记录”的方法有什么不同
 		odao.insert(accountid1, -money, charge);
-		
+
 		// 存款直接调用上面的存款方法
 		diposit(accountid2, money);
-		
+
 		/**
 		   *  请思考：Spring是如何管理事务的？
 		 */
