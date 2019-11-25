@@ -34,12 +34,12 @@ public class BankBiz {
 		// 存入金额
 		adao.update(accountid, money);
 
-		boolean b = true;
-		// int i=1/0;		// 抛出运行期异常
-		if (b) {
+		//boolean b = true;
+		// int i=1/0; // 抛出运行期异常
+		/*if (b) {
 			// 抛出编译器异常
 			throw new BizException("我要抛出的异常（编译期）");
-		}
+		}*/
 
 		// 记录流水
 		odao.insert(accountid, money);
@@ -61,16 +61,40 @@ public class BankBiz {
 	 * 取款，注意要判断账号余额够不够
 	 */
 	public void withdraw(int accountid, float money) throws BizException {
-
+		int result = adao.update(accountid, -money);
+		if (result == 0) {
+			throw new BizException("账户余额不足！");
+		}
+		odao.insert(accountid, -money);
 	}
 
 	/**
 	 * 转账，将资金从 account1 转到 account2， 
 	 * 意味着 account1 要调用取款方法，account2 要调用存款方法
 	 * 此外，还要计算手续费，按千分之一收取
+	 * @throws BizException 
 	 */
-	public void transfar(int accountid1, int accountid2, float money) {
-
+	public void transfar(int accountid1, int accountid2, float money) throws BizException {
+		if (adao.selectById(accountid1) == null) {
+			throw new BizException("取款账号不存在：" + accountid1);
+		}
+		float charge = money * 0.001f;
+		if (charge < 1) {
+			charge = 1;
+		}
+		int result = adao.update(accountid1, -money);
+		if (result == 0) {
+			throw new BizException("取款账户余额不足！");
+		}
+		// 注意：这里“写流水记录”的方法，和取款方法中“写流水记录”的方法有什么不同
+		odao.insert(accountid1, -money, charge);
+		
+		// 存款直接调用上面的存款方法
+		diposit(accountid2, money);
+		
+		/**
+		   *  请思考：Spring是如何管理事务的？
+		 */
 	}
 
 }
