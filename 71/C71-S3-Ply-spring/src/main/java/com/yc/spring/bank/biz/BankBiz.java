@@ -15,11 +15,11 @@ import com.yc.spring.bank.dao.oprecordDao;
  * 注解方式使用注解，可以不用配置切点，因为注解直接加到了类上了
  * 另外： @Transactional 也可以直接加到方法上
  */
-@Transactional( transactionManager="txManager",
-		propagation = Propagation.REQUIRED,
-		isolation = Isolation.READ_UNCOMMITTED,
-		readOnly=false,
-		timeout = 1000,
+@Transactional(transactionManager = "txManager", 
+		propagation = Propagation.REQUIRED, 
+		isolation = Isolation.READ_COMMITTED, 
+		readOnly = false, 
+		timeout = 1000, 
 		rollbackFor = BizException.class)
 public class BankBiz {
 
@@ -91,11 +91,13 @@ public class BankBiz {
 		if (adao.selectById(accountid1) == null) {
 			throw new BizException("取款账号不存在：" + accountid1);
 		}
+		// 计算手续费
 		float charge = money * 0.001f;
 		if (charge < 1) {
 			charge = 1;
 		}
-		int result = adao.update(accountid1, -money);
+		// 账户减金额
+		int result = adao.update(accountid1, -(money + charge));
 		if (result == 0) {
 			throw new BizException("取款账户余额不足！");
 		}

@@ -3,6 +3,7 @@ package com.yc.spring.bank.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,6 +31,27 @@ public class AccountDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
+	
+	/**
+	 * 账户检查，账户当前余额 = 期初余额 + 转入 + 转出（负数）- 手续费
+	 * 
+	 */
+	public List<Map<String,Object>> selectCheckAccount(){
+		String sql = "SELECT" +
+				"	*" +
+				" FROM" +
+				"	account a" +
+				" JOIN (" +
+				"	SELECT" +
+				"		accountid," +
+				"		sum(opmoney - charge) money" +
+				"	FROM" +
+				"		oprecord" +
+				"	GROUP BY" +
+				"		accountid" +
+				") b ON a.accountid = b.accountid";
+		return jdbcTemplate.queryForList(sql);
+	}
 
 	public void insert(int accountid, float balance) {
 		String sql = "insert into account values (?,?)";
@@ -65,8 +87,8 @@ public class AccountDao {
 			String sql = "update account set balance = balance + ? where accountid = ?";
 			return jdbcTemplate.update(sql, money, accountid);
 		} else if (money <0) {
-			String sql = "update account set balance = balance - ?"
-					+ " where accountid = ? and balance >= ?";
+			String sql = "update account set balance = balance + ?"
+					+ " where accountid = ? and balance >= -?";
 			return jdbcTemplate.update(sql, money, accountid, money);
 		} else {
 			return 0;

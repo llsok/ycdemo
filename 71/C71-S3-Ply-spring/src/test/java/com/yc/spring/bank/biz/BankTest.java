@@ -2,6 +2,7 @@ package com.yc.spring.bank.biz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -61,9 +62,8 @@ public class BankTest {
 
 		List<Integer> accountList = new ArrayList<>();
 		for (int i = 1; i < 101; i++) {
-			// 随机生成账号余额（5万~10万），做了个取整，只是为了方便观察结果
-			long balance = (long) (Math.random() * 50000d + 50000);
-			bbiz.regisiter(i, (float) balance);
+			// 随机100个用户，账号余额都是10万，这是为了方便观察结果，以及后面的验算
+			bbiz.regisiter(i, 100000);
 			accountList.add(i);
 		}
 		System.out.println("100个账号初始化完成");
@@ -131,10 +131,19 @@ public class BankTest {
 
 		System.out.println("开始验证");
 		Assert.assertEquals(100, adao.countAll());
-		Assert.assertEquals(20100, odao.countAll()); // 10000次转出流水 + 10000次转入流水
-														// + 100开户流水
+		Assert.assertEquals(20100, odao.countAll()); // 10000次转出流水 + 10000次转入流水 + 100次开户流水
 
 		System.out.println("一共产生 " + odao.sumCharge() + " 元的手续费");
+		
+		/**
+		 * 账户检查，账户当前余额 = 期初余额 + 转入 + 转出（负数）- 手续费
+		 */
+		List<Map<String,Object>> list = adao.selectCheckAccount();
+		for(Map<String,Object> row : list) {
+			Assert.assertEquals(row.get("balance"), row.get("money"));
+		}
+		
+		System.out.println("所有账户金额准确无误");
 	}
 
 	@Test
