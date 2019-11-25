@@ -22,6 +22,13 @@ import com.yc.spring.bank.dao.oprecordDao;
 @ContextConfiguration("/bank.xml")
 public class BankTest {
 
+	/** 
+	 * 创建线程池（50个线程），不想看着电脑运行10分钟才结束，就用线程池吧！
+	 * 注意：在多线程环境下，有可能出现数据库并发操作，导致死锁（无限等待），
+	 * 要给事务配置 timeout 属性值 
+	 */
+	ExecutorService executor = Executors.newFixedThreadPool(50);
+
 	@Resource
 	private AccountDao adao;
 
@@ -59,30 +66,65 @@ public class BankTest {
 		}
 		System.out.println("100个账号初始化完成");
 
+		List<Integer> finishedList = new ArrayList<>();
 		for (int i = 0; i < 10000; i++) {
-			boolean success = false;
-			while (success == false) {
-				// 随机生成取款账号
-				int aid1 = (int) (Math.random() * accountList.size() + 1);
-				// 随机生成存款款账号
-				int aid2 = -1;
-				do {
-					aid2 = (int) (Math.random() * accountList.size() + 1);
-				} while (aid1 == aid2);
+			// index 是给匿名类使用的循环变量，不用index？你可以试试
+			int index = i;
+			// 使用线程池中的线程执行 转账业务
+			executor.execute(new Runnable() {
+				@Override
+				public void run() {
+					
+					boolean success = false;
+					while (success == false) {
+						// 随机生成取款账号
+						int aid1 = (int) (Math.random() * accountList.size() + 1);
+						// 随机生成存款款账号
+						int aid2 = -1;
+						do {
+							aid2 = (int) (Math.random() * accountList.size() + 1);
+						} while (aid1 == aid2);
 
-				// 随机生成转账金额，进行取整，方便观察结果
-				long money = (long) (Math.random() * 8000 + 2000);
+						// 随机生成转账金额，进行取整，方便观察结果
+						long money = (long) (Math.random() * 8000 + 2000);
+						try {
+							bbiz.transfar(aid1, aid2, money);
+							success = true;
+							
+							/**
+							 * 划重点：没次成功执行之后，在 finishedList 添加当前序号 index
+							 * 	并通知主线程，主线程在等待 finishedList 对象
+							 */
+							synchronized (finishedList) {
+								finishedList.add(index);
+								finishedList.notify();
+							}
+							
+							System.out.println(
+									String.format("第 %s 笔转账成功！转出账号：%s，转入账号：%s，转账金额：%s", index + 1, aid1, aid2, money));
+						} catch (Exception e) {
+							System.out.println(String.format("转账失败！转出账号：%s，转入账号：%s，转账金额：%s，原因：%s", index + 1, aid1,
+									aid2, money, e.getMessage()));
+						}
+					}
+				}
+			});
+
+		}
+
+		/**
+		 * 划重点：在这里判断所有的线程任务都执行完之后，再继续后续的测试
+		 */
+		synchronized (finishedList) {
+			while (finishedList.size() < 10000) {
 				try {
-					bbiz.transfar(aid1, aid2, money);
-					success = true;
-					System.out.println(String.format("第 %s 笔转账成功！转出账号：%s，转入账号：%s，转账金额：%s",
-							i + 1, aid1, aid2, money));
-				} catch (BizException e) {
-					System.out.println(String.format("转账失败！转出账号：%s，转入账号：%s，转账金额：%s，原因：%s",
-							i + 1, aid1, aid2, money, e.getMessage()));
+					finishedList.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}
+
 		System.out.println("10000次转账完成");
 
 		System.out.println("开始验证");

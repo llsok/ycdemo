@@ -49,10 +49,12 @@
             	
             	一般情况下，事务都是加载 业务层
             -->
+            
+            <!-- 划重点：timeout 设置为1秒，用于处理多线程情况下的死锁清空   -->
             <tx:method name="*" 
             	propagation="REQUIRED" 
             	isolation="READ_COMMITTED"
-            	timeout="-1"
+            	timeout="1000"
             	read-only="false" 
             	rollback-for="com.yc.spring.bank.biz.BizException"
             	/>
