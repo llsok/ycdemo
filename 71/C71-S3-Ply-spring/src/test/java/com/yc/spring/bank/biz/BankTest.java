@@ -1,4 +1,4 @@
-package com.yc.spring.bank.dao;
+package com.yc.spring.bank.biz;
 
 import javax.annotation.Resource;
 
@@ -10,10 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.yc.spring.bank.biz.BankBiz;
 import com.yc.spring.bank.biz.BizException;
+import com.yc.spring.bank.dao.AccountDao;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration("/jdbc.xml")
+@ContextConfiguration("/bank.xml")
 public class BankTest {
 	
 	@Resource
