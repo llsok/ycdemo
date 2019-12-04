@@ -3,6 +3,7 @@ package com.yc.spring.bank.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,6 +31,27 @@ public class AccountDao {
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
+	
+	/**
+	 * 账户检查，账户当前余额 = 期初余额 + 转入 + 转出（负数）- 手续费
+	 * 
+	 */
+	public List<Map<String,Object>> selectCheckAccount(){
+		String sql = "SELECT" +
+				"	*" +
+				" FROM" +
+				"	account a" +
+				" JOIN (" +
+				"	SELECT" +
+				"		accountid," +
+				"		sum(opmoney - charge) money" +
+				"	FROM" +
+				"		oprecord" +
+				"	GROUP BY" +
+				"		accountid" +
+				") b ON a.accountid = b.accountid";
+		return jdbcTemplate.queryForList(sql);
+	}
 
 	public void insert(int accountid, float balance) {
 		String sql = "insert into account values (?,?)";
@@ -53,9 +75,24 @@ public class AccountDao {
 
 	}
 
-	public void update(int accountid, float money) {
-		String sql = "update account set balance = balance + ? where accountid = ?";
-		jdbcTemplate.update(sql, money, accountid);
+	/**
+	   * 更新账号表的余额，如果传入的 money 是负数，则表示取款，要判断余额是否大于取款金额
+	 * @param accountid		存取款账号
+	 * @param money			存取款金额
+	 * @return				返回结果表示更新到的记录行数，1更新成功，0未更新
+	 */
+	public int update(int accountid, float money) {
+		// 小于0就是取款
+		if(money>0) {
+			String sql = "update account set balance = balance + ? where accountid = ?";
+			return jdbcTemplate.update(sql, money, accountid);
+		} else if (money <0) {
+			String sql = "update account set balance = balance + ?"
+					+ " where accountid = ? and balance >= -?";
+			return jdbcTemplate.update(sql, money, accountid, money);
+		} else {
+			return 0;
+		}
 	}
 
 	public Account selectById(int accountid) {
@@ -83,6 +120,11 @@ public class AccountDao {
 	public void delete(int account) {
 		String sql = "delete from account where accountid = ?";
 		jdbcTemplate.update(sql, account);
+	}
+	
+	public int countAll() {
+		String sql = "select count(*) from account";
+		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 
 }
