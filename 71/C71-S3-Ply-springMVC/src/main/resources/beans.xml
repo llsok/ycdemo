@@ -13,6 +13,9 @@
 
 	<!-- spring mvc 的注解驱动 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- 处理静态资源  css,js,jpg -->
+	<mvc:default-servlet-handler/>
 
 	<!-- JSP 视图解析器 -->
 	<bean id="viewResolver"

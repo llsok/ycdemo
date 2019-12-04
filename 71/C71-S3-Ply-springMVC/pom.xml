@@ -47,7 +47,12 @@
 			<version>1.2</version>
 		</dependency>
 
-
+		<!-- SpringMVC 返回复杂 json 对象所需要的依赖 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
+		</dependency>
 	</dependencies>
 	
 	
