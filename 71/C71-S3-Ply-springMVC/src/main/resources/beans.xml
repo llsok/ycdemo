@@ -13,19 +13,29 @@
 
 	<!-- spring mvc 的注解驱动 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
-	
-	<!-- 处理静态资源  css,js,jpg -->
-	<mvc:default-servlet-handler/>
+
+	<!-- 处理静态资源 css,js,jpg -->
+	<mvc:default-servlet-handler />
 
 	<!-- JSP 视图解析器 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<!-- JSTL 标签支持属性 -->
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<!-- 视图名前缀   web路径   WEB-INF/jsp 表示 jsp页面存放的路径    /WEB-INF/jsp/hello.jsp -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<!-- 视图名前缀 web路径 WEB-INF/jsp 表示 jsp页面存放的路径 /WEB-INF/jsp/hello.jsp -->
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<!-- 视图名后缀 -->
 		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 基于 Apache commons-upload 组件 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		<!-- 最大上传文件大小 -->
+		<property name="maxUploadSize" value="100000" />
+
 	</bean>
 
 </beans>
