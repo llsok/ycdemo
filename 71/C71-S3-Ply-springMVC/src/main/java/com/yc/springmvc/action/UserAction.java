@@ -4,10 +4,16 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,24 +63,30 @@ public class UserAction {
 		return user.getUname() + "<br>" + user.getUpass() + "<br>" + topic.getTitle();
 	}
 	
-	@ResponseBody
+	//@ResponseBody
 	@PostMapping("reg.do")
-	public String reg(User user, 
+	public String reg(@Valid User user, Errors errors,
 			@RequestParam("file") MultipartFile file,
 			HttpServletRequest request) throws IllegalStateException, IOException{
+		
+		if(errors.hasErrors()){
+			return "reg";
+		}
 		
 		String fn = file.getOriginalFilename(); // 获取文件名   1.jpg
 		file.getName();				// 获取字段名    name="file"
 		//file.getInputStream();	// 获取输入流
 		file.getSize();				// 获取文件大小
 		
-		String path = "/upload/" + fn;	// web 路径转成 磁盘路径
-		path = request.getServletContext().getRealPath(path);
-		System.out.println(path);
-		File fileObj = new File(path);
-		file.transferTo(fileObj);
+		if(fn!= null && fn.isEmpty() == false){
+			String path = "/upload/" + fn;	// web 路径转成 磁盘路径
+			path = request.getServletContext().getRealPath(path);
+			System.out.println(path);
+			File fileObj = new File(path);
+			file.transferTo(fileObj);
+		}
 		
-		return "reg success";
+		return "success";
 	}
 	
 	@GetMapping("toreg.do")
@@ -84,35 +96,39 @@ public class UserAction {
 	
 	
 	@GetMapping("tomod.do")
-	public String toMod( Model m){
-		
-		User user = new User();
+	public String toMod(@ModelAttribute User user){
+		// User user = (User) m.asMap().get("user");
 		user.setUname("武松");
 		user.setUpass("123");
-		user.setRegtime("2019-12-12");
-		// "user" ==> from:from modelattribute="user"
-		m.addAttribute("user",user);
-		
+		//user.setRegtime("2019-12-12");
 		user.setHead("广东");
-		
 		user.setGender(1);
-		
-		String[] sheng = {"湖南","湖北","广东","广西"};
-		
-		SelectItem[] gender = {
-				new SelectItem("男","1"),
-				new SelectItem("女","0")};
-		
-		m.addAttribute("sheng",sheng);
-		
-		m.addAttribute("gender",gender);
-		
 		return "reg";
 	}
 	
+	@ModelAttribute
+	/**
+	 * 1、该方法会在所有控制器方法执行前，先执行
+	 * 2、该方法的返回值会被放到请求作用域中  request
+	 */
+	public void init(Model m){
+		User user = new User();
+		String[] sheng = {"湖南","湖北","广东","广西"};
+		SelectItem[] gender = {
+				new SelectItem("男","1"),
+				new SelectItem("女","0")};
+		// "user" ==> from:from modelattribute="user"
+		m.addAttribute("user",user);
+		m.addAttribute("sheng",sheng);
+		m.addAttribute("gender",gender);
+	}
 	
-	
-	
+	// 该方法实现自定义的类型转换
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		// 添加日期类型转换
+		binder.addCustomFormatter(new DateFormatter("yyyy-MM-dd"));
+	}
 	
 	
 	
