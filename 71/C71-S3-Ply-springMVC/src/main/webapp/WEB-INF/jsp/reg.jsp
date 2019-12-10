@@ -22,6 +22,9 @@ function loadImg(){
 <body>
 
 <form:form modelAttribute="user" method="post" action="reg.do" enctype="multipart/form-data">
+	<!-- errors 支持 * 通配符 -->
+	<form:errors path="*"/>
+
     用户名：<form:input type="text" path="uname"/>
     <form:errors path="uname"/>
     <br>

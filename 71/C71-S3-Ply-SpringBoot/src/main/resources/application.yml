@@ -1,0 +1,15 @@
+server:
+  port: 80
+
+# JSP 集成配置  不要使用 tab 建输入空格
+spring:
+  mvc:
+    view:
+      prefix: WEB-INF/jsp/
+      suffix: .jsp
+
+  datasource:
+     url: jdbc:mysql://127.0.0.1:3306/C71-S3-Ply-SpringBoot
+     username: root
+     password: a
+     driver-class-name: com.mysql.jdbc.Driver
