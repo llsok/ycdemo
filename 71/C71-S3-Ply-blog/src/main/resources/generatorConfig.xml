@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 命令：
+	-Dmybatis.generator.overwrite=true mybatis-generator:generate
+	-->
+
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1/C71-S3-Ply-SpringBoot?useUnicode=true&amp;characterEncoding=UTF-8" 
+			userId="root" password="a">
+		</jdbcConnection>
+		
+		<!-- 实体类包名 -->
+		<javaModelGenerator targetPackage="com.yc.springboot.C71S3PlyBlog.bean"
+			targetProject="src/main/java">
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!-- Dao类包名 -->
+		<sqlMapGenerator targetPackage="com.yc.springboot.C71S3PlyBlog.dao"
+			targetProject="src/main/java">
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.yc.springboot.C71S3PlyBlog.dao" targetProject="src/main/java">
+		</javaClientGenerator>
+
+		<!-- % 表示所有的表 -->
+		<table tableName="%" >
+			<!-- 配置自增列 id -->
+			<generatedKey column="id" sqlStatement="mysql" identity="true"/>
+			<!-- 配置 日期字段 -->
+			<columnOverride column="createtime" javaType="java.sql.Timestamp"></columnOverride>
+		</table>
+
+	</context>
+</generatorConfiguration>

@@ -9,9 +9,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.yc.springboot</groupId>
-	<artifactId>C71-S3-Ply-SpringBoot</artifactId>
+	<artifactId>C71-S3-Ply-blog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>C71-S3-Ply-SpringBoot</name>
+	<name>C71-S3-Ply-blog</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -79,6 +79,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- -Dmybatis.generator.overwrite=true mybatis-generator:generate -->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.47</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

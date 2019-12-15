@@ -9,7 +9,7 @@ spring:
       suffix: .jsp
 
   datasource:
-     url: jdbc:mysql://127.0.0.1:3306/C71-S3-Ply-SpringBoot
+     url: jdbc:mysql://127.0.0.1/C71-S3-Ply-SpringBoot?useUnicode=true&characterEncoding=UTF-8
      username: root
      password: a
      driver-class-name: com.mysql.jdbc.Driver
