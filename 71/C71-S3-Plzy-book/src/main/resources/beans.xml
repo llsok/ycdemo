@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+	    https://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/mvc
+	    https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context
+       	https://www.springframework.org/schema/context/spring-context.xsd
+       	http://www.springframework.org/schema/aop
+       	https://www.springframework.org/schema/aop/spring-aop.xsd
+       	http://www.springframework.org/schema/tx
+       https://www.springframework.org/schema/tx/spring-tx.xsd
+       	">
+
+	<context:component-scan base-package="com.book"></context:component-scan>
+
+	<!-- -spring mvc 的注解驱动 -->
+	
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=utf-8</value>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/xml;charset=utf-8</value>
+						<value>application/json;charset=utf-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 静态资源访问 -->
+	<mvc:default-servlet-handler></mvc:default-servlet-handler>
+	<!-- JSP视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<!-- JSTL标签支持属性 -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<!-- 视图前缀名 web路径 WEB-INF/jsp 表示jsp页面存放的路径 /WEB-INF/jsp/hello.jsp -->
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<!-- 视图后缀名 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<!-- spring JDBC 配置 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1/c71-s3-plzy-book" />
+		<property name="username" value="root" />
+		<property name="password" value="a" />
+	</bean>
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- 文件上传bean -->
+	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- 文件最大上传大小 -->
+    <property name="maxUploadSize" value="100000"/>
+    <property name="defaultEncoding" value="utf-8"></property>
+    </bean>
+    
+	<!-- 定义事务管理器 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 定义spring的事务增强 -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!-- 定义事务属性 -->
+        <tx:attributes>
+            <!-- 定义方法上的事务属性 -->
+            <tx:method name="get*" read-only="true"/>
+            <!--
+            	*表示所有方法
+            	propagation="REQUIRED"     传播特性 
+            	isolation="READ_COMMITTED" 隔离级别
+            	timeout="-1"               超时-1表示不限时
+            	read-only="false"          只读事务
+            	rollback-for=""            回滚异常 默认情况：Spring 只回滚运行期异常
+            	no-rollback-for            不会滚异常
+				-->
+            <tx:method name="*"
+            	propagation="REQUIRED"
+            	isolation="READ_COMMITTED"
+            	timeout="1000"
+            	read-only="false"
+            	rollback-for="com.book.biz.BizException"
+            />
+        </tx:attributes>
+    </tx:advice>
+
+
+	<aop:config>
+		<aop:pointcut expression="execution(* com.book.biz.*.*(..))" id="mypc"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="mypc"/>
+	</aop:config>
+</beans>
