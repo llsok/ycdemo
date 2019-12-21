@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <header class="header">
   <nav class="navbar navbar-default" id="navbar">
     <div class="container">
@@ -16,7 +17,19 @@
             </ul>
           </li>
         </ul>
-        <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;<a href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;<a href="" rel="nofollow">找回密码</a> </div>
+        
+        <c:if test="${empty loginedUser}">
+        <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">
+        	Hi,请登录</a>&nbsp;&nbsp;
+        </c:if>
+        <c:if test="${! empty loginedUser}">
+        <a class="login" rel="nofollow">
+        	Hi,${loginedUser.name}</a>&nbsp;&nbsp;
+        </c:if>
+        
+        <a href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;
+        <a href="" rel="nofollow">找回密码</a> 
+       </div>
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
         <h1 class="logo hvr-bounce-in"><a href="" title=""><img src="images/logo.png" alt=""></a></h1>

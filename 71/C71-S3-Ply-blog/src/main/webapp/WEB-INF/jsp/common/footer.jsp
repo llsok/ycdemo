@@ -27,10 +27,8 @@ function login(){
 				// 隐藏模态框
 				$('#loginModal').modal('hide');
 				$(".login").text("Hi,"+result.data.name);
+				// 请移除 login 超链接 的 data-toggle="modal" data-target="#loginModal" 属性
 			}
-				 
-			
-			
 		}
 	)
 }
