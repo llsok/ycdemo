@@ -25,6 +25,9 @@
         <c:if test="${! empty loginedUser}">
         <a class="login" rel="nofollow">
         	Hi,${loginedUser.name}</a>&nbsp;&nbsp;
+        	
+        <a class="login" rel="nofollow" href="toaddArticle">
+        	发表博文</a>&nbsp;&nbsp;
         </c:if>
         
         <a href="javascript:;" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;
