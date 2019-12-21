@@ -13,6 +13,14 @@ spring:
      username: root
      password: a
      driver-class-name: com.mysql.jdbc.Driver
+     
+logging:
+  level:
+    com:
+      yc: debug
+      
+# log 日志等级：   debug error warn info   
+# log.debug("调试信息")  =》 system.out
 
 # SpringBoot 如何实现自动化配置
 #   1、pom.xml

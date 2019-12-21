@@ -72,7 +72,7 @@
       		<img class="thumb" data-original="images/excerpt.jpg" src="images/excerpt.jpg" alt="">
       	</a>
         <header><a class="cat" href="program">${a.categoryid } 分类名称（未完待续）<i></i></a>
-          <h2><a href="article.html" title="">${a.title }</a></h2>
+          <h2><a href="article?id=${a.id}" title="">${a.title }</a></h2>
         </header>
         <p class="meta">
           <time class="time"><i class="glyphicon glyphicon-time"></i>${a.createtime }</time>
@@ -80,15 +80,15 @@
           <a class="comment" href="article.html#comment">
           	<i class="glyphicon glyphicon-comment">
           </i> ????个不明物体</a></p>
-        <p class="note">${a.title }文章内容（未完待续）... </p>
+        <p class="note">${a.title}文字内容</p>
       </article>
       </c:forEach>
       <nav class="pagination" style="display: none;">
         <ul>
           <li class="prev-page"></li>
           <li class="active"><span>1</span></li>
-          <li><a href="?page=2">2</a></li>
-          <li class="next-page"><a href="?page=2">下一页</a></li>
+          <li><a href="?next">2</a></li>
+          <li class="next-page"><a href="?next">下一页</a></li>
           <li><span>共 2 页</span></li>
         </ul>
       </nav>
