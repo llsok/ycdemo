@@ -9,7 +9,28 @@ function login(){
 			{account : username,
 			 pwd : password},
 		function(result){
-			alert(result.msg); 
+			
+			if(result.code == 0){
+				alert(result.msg);
+			} else if (result.code == 2){
+				console.info(result.data);
+				for(var i=0; i< result.data.length; i++){
+					console.info(result.data[i].field);
+					if(result.data[i].field == 'account'){
+						// html 元素.innerText
+						$("#unameLabel").text("用户名   " + result.data[i].defaultMessage);
+					} else if(result.data[i].field == 'pwd'){
+						$("#upassLabel").text("密码   " + result.data[i].defaultMessage);
+					}
+				}
+			} else if(result.code == 1){
+				// 隐藏模态框
+				$('#loginModal').modal('hide');
+				$(".login").text("Hi,"+result.data.name);
+			}
+				 
+			
+			
 		}
 	)
 }
@@ -61,17 +82,17 @@ function login(){
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="loginModalUserNmae">用户名</label>
+            <label for="loginModalUserNmae" id="unameLabel">用户名</label>
             <input type="text" class="form-control" id="loginModalUserNmae" placeholder="请输入用户名" autofocus maxlength="15" autocomplete="off" required>
           </div>
           <div class="form-group">
-            <label for="loginModalUserPwd">密码</label>
+            <label for="loginModalUserPwd" id="upassLabel">密码</label>
             <input type="password" class="form-control" id="loginModalUserPwd" placeholder="请输入密码" maxlength="18" autocomplete="off" required>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">登录</button>
+          <button type="button" class="btn btn-primary" onclick="login()">登录</button>
         </div>
       </form>
     </div>

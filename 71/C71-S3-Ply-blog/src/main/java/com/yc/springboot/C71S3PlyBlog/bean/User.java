@@ -2,13 +2,17 @@ package com.yc.springboot.C71S3PlyBlog.bean;
 
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotEmpty;
+
 public class User {
     private Integer id;
 
     private String name;
 
+    @NotEmpty(message="请填写用户名！")
     private String account;
 
+    @NotEmpty(message="请填写密码！")
     private String pwd;
 
     private String phone;
