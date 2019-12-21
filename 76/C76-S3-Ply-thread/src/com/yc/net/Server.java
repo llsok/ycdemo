@@ -38,6 +38,9 @@ public class Server {
 		OutputStream out = socket.getOutputStream();
 		Scanner sc = new Scanner(System.in);
 
+		/**
+		 * 以下代码与 Client 完全一样
+		 */
 		// 读的线程
 		new Thread() {
 			public void run() {
