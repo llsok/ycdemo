@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+    
+<script type="text/javascript">
+function login(){
+	var username = $("#loginModalUserNmae").val();
+	var password = $("#loginModalUserPwd").val();
+	$.post("login",
+			{account : username,
+			 pwd : password},
+		function(result){
+			alert(result.msg); 
+		}
+	)
+}
+</script>
+
 <footer class="footer">
   <div class="container">
     <p>&copy; 2016 <a href="">ylsat.com</a> &nbsp; <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">豫ICP备20151109-1</a> &nbsp; <a href="sitemap.xml" target="_blank" class="sitemap">网站地图</a></p>
@@ -56,7 +71,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="submit" class="btn btn-primary">登录</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="login()">登录</button>
         </div>
       </form>
     </div>
