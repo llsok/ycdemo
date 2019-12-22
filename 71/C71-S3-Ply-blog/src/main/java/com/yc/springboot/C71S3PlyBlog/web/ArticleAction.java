@@ -25,39 +25,49 @@ import com.yc.springboot.C71S3PlyBlog.biz.BizException;
 import com.yc.springboot.C71S3PlyBlog.biz.UserBiz;
 import com.yc.springboot.C71S3PlyBlog.vo.Result;
 
-
 @RestController
 public class ArticleAction {
-	
+
 	// 读取配置参数
 	@Value("${spring.resources.staticLocations}")
 	private String uploadDir;
-	
+
 	@Resource
 	private ArticleBiz aBiz;
-	
+
 	@PostMapping("addArticle")
-	public ModelAndView add(Article a, 
-			@SessionAttribute("loginedUser") User user,
-			Errors errors, Model m){
+	public ModelAndView add(Article a, @SessionAttribute("loginedUser") User user, Errors errors, Model m) {
 		a.setAuthor(user.getName());
 		aBiz.addArticle(a);
 		// 响应重定向
-		return new ModelAndView("redirect:article?id="+a.getId());
+		return new ModelAndView("redirect:article?id=" + a.getId());
 	}
-	
+
 	@GetMapping("toaddArticle")
-	public ModelAndView toadd(){
+	public ModelAndView toadd() {
 		return new ModelAndView("article_add");
 	}
-	
+
+	/**
+	 * 图片上传
+	 * @param CKEditorFuncNum 		CKEditor 回调函数名
+	 * @param file					上传文件字段对象（SpringMVC封装+注入）
+	 * @return						返回 CKEditor 的回调js代码，用于将上传文件展示出来
+	 */
 	@PostMapping("uploadimg")
-	public String uploadImg(@RequestParam("file")MultipartFile file ) 
-			throws IllegalStateException, IOException{
+	public String uploadImg(String CKEditorFuncNum, @RequestParam("upload") MultipartFile file)
+			throws IllegalStateException, IOException {
 		String path = uploadDir.substring("file:/".length());
-		File diskfile = new File(path + "/" + file.getOriginalFilename());
+		String fileName = file.getOriginalFilename();
+		File diskfile = new File(path + "/" + fileName);
 		file.transferTo(diskfile);
-		return "success";
+
+		String ret = "<script type=\"text/javascript\">";
+		ret += "window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ",'" + "/" + 
+				fileName + "','')";
+		ret += "</script>";
+
+		return ret;
 	}
-	
+
 }

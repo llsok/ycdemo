@@ -3,6 +3,10 @@ package com.yc.springboot.C71S3PlyBlog.web;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +46,26 @@ public class UserAction {
 		}
 	}
 	
+	@Autowired
+    private JavaMailSender mailSender;
+    @Value("${mail.fromMail.addr}")
+    private String from;
+
+    @PostMapping("sendEmail")
+    public String sendSimpleMail(String to, String subject, String content) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(content);
+        mailSender.send(message);
+        return "success";
+    }
+    
+    /**
+     * 使用SpringBoot的邮件功能实现用户忘记密码时, 给用户发送一封包含一个验证码的邮件, 
+     * 在用户重置密码时, 必须填写邮件里面的验证码, 验证码正确才允许重置密码
+     */
+    
 
 }
