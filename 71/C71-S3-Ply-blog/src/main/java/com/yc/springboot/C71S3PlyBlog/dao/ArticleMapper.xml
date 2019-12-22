@@ -14,6 +14,11 @@
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="readCnt" jdbcType="INTEGER" property="readcnt" />
     <result column="agreeCnt" jdbcType="INTEGER" property="agreecnt" />
+    
+    <association property="category" autoMapping="true" column="categoryid"
+			select="com.yc.springboot.C71S3PlyBlog.dao.CategoryMapper.selectByPrimaryKey" 
+			fetchType="lazy"></association>
+    
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yc.springboot.C71S3PlyBlog.bean.Article">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />

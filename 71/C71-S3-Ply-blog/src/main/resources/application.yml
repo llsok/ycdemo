@@ -13,6 +13,9 @@ spring:
      username: root
      password: a
      driver-class-name: com.mysql.jdbc.Driver
+  # 配置 静态资源路径
+  resources:
+     staticLocations: file:/d:/blogimg
      
 logging:
   level:

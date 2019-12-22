@@ -28,8 +28,19 @@ public class Article {
     private Integer agreecnt;
 
     private String content;
+    
+    // 文章的类别对象
+    private Category category;
+    
+    public Category getCategory() {
+		return category;
+	}
 
-    public Integer getId() {
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Integer getId() {
         return id;
     }
 
