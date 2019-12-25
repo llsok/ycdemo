@@ -22,7 +22,7 @@ spring:
     # //用户名 
     username: 306529917@qq.com
     # //密码 
-    password: grajbudesyhlbiji
+    password: 省略
     default-encoding: UTF-8
      
 # //以谁来发送邮件    用户自定义的参数
