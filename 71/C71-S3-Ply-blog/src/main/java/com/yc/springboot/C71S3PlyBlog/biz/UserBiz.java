@@ -15,8 +15,16 @@ public class UserBiz {
 	
 	@Resource
 	private UserMapper um;
+	
+	@Resource
+	private LogBiz lbiz;
 
 	public User login(User user) throws BizException {
+		
+		lbiz.log2(user);
+		
+		lbiz.log(user);
+		
 		UserExample example = new UserExample();
 		
 		example.createCriteria()
@@ -25,11 +33,28 @@ public class UserBiz {
 		
 		List<User> list = um.selectByExample(example);
 		
+		lbiz.log(user);
+		lbiz.log(user);
+		lbiz.log(user);
+		lbiz.log(user);
+		lbiz.log(user);
+		
+		
+		lbiz.log1(user);
+		lbiz.log1(user);
+		lbiz.log1(user);
+		lbiz.log1(user);
+		lbiz.log1(user);
+		lbiz.log1(user);
+		lbiz.log1(user);
+		
 		if(list.size() == 0){
 			throw new BizException("用户名或密码错误！");
 		} else {
 			return list.get(0);
 		}
+
+
 	}
 
 }

@@ -5,7 +5,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserExample {
-    protected String orderByClause;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (distinct ? 1231 : 1237);
+		result = prime * result + ((orderByClause == null) ? 0 : orderByClause.hashCode());
+		result = prime * result + ((oredCriteria == null) ? 0 : oredCriteria.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserExample other = (UserExample) obj;
+		if (distinct != other.distinct)
+			return false;
+		if (orderByClause == null) {
+			if (other.orderByClause != null)
+				return false;
+		} else if (!orderByClause.equals(other.orderByClause))
+			return false;
+		if (oredCriteria == null) {
+			if (other.oredCriteria != null)
+				return false;
+		} else if (!oredCriteria.equals(other.oredCriteria))
+			return false;
+		return true;
+	}
+
+	protected String orderByClause;
 
     protected boolean distinct;
 
