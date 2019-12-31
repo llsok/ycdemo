@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+#reduceCount{
+		 text-decoration:none;
+		  line-height: 30px;
+		  font-size:20px;
+		 height:30px;
+	}
+	#addCount{
+		 text-decoration:none;
+		  line-height: 30px;
+		  font-size:20px;
+		   height:30px;
+	}
+	#count-cart{
+		line-height: 30px;
+		margin-right:2px;
+		margin-left:2px;
+		text-align:center;
+		width: 20px;
+		height:20px;
+	}
+	#count-div{
+		background:#f0f0f0;
+		 width: 100px; 
+		 height:36px; ;
+		line-height: 30px;
+		margin-top:35px;
+	}
+	.buyA{
+		margin-top:30px;
+		margin-left:5px;
+		color: #fff;
+		background: deepskyblue;
+		outline: none;
+		border: none;
+		cursor: pointer;
+		padding: 5px 5px;
+		font-size:14px;
+		-webkit-appearance: none;
+		line-height: 90px;
+	}

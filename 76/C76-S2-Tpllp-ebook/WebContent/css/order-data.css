@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+b{
+	font-size:16px;
+}
+th{
+	font-size:16px;
+}
+td{
+	font-size:16px;
+}
+span{
+	font-size:16px;
+}
+.order-state-user{
+	background-color: blue;
+	line-height: 50px;
+	margin-top: 23px;
+	color: white;
+}
+.order-state-user-1{
+	background-color: red;
+	line-height: 50px;
+	margin-top: 23px;
+	color: white;
+}
+.state-real{
+	margin: 10px 10px 10px 10px;
+}
+* input[type="button"] {
+	font-size: 0.9em;
+	color: #fff;
+	background: deepskyblue;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	padding: 5px 5px;
+	font-size:14px;
+	-webkit-appearance: none;
+}
