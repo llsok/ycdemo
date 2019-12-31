@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- 在 html标签中加入 thymeleaf 的命名空间      xmlns ==>  xml   name  spase -->
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<!-- thymeleaf 引入子页面的命令有三个 ：  
+	include : 替换子标签  
+	replace ： 替换父标签 + 子标签
+	insert ： 保留原来的父标签 + 导入父标签 + 子标签 -->
+<head th:include="common::head">
+	<!-- 保留这行是为了解决乱码问题 -->
+	<meta charset="UTF-8">
+</head>
+
+<body class="login_bj" >
+<div class="zhuce_body">
+
+	<!-- 使用 css 选择器 导入子页面 -->
+	<div th:replace="common::.logo"></div>
+
+    <div class="zhuce_kong login_kuang">
+    	<div class="zc">
+        	<div class="bj_bai">
+            <h3>登录</h3>
+       	  	  <form action="" method="get">
+                <input name="" type="text" class="kuang_txt" placeholder="手机号">
+                <input name="" type="text" class="kuang_txt" placeholder="密码">
+                <div>
+               		<a href="#">忘记密码？</a><input name="" type="checkbox" value="" checked><span>记住我</span> 
+                </div>
+                <input name="登录" type="button" class="btn_zhuce" value="登录">
+                
+                </form>
+            </div>
+        	<div class="bj_right">
+            	<p>使用以下账号直接登录</p>
+                <a href="#" class="zhuce_qq">QQ注册</a>
+                <a href="#" class="zhuce_wb">微博注册</a>
+                <a href="#" class="zhuce_wx">微信注册</a>
+                <p>已有账号？<a href="#">立即登录</a></p>
+            
+            </div>
+        </div>
+        <P>Diyhe.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎您定制盒子模型</P>
+    </div>
+
+</div>
+    
+</body>
+</html>

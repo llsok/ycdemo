@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+	var websocket;
+	function conn() {
+		//创建websocket对象
+		websocket = new WebSocket("ws://localhost/websocket/" + userid.value);
+		//连接发生错误的回调方法
+		websocket.onerror = function(event) {
+			console.info("=======onerror========");
+		};
+		//连接成功建立的回调方法
+		websocket.onopen = function(event) {
+			alert("连接成功！");
+			console.info("=======onopen========" + event);
+		}
+		//接收到消息的回调方法
+		websocket.onmessage = function(event) {
+			ctt.innerHTML += event.data + "<br>";
+		}
+		//连接关闭的回调方法
+		websocket.onclose = function(event) {
+			console.info("=======onclose========" + event);
+		}
+	}
+	//关闭连接
+	function closeWebSocket() {
+		websocket.close();
+	}
+	//发送消息
+	function send() {
+		websocket.send(msg.value);
+	}
+</script>
+</head>
+<body>
+	消息：<div id="ctt" style="width: 200px;height: 100px;border: 1px solid; overflow: auto;"></div>
+	用户ID:
+	<input id="userid" value="1">
+	<br> 消息:
+	<input id="msg">
+	<br>
+	<input type="button" onclick="conn()" value="连接">
+	<br>
+	<input type="button" onclick="send()" value="发送">
+</body>
+</html>
