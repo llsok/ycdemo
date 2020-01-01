@@ -379,13 +379,13 @@ function checkReg(){
 				<p> 
 					<label for="username" class="uname" data-icon="u" >您的用户名</label>
 					<input id="username" name="username" required="required" type="text" 
-					value="${loginUname }"
+					value="${empty loginUname ? '张三' : loginUname }"
 					placeholder="请输入用户名"/>
 				</p>
 				<p> 
 					<label for="password" class="youpasswd" data-icon="p">你的密码</label>
 					<input id="password" name="password" required="required" type="password" 
-					placeholder="请输入密码" />
+					placeholder="请输入密码" value="${empty loginUname ? 'psq520' : '' }"/>
 				</p>
 				<p> 
 					<label for="vcode" class="vcode" data-icon="p">请输入验证码</label>
