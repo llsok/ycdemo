@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 命名空间 ==》 唯一地址 -->
+<mapper namespace="com.yc.mybatis.dao.CategoryMapper">
+	<!-- resultType 返回类型 List<Category> -->
+	<select id="selectAll" resultType="com.yc.mybatis.bean.Category">
+		select * from Category
+	</select>
+	
+	<!-- ? 占位符 避免 注入攻击   ==》 命名参数 #{实体类的属性名}  -->
+	<insert id="insert">
+		insert into Category values ( #{id},#{name},#{sort},#{introduce} )
+	</insert>
+	
+	<update id="updateById">
+		update category set name=#{name},sort=#{sort}, introduce=#{introduce}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteById">
+		delete from category where id=#{id}
+	</delete>
+	
+	<select id="selectById" resultType="com.yc.mybatis.bean.Category">
+		select * from Category where id=#{id}
+	</select>
+	
+</mapper>
