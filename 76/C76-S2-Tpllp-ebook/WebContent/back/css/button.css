@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+.new-contentarea {
+width:100%;
+overflow:hidden;
+margin: 0 auto;
+position:relative;
+}
+.new-contentarea label {
+cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+width:100%;
+height:100%;
+display:block;
+}
+.new-contentarea input[type=file] {
+cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+background:#333;
+margin: 0 auto;
+position:absolute;
+right:50%;
+margin-right:-94px;
+top:0;
+right:0px\9;
+margin-right:0px\9;
+width:10px\9;
+opacity:0;
+filter:alpha(opacity=0);
+z-index:2;
+}
+a.upload-img{
+width:165px;
+display: inline-block;
+margin-bottom: 10px;
+height:57px;
+line-height: 57px;
+font-size: 20px;
+color: #FFFFFF;
+background-color: dodgerblue;
+border-radius: 3px;
+text-decoration:none;
+cursor:pointer;
+}
+a.upload-img:hover{
+background-color: #ec7e70;
+}
+
+.tc{text-align:center;}
+			
