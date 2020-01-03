@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.mybatis.dao.CinemaMapper">
+
+	<!-- fetchType="lazy" 表示延迟加载：只有在程序访问到该属性时，才执行查询 -->
+	<resultMap type="com.yc.mybatis.bean.Cinema" id="rmCinema">
+		<collection property="halls" column="id"
+			select="com.yc.mybatis.dao.HallMapper.selectByCinemaId"
+			fetchType="lazy"></collection>
+	</resultMap>
+
+	<!-- resultType="com.yc.mybatis.bean.Hall"  resultType 是简单的自动的映射 -->
+	<select id="selectById" resultMap="rmCinema">
+		select * from cinema where id = #{id}
+	</select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.mybatis.dao.HallMapper">
+
+	<!--
+		resultMap 标签用于
+			1、自定义的字段关系映射配置
+			2、关联查询配置
+		
+		默认情况下，MyBatis 字段映射规则是：字段名与属性名 完全一致 （大小写、下划线）
+	 
+	<resultMap></resultMap> 
+	-->
+	<!-- 你字需要定义 名称不一致的 关系 ，其他相同的字段仍然可以让MyBatis 自动映射-->
+	<!-- association 用于配置一对一的关联查询 
+		property="cinema" 查询的结果要存入的对象
+		autoMapping="true" 自动  字段==属性  映射
+		column="cinema_id"  定义外键关联字段
+		select="xxxxx"  定义关联查询的方法
+	-->
+	<resultMap id="myColumnMapper" type="com.yc.mybatis.bean.Hall">
+		<result column="hall_type" property="hallType"></result>
+		<association property="cinema" column="cinema_id"
+			select="com.yc.mybatis.dao.CinemaMapper.selectById"
+			fetchType="lazy"></association>
+	</resultMap>
+	
+	
+	<!-- resultType="com.yc.mybatis.bean.Hall"  resultType 是简单的自动的映射 -->
+	<select id="selectById" resultMap="myColumnMapper">
+		select * from hall where id = #{id}
+	</select>
+	
+	<select id="selectByCinemaId" resultMap="myColumnMapper">
+		select * from hall where cinema_id = #{cinemaId}
+	</select>
+	
+	
+	
+</mapper>

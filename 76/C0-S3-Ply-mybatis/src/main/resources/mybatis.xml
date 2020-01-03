@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 数据环境配置 -->
+	<environments default="test">
+		<environment id="development">
+			<!-- 设置事务管理 -->
+			<transactionManager type="JDBC" />
+			<!-- 连接参数-->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+		
+		<environment id="test">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1/C0-S3-Ply-mybatis" />
+				<property name="username" value="root" />
+				<property name="password" value="a" />
+			</dataSource>
+		</environment>
+		
+		<environment id="production">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<!-- 注册SQL映射文件 -->
+		<mapper resource="com/yc/mybatis/dao/HallMapper.xml" />
+		<mapper resource="com/yc/mybatis/dao/CinemaMapper.xml" />
+	</mappers>
+</configuration>
