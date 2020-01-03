@@ -1,0 +1,528 @@
+
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="/C76-S2-Tpllp-ebook/css/index.css"/>
+	<link rel="stylesheet" href="/C76-S2-Tpllp-ebook/css/swiper3.07.min.css"/>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="/C76-S2-Tpllp-ebook/js/jquery-1.11.2.min.js"></script>
+	<script src="/C76-S2-Tpllp-ebook/js/koala.min.1.5.js"></script>
+	<style>
+		.swiper-container {
+			width: 1100px;
+			height: 300px;
+			margin: 0 auto;
+		}
+		.book-wrap {
+		    padding: 0px;
+		}
+	</style>
+	<script type="text/javascript">
+	Qfast.add('widgets', { path: "/C76-S2-Tpllp-ebook/js/terminator2.2.min.js", type: "js", requires: ['fx'] });
+	Qfast(false, 'widgets', function () {
+		K.tabs({
+			id: 'fsD1',   //焦点图包裹id
+			conId: "D1pic1",  //** 大图域包裹id
+			tabId:"D1fBt",
+			tabTn:"a",
+			conCn: '.fcon', //** 大图域配置class
+			auto: 1,   //自动播放 1或0
+			effect: 'fade',   //效果配置
+			eType: 'click', //** 鼠标事件
+			pageBt:true,//是否有按钮切换页码
+			bns: ['.prev', '.next'],//** 前后按钮配置class
+			interval: 2750  //** 停顿时间
+		})
+	});
+</script>
+	<title>易书网</title>
+</head>
+<body>
+
+
+<script>
+	function exitSys(){
+		if(confirm("请确认退出系统？")){
+			$.ajax({
+	            type: "post",
+	            url: "/C76-S2-Tpllp-ebook/show.s?op=quit",
+	            data: "",
+	            async:true, // 异步请求
+	            cache:true, // 设置为 false 将不缓存此页面
+	            dataType: 'json', // 返回对象
+	            success: function(result) {
+	            	if(result.code == 1){
+	            		location.href="join.jsp";
+	            		return;
+	            	}
+	            }
+			});
+		}
+	}
+
+</script>
+<div class="top" id="item4">
+	<div class="container clearfix">
+		<ul class="clearfix fr">
+			<li>
+				<a href="/C76-S2-Tpllp-ebook/join.jsp" >登录</a>		   	
+			</li>
+			<li><a href="/C76-S2-Tpllp-ebook/join.jsp" >注册</a></li>
+			<li>
+					<a href="#" style="border: none">个人中心</a>
+					<a href="javascript:;" onclick="exitSys();" style="border: none">退出</a>
+			</li>	
+		</ul>
+	</div>
+</div>
+
+<div class="header">
+	<div class="container clearfix">
+		<div class="logo fl">
+			<a href="/C76-S2-Tpllp-ebook/back/lhoption/index.jsp"><img src="/C76-S2-Tpllp-ebook/images/logo4.png" alt=""/></a>
+		</div>
+		<div class="seacher fl">
+			<form action="" method="post">
+				<input type="text" placeholder="小伙伴，你想找什么?"/><input type="submit" value="搜 索"/>
+			</form>
+			<p>热门搜索：<a href="#">自行车</a> <a href="#">笔记本</a> <a href="#">散热器</a> <a href="#">考研资料</a> <a href="#">摩托车</a> <a href="#">手机</a> <a href="#">轮滑鞋</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a> <a href="#">显示器</a></p>
+		</div>
+		<div class="mm fr clearfix">
+			<a href="/C76-S2-Tpllp-ebook/back/lywoption/list.jsp">我要买</a>
+			<a href="/C76-S2-Tpllp-ebook/back/lhoption/publish.jsp">我要卖</a>
+		</div>
+	</div>
+</div>
+<div class="banner container" id="index-Show">
+	<img src="/C76-S2-Tpllp-ebook/images/notice.png" alt="" style="width: 1200px;height: auto;"/>
+	<div class="clearfix">
+		<div class="about fl">
+			<h1>易书网</h1>
+			<img src="/C76-S2-Tpllp-ebook/images/logo9.png" alt=""/>
+			<p><span>易书网</span>是一个网上书商城。力求打造网上最大的中文图书借换系统二手书交换系统力求打造是是网上最大的中文图书借换系统二手书交换系统。易书网来了,让爱书的你花极小的支出(1到2元)就可以读到你喜欢的书且没有后顾之忧哦！</p>
+		</div>
+		<div id="fsD1" class="focus fl">
+			<div id="D1pic1" class="fPic">
+				<div class="fcon">
+					<a href="javascript:void();"><img src="/C76-S2-Tpllp-ebook/images/focus1.jpg" /></a>
+					<span class="shadow"><a href="/C76-S2-Tpllp-ebook/back/lyw/list.jsp">便宜出售一本好书</a></span>
+				</div>
+				<div class="fcon">
+					<a href="javascript:void();"><img src="/C76-S2-Tpllp-ebook/images/focus2.jpg" /></a>
+					<span class="shadow"><a href="/C76-S2-Tpllp-ebook/back/lyw/list.jsp">便宜出售一本好书</a></span>
+				</div>
+				<div class="fcon">
+					<a href="javascript:void();"><img src="/C76-S2-Tpllp-ebook/images/focus3.jpg" /></a>
+					<span class="shadow"><a href="/C76-S2-Tpllp-ebook/back/lyw/list.jsp">便宜出售一本好书</a></span>
+				</div>
+				<div class="fcon">
+					<a href="javascript:void();"><img src="/C76-S2-Tpllp-ebook/images/focus4.jpg" /></a>
+					<span class="shadow"><a href="/C76-S2-Tpllp-ebook/back/lyw/list.jsp">便宜出售一本好书</a></span>
+				</div>
+				<div class="fcon">
+					<a href="javascript:void();"><img src="/C76-S2-Tpllp-ebook/images/focus5.jpg" /></a>
+					<span class="shadow"><a href="/C76-S2-Tpllp-ebook/back/lyw/list.jsp">便宜出售一本好书</a></span>
+				</div>
+			</div>
+			<div class="fbg">
+				<div class="D1fBt" id="D1fBt">
+					<a href="javascript:void(0)" class="current"><i>1</i></a>
+					<a href="javascript:void(0)"><i>2</i></a>
+					<a href="javascript:void(0)"><i>3</i></a>
+					<a href="javascript:void(0)"><i>4</i></a>
+					<a href="javascript:void(0)"><i>5</i></a>
+				</div>
+			</div>
+		</div>
+		<div class="help fr">
+			<h2>最新公告</h2>
+			<ul>
+							<li><i class="icon-bell red"></i><a href="/C76-S2-Tpllp-ebook/notice-detail.jsp?nid=1">华南地区</a></li>
+							<li><i class="icon-bell red"></i><a href="/C76-S2-Tpllp-ebook/notice-detail.jsp?nid=4">华南地区</a></li>
+							<li><i class="icon-bell red"></i><a href="/C76-S2-Tpllp-ebook/notice-detail.jsp?nid=3">华南地区</a></li>
+							<li><i class="icon-bell red"></i><a href="/C76-S2-Tpllp-ebook/notice-detail.jsp?nid=2">华南地区</a></li>
+			</ul>
+			<h2>新手帮助</h2>
+			<ul>
+				<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">如何买书</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="index-book-show">
+	<div class="item clearfix" id="item1">
+		<h1>教材区<span></span>
+		</h1>
+		<div class="list fl">
+			<ul class="one">
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">文化历史</a>
+						<ul class="two">		
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">计算机与网络</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">成功励志</a>
+						<ul class="two">
+									<li><a href="/C76-S2-Tpllp-ebook/join.jsp">名人名言</a></li>
+									<li><a href="/C76-S2-Tpllp-ebook/join.jsp">名人传记</a></li>
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">法律</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">生活时尚</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">管理</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">教育考试</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+					<li><a class="on" href="/C76-S2-Tpllp-ebook/join.jsp">科技工程</a>
+						<ul class="two">
+						</ul>
+					</li>
+				
+			</ul>
+		</div>
+		<div class="book-wrap fr">
+			<div class="book clearfix" id="teachBook">
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=1"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97871112154792dfedf3.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=1" >微机原理与接口技术</a></p>
+							<p>数量：736</p>
+							<p><s>价格：￥29.0</s> 29.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=2"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978750846114415465ac.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=2" >计算机辅助设计AutoCAD</a></p>
+							<p>数量：575</p>
+							<p><s>价格：￥28.0</s> 28.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=3"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97871112154792dfedf3.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=3" >微机原理与接口技术</a></p>
+							<p>数量：736</p>
+							<p><s>价格：￥29.0</s> 29.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=4"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978750846114415465ac.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=4" >计算机辅助设计AutoCAD</a></p>
+							<p>数量：575</p>
+							<p><s>价格：￥28.0</s> 28.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=5"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97871112154792dfedf3.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=5" >微机原理与接口技术</a></p>
+							<p>数量：736</p>
+							<p><s>价格：￥29.0</s> 29.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=6"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978750846114415465ac.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=6" >计算机辅助设计AutoCAD</a></p>
+							<p>数量：575</p>
+							<p><s>价格：￥28.0</s> 28.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=7"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/最新上传/9787115156020.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=7" >数据库Access2003应用教程</a></p>
+							<p>数量：468</p>
+							<p><s>价格：￥29.0</s> 29.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=8"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978730220119919019b0.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=8" >计算机网络技术及应用</a></p>
+							<p>数量：261</p>
+							<p><s>价格：￥39.0</s> 39.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=9"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978704007264801b91c2.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=9" >遥感导论</a></p>
+							<p>数量：211</p>
+							<p><s>价格：￥35.4</s> 35.4</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=10"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978711522081302ed2b0.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=10" >办公自动化技术与应用</a></p>
+							<p>数量：210</p>
+							<p><s>价格：￥32.0</s> 32.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=11"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978711308185008c8802.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=11" >单片机原理及应用</a></p>
+							<p>数量：188</p>
+							<p><s>价格：￥24.0</s> 24.0</p>
+						</dd>
+					</dl>
+
+					<dl>
+						<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=12"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/9787302152286049444e.jpg" /></a></dt>
+						<dd>
+							<p style="width:150px;height:100px;"><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=12" >TCP/IP协议与网络管理标准教程</a></p>
+							<p>数量：156</p>
+							<p><s>价格：￥43.0</s> 43.0</p>
+						</dd>
+					</dl>
+
+			</div>
+		</div>
+	</div>	
+	
+	<div class="item clearfix" id="item2">
+		<h1>工具书区<span></span></h1>
+		<ul class="tab clearfix">
+					
+						<li><a   href="/C76-S2-Tpllp-ebook/join.jsp">英语四六级</a></li>	
+						
+						<li><a   href="/C76-S2-Tpllp-ebook/join.jsp">公务员资料</a></li>	
+					
+						
+						<li><a   href="/C76-S2-Tpllp-ebook/join.jsp">考研资料</a></li>	
+					
+						<li><a   href="/C76-S2-Tpllp-ebook/join.jsp">雅思托福</a></li>	
+						<li><a   href="/C76-S2-Tpllp-ebook/join.jsp">其他</a></li>	
+					
+		</ul>
+		
+		<div class="tab0 tabs clearfix">
+			<div class="book clearfix" id="toolBook">
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=183"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97873021464070365354.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=183">软件过程管理</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥28.0</s> 28.0</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=184"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97870402834260fe7f00.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=184">自动控制原理及其应用</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥21.8</s> 21.8</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=185"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/9787113122331048441a.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=185">办公软件高级应用与案例精选</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥31.0</s> 31.0</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=186"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978730217257402362c4.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=186">计算机网络管理技术</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥25.0</s> 25.0</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=187"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/97870401871200c0cc87.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=187">人机工程学</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥36.2</s> 36.2</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=188"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978781082281713e8378.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=188">单片机原理及接口技术</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥33.0</s> 33.0</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=189"><img src="https://2sjc.oss-cn-hangzhou.aliyuncs.com/img/计算机与网络/978712101454305795c7.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=189">编译原理</a></p>
+						<p>数量：3</p>
+						<p><s>价格：￥22.0</s> 22.0</p>
+					</dd>
+				</dl>
+			
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="item clearfix" id="item3">
+		<h1>分享区<span></span></h1>
+		<div class="tabs book clearfix">
+		
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=408"><img src="http://img3m8.ddimg.cn/62/8/25141508-1_l_3.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=408">朝圣者</a></p>
+						<p>数量：19534</p>
+						<p><s>价格：￥45.2</s> 45.2</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=409"><img src="http://img3m0.ddimg.cn/65/35/28470980-1_l_5.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=409">阴谋与爱情</a></p>
+						<p>数量：12134</p>
+						<p><s>价格：￥28.6</s> 28.6</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=410"><img src="http://img3m9.ddimg.cn/21/27/28470639-1_l_5.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=410">自游加州全攻略</a></p>
+						<p>数量：10484</p>
+						<p><s>价格：￥34.5</s> 34.5</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=411"><img src="http://img3m7.ddimg.cn/61/16/25580077-1_l_3.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=411">安妮日记</a></p>
+						<p>数量：10298</p>
+						<p><s>价格：￥23.8</s> 23.8</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=412"><img src="http://img3m0.ddimg.cn/85/3/27898780-1_l_1.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=412">名人传</a></p>
+						<p>数量：10281</p>
+						<p><s>价格：￥23.8</s> 23.8</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=413"><img src="http://img3m8.ddimg.cn/53/8/27898748-1_l_1.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=413">给青年的十二封信</a></p>
+						<p>数量：10250</p>
+						<p><s>价格：￥23.8</s> 23.8</p>
+					</dd>
+				</dl>
+			
+				<dl>
+					<dt><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=414"><img src="http://img3m2.ddimg.cn/98/21/25585262-1_l_3.jpg" /></a></dt>
+					<dd>
+						<p><a href="/C76-S2-Tpllp-ebook/detail.jsp?bid=414">领导者习惯：卓越管理的22个必备技能</a></p>
+						<p>数量：10758</p>
+						<p><s>价格：￥25.9</s> 25.9</p>
+					</dd>
+				</dl>
+			
+		</div>
+	</div>
+</div>
+<div class="fixnav">
+	<ul>
+		<li><a href="#" title="1">教材区</a></li>
+		<li><a href="#" title="2">工具书区</a></li>
+		<li><a href="#" title="3">分享区</a></li>
+		<li><a href="#" title="4">返回顶部</a></li>
+		<li><a  href="http://wpa.qq.com/msgrd?v=3&uin=2078140086&site=qq&menu=yes">联系客服</a></li>
+	</ul>
+</div>
+
+
+<div class="foot">
+	<div class="container">
+		<div class="zhinan">
+			<ul class="clearfix">
+				<li class="item-li">关于我们
+					<ul>
+					<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">自我介绍</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">联系我们</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/notice.jsp">网站公告</a></li>
+						</ul>
+				</li>
+				<li class="item-li">新手指南
+					<ul>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">如何买书</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">如何卖书</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lywoption/password.jsp">修改密码</a></li>
+					</ul>
+				</li>
+				<li class="item-li">配送方式
+					<ul>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">配送范围</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">配送时间</a></li>
+					</ul>
+				</li>
+				<li class="item-li">售后服务
+					<ul>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">退款申请</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">退换货处理</a></li>
+						<li><a href="/C76-S2-Tpllp-ebook/back/lhoption/help.jsp">退换货政策</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div class="line"></div>
+
+		<div class="bottom">
+			<p>友情链接：<a href="javascript:;" onclick="window.open('https://www.baidu.com')">百度</a>&nbsp;&nbsp;<a href="javascript:;"onclick="window.open('https://www.taobao.com')">淘宝</a></p>
+			<p>本站所有信息均为用户自由发布，本站不对信息的真实性负任何责任，交易时请注意识别信息的真假如有网站内容侵害了您的权益请联系我们删除，举报电话：18873251434</p>
+			<p>技术支持：彭算泉 &nbsp;&nbsp;商务QQ:1457489935 &nbsp;&nbsp;邮箱：1139386771@qq.com</p>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

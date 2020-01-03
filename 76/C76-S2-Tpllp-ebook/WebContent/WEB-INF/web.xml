@@ -130,7 +130,7 @@
 		<url-pattern>/detail.jsp</url-pattern>
 	</filter-mapping>
 	<!-- 配置错误处理 -->
-	<error-page>
+<!-- 	<error-page>
 		<error-code>404</error-code>
 		<location>/back/error/not-fund.jsp</location>
 	</error-page>
@@ -141,10 +141,10 @@
 	<error-page>
 		<error-code>500</error-code>
 		<location>/back/error/error.jsp</location>
-	</error-page>
+	</error-page> -->
 	<!-- 配置异常处理 -->
-	<error-page>
+<!-- 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/back/error/error.jsp</location>
-	</error-page>
+	</error-page> -->
 </web-app>
