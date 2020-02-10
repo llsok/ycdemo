@@ -18,6 +18,14 @@ public class Download {
 	private Integer downloadedCount = 0;
 	
 	/**
+	 *   当前下载的字节数 / 总的字节数 = 比率 ==》百分数
+	 * 在每次下载到数据时，将字节数加入到字节数统计变量中
+	 * 然后计算百分比，显示出来
+	 */
+	// 下载的字节数
+	private long downloadBytes;
+		
+	/**
 	 * 分块下载
 	 * 
 	 * @param urlstr 地址
@@ -71,10 +79,22 @@ public class Download {
 				if (tmpCurrent <= end) {
 					fos.write(buffer, 0, count);
 					current += count;
+					// 更新字节数
+					synchronized (this) {
+						downloadBytes += count;
+						int rate = (int) (downloadBytes*100/fileSize);
+						System.out.println("下载进度：" + rate + "%");
+					}
 				} else {
 					// 计算最后一块的大小， 这是跨分界线的情况
 					int tmpSize = (int) (end - current);
 					fos.write(buffer, 0, tmpSize);
+					synchronized (this) {
+						downloadBytes += tmpSize;
+						int rate = (int) (downloadBytes*100/fileSize);
+						System.out.println("下载进度：" + rate + "%");
+						// 实现显示的百分没有重复值
+					}
 					break;
 				}
 			}
@@ -130,7 +150,7 @@ public class Download {
 					if (runThreadCount >= threadSize) {
 						// 等待
 						try {
-							wait();
+							this.wait();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -193,15 +213,19 @@ public class Download {
 	}
 	
 	/**
-	 * 下载完成
+	 * 文件块下载完成
 	 */
 	public void finish() {
 		synchronized (this) {
 			// 线程数减一
 			runThreadCount --;
 			downloadedCount++;
-			notify();
+			this.notify();
 		}
+	}
+	
+	public void showRate() {
+		
 	}
 
 	public static void main(String[] args) throws IOException {
