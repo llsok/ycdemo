@@ -2,6 +2,7 @@ package com.yc.download;
 
 import java.io.*;
 import java.net.*;
+import java.util.Properties;
 
 public class Download {
 
@@ -13,18 +14,35 @@ public class Download {
 	private String filePath = "d:/"; // 文件存放的路径
 	// 定义当前运行的线程数
 	private Integer runThreadCount = 0;
-	
+
 	// 记录已经下载的文件数量
 	private Integer downloadedCount = 0;
-	
+
 	/**
-	 *   当前下载的字节数 / 总的字节数 = 比率 ==》百分数
-	 * 在每次下载到数据时，将字节数加入到字节数统计变量中
-	 * 然后计算百分比，显示出来
+	 * 当前下载的字节数 / 总的字节数 = 比率 ==》百分数 在每次下载到数据时，将字节数加入到字节数统计变量中 然后计算百分比，显示出来
 	 */
 	// 下载的字节数
 	private long downloadBytes;
-		
+
+	/**
+	 * 实现断点续传 
+	 * 1、保存当前下载的进度 
+	 * txt : 自己定义文件保存的格式，方便解析 ，不推荐 
+	 * properties : 属性文件：格式： 
+	 * 键1=值1
+	 * 键2=值2
+	 *  。。。。 
+	 *  a.zip 文件 
+	 *  a.zip.0=已经下载的进度数 
+	 *  a.zip.1=已经下载的进度数 
+	 *  a.zip.3=已经下载的进度数
+	 * 2、当下次启动下载时，检查有没有保存的进度 
+	 * 3、如果有，则回复下载进度 4、如果没有，则重新下载
+	 */
+	// 存储下载进度的集合
+	private Properties downloadMap = new Properties(); 
+	// Map ==》Hashtable线程安全（HashMap线程不安全） ==》Properties（存储字符串数据）
+
 	/**
 	 * 分块下载
 	 * 
@@ -79,19 +97,30 @@ public class Download {
 				if (tmpCurrent <= end) {
 					fos.write(buffer, 0, count);
 					current += count;
+					/**
+					 * 更新进度
+					 */
+					saveProgress(filename, index, current);
+
 					// 更新字节数
 					synchronized (this) {
 						downloadBytes += count;
-						int rate = (int) (downloadBytes*100/fileSize);
+						int rate = (int) (downloadBytes * 100 / fileSize);
 						System.out.println("下载进度：" + rate + "%");
 					}
 				} else {
 					// 计算最后一块的大小， 这是跨分界线的情况
 					int tmpSize = (int) (end - current);
 					fos.write(buffer, 0, tmpSize);
+
+					/**
+					 * 更新进度
+					 */
+					saveProgress(filename, index, blockSize);
+
 					synchronized (this) {
 						downloadBytes += tmpSize;
-						int rate = (int) (downloadBytes*100/fileSize);
+						int rate = (int) (downloadBytes * 100 / fileSize);
 						System.out.println("下载进度：" + rate + "%");
 						// 实现显示的百分没有重复值
 					}
@@ -117,6 +146,33 @@ public class Download {
 	}
 
 	/**
+	 * 保存进度
+	 * @param filename
+	 * @param index
+	 * @param current
+	 */
+	public /*synchronized*/ void saveProgress(String filename, int index, long current) {
+		/**
+		 * 更新进度
+		 */
+		downloadMap.setProperty("" + filename + "." + index, "" + current);
+		/**
+		 * 不能在这里保存进度文件
+		 * 自动定时的保存==》 开启一个线程定时得循环执行保存的操作=》1秒钟保存一次进度
+		 * 建议 在 downloadFile 中保存进度文件
+		 */
+		/*
+		try {
+			FileOutputStream fos = new FileOutputStream("d:/download.properties");
+			downloadMap.store(fos, "download progress ...");
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		*/
+	}
+
+	/**
 	 * 下载文件
 	 * 
 	 * @param urlstr
@@ -131,6 +187,45 @@ public class Download {
 			}
 
 			/**
+			 * 启动进度保存线程
+			 */
+			int tmpBlockNumber = blockNumber;
+			Thread progressThread = new Thread() {
+				public void run() {
+					while (downloadedCount < tmpBlockNumber) {
+						FileOutputStream fos = null;
+						try {
+							fos = new FileOutputStream("d:/download.properties");
+							downloadMap.store(fos, "download progress ...");
+						} catch (IOException e) {
+							e.printStackTrace();
+						} finally {
+							if(fos!=null) {
+								try {
+									fos.close();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					/**
+					 *问题：
+					 *	1、bug 少了最后一个文件块的进度
+					 *	2、正常下载完成之后，要移除进度信息
+					 *	3、异常情况：
+					 *		当异常退出时，下载中的文件，没有保存到数据
+					 */
+				}
+			};
+			progressThread.start();
+
+			/**
 			 * 开启多线程下载
 			 */
 			for (int i = 0; i < blockNumber; i++) {
@@ -141,7 +236,7 @@ public class Download {
 						finish();
 					}
 				}.start();
-				
+
 				// 一定锁定 Download 对象
 				synchronized (this) {
 					// 运行的线程数加一
@@ -160,11 +255,10 @@ public class Download {
 			
 			// 如果直接拼接，会有问题
 			/**
-			 * 在此等待，等待所有线程下载完成
-			 * wait();
+			 * 在此等待，等待所有线程下载完成 wait();
 			 */
 			synchronized (this) {
-				while(downloadedCount < blockNumber) {
+				while (downloadedCount < blockNumber) {
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -211,21 +305,21 @@ public class Download {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 文件块下载完成
 	 */
 	public void finish() {
 		synchronized (this) {
 			// 线程数减一
-			runThreadCount --;
+			runThreadCount--;
 			downloadedCount++;
 			this.notify();
 		}
 	}
-	
+
 	public void showRate() {
-		
+
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -236,8 +330,12 @@ public class Download {
 		d.downloadFile(urlstr);
 
 		/**
-		 * 作业题： 1，如何限制下载进程数 2，如果在现在完成之后，自动合并，删除临时文件 3，实现进度显示：进度条，百分数：10%
-		 * 4，实现断点续传，关闭程序后，下次可以继续下载 5，列表下载，依次下载多个文件
+		 * 作业题： 
+		 * 1，如何限制下载进程数 
+		 * 2，如果在现在完成之后，自动合并，删除临时文件 
+		 * 3，实现进度显示：进度条，百分数：10%
+		 * 4，实现断点续传，关闭程序后，下次可以继续下载
+		 * 5，列表下载，依次下载多个文件
 		 */
 
 		/*
