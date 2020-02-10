@@ -14,6 +14,9 @@ public class Download {
 	// 定义当前运行的线程数
 	private Integer runThreadCount = 0;
 	
+	// 记录已经下载的文件数量
+	private Integer downloadedCount = 0;
+	
 	/**
 	 * 分块下载
 	 * 
@@ -134,6 +137,24 @@ public class Download {
 					}
 				}
 			}
+			
+			// 如果直接拼接，会有问题
+			/**
+			 * 在此等待，等待所有线程下载完成
+			 * wait();
+			 */
+			synchronized (this) {
+				while(downloadedCount < blockNumber) {
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			// 完成文件合并
+			mergeFile(urlstr);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -178,6 +199,7 @@ public class Download {
 		synchronized (this) {
 			// 线程数减一
 			runThreadCount --;
+			downloadedCount++;
 			notify();
 		}
 	}
