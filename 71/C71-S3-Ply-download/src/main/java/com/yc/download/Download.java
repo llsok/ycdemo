@@ -9,9 +9,11 @@ public class Download {
 	 * 定义下载属性
 	 */
 	private int blockSize = 1024 * 1024; // 文件分区的大小
-	private int threadSize = 10; // 线程的数量
+	private int threadSize = 3; // 线程的数量
 	private String filePath = "d:/"; // 文件存放的路径
-
+	// 定义当前运行的线程数
+	private Integer runThreadCount = 0;
+	
 	/**
 	 * 分块下载
 	 * 
@@ -113,8 +115,24 @@ public class Download {
 				new Thread() {
 					public void run() {
 						downloadBlock(urlstr, index);
+						finish();
 					}
 				}.start();
+				
+				// 一定锁定 Download 对象
+				synchronized (this) {
+					// 运行的线程数加一
+					runThreadCount += 1;
+					// 判断线程数是否超过设定值
+					if (runThreadCount >= threadSize) {
+						// 等待
+						try {
+							wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 			}
 
 		} catch (IOException e) {
@@ -125,6 +143,7 @@ public class Download {
 
 	/**
 	 * 拼接文件
+	 * 
 	 * @param urlstr
 	 */
 	public void mergeFile(String urlstr) {
@@ -142,7 +161,7 @@ public class Download {
 				byte[] buffer = new byte[1024];
 				int count;
 				while ((count = fis.read(buffer)) > -1) {
-					fos.write(buffer,0, count);
+					fos.write(buffer, 0, count);
 				}
 				fis.close();
 			}
@@ -152,21 +171,27 @@ public class Download {
 		}
 	}
 	
-	
+	/**
+	 * 下载完成
+	 */
+	public void finish() {
+		synchronized (this) {
+			// 线程数减一
+			runThreadCount --;
+			notify();
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
 		String urlstr = "http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.50/bin/apache-tomcat-8.5.50.zip";
 
 		Download d = new Download();
 
 		d.downloadFile(urlstr);
-		
+
 		/**
-		 * 作业题：
-		 * 1，如何限制下载进程数
-		 * 2，如果在现在完成之后，自动合并，删除临时文件
-		 * 3，实现进度显示：进度条，百分数：10%
-		 * 4，实现断点续传，关闭程序后，下次可以继续下载
-		 * 5，列表下载，依次下载多个文件
+		 * 作业题： 1，如何限制下载进程数 2，如果在现在完成之后，自动合并，删除临时文件 3，实现进度显示：进度条，百分数：10%
+		 * 4，实现断点续传，关闭程序后，下次可以继续下载 5，列表下载，依次下载多个文件
 		 */
 
 		/*
