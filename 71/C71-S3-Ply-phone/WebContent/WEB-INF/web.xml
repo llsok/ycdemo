@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>C71-S3-Ply-phone</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>文件上传</servlet-name>
+		<servlet-class>com.yc.photo.servlet.UploadServlet</servlet-class>
+		<!-- Serlvet 3.0 新增的文件上传配置 -->
+		<multipart-config>
+			<!--允许上传文件大小
+			<max-file-size></max-file-size>
+			临时保存文件大小阀值
+			<file-size-threshold></file-size-threshold>
+			临时保存的文件路径
+			<location></location>
+			允许上传的文件数量
+			<max-request-size></max-request-size> -->
+		</multipart-config>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>文件上传</servlet-name>
+		<url-pattern>/upload.do</url-pattern>
+	</servlet-mapping>
+
+
+</web-app>
