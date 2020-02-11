@@ -6,10 +6,37 @@
 </head>
 <body>
 
-<form action="upload.do" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<input type="submit" value="上传">
+<form id='ff' action="upload.do" method="post" enctype="multipart/form-data">
+	<input type="file" name="file">
+	<input type="button" value="上传" onclick="postData()">
 </form>
 
 </body>
+<script src="assets/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+function postData(){
+	// ff 表示表单的dom对象
+    var formData = new FormData(ff);
+    // 手动加入提交字段
+    /* formData.append("photo",$("#photo")[0].files[0]);
+    formData.append("service",'App.Passion.UploadFile');
+    formData.append("token",token); */
+    $.ajax({
+        url:'upload.do', /*接口域名地址*/
+        type:'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success:function(res){
+        	// res 是servlet 返回的数据  success
+            if(res=="success"){
+                location.href = "index.html";
+            }else{
+            	alert('失败');
+            }
+        }
+    })
+}
+</script>
 </html>
