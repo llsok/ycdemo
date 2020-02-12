@@ -40,7 +40,10 @@
 
 	<mappers>
 		<!-- 注册SQL映射文件 -->
-		<mapper resource="com/yc/mybatis/dao/HallMapper.xml" />
-		<mapper resource="com/yc/mybatis/dao/CinemaMapper.xml" />
+		<!-- <mapper resource="com/yc/mybatis/dao/HallMapper.xml" />
+		<mapper resource="com/yc/mybatis/dao/CinemaMapper.xml" /> -->
+		<!-- package 可以设置包扫描，自动将该包下的映射文件注册进来 -->
+		<package name="com.yc.mybatis.dao"/>
+		
 	</mappers>
 </configuration>

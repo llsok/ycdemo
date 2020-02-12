@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.mybatis.dao.MovieMapper">
+
+	<!-- resultType 简单映射，自动映射 ，配置实体类的类路径 -->
+	<select id="selectAll" resultType="com.yc.mybatis.bean.Movie">
+		select * from movie
+	</select>
+
+	<select id="selectByMovie"
+		resultType="com.yc.mybatis.bean.Movie">
+		select * from movie
+		<where>
+			<if test="name != null">and name like #{name}</if>
+			<if test="region != null">and region = #{region}</if>
+			<if test="language != null">and language = #{language}</if>
+		</where>
+	</select>
+	
+	<select id="selectByFlag"
+		resultType="com.yc.mybatis.bean.Movie">
+		select * from movie
+		<where>
+			<choose>
+				<when test="flag == 1">name=#{name}</when>
+				<when test="flag == 2">name like #{name}</when>
+				<when test="flag == 3">name is null</when>
+				<otherwise>name is not null</otherwise>
+			</choose>			
+		</where>
+	</select>
+	
+	<!-- 单参数 对名字没有要求 -->
+	<select id="selectById"
+		resultType="com.yc.mybatis.bean.Movie">
+		select * from movie where id = #{iddddddd}
+	</select>
+	
+	<update id="update">
+		update movie 
+		<set>
+			<if test="name != null ">name=#{name},</if>
+			<if test="duration != null ">duration=#{duration},</if>
+			<if test="region != null ">region=#{region}</if>
+			<!-- 其他字段省略 -->		
+		</set>
+		where id=#{id}
+	</update>
+	
+	<select id="selectInLanguage" resultType="com.yc.mybatis.bean.Movie">
+	
+		select * from movie where <!-- language in (?,?,?,?,?) -->
+		
+		<foreach collection="languages" item="l" open="language in (" close=")" separator=",">
+			<!-- language in ( #{l} , #{l} , #{l} , #{l}) -->
+			#{l}
+		</foreach>
+		
+	
+	</select>
+	
+
+</mapper>
