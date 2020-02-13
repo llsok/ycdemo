@@ -48,6 +48,14 @@ public interface MovieMapper {
 	 */
 	List<Movie> selectAllWithOrder(@Param("orders") String orders);
 	
-	
+	/**
+	 * @CacheNamespace(size = 512)：定义在该命名空间内允许使用内置缓存
+	@Options(useCache = true, flushCache = false, timeout = 10000)：一些查询的选项开关
+	@Param("id")：全局限定别名，定义查询参数在sql语句中的位置不再是顺序下标0,1,2,3......的形式，而是对应名称，该名称在此处定义。 
+	@Results是以@Result为元素的数组，@Result表示单条属性——字段的映射关系，id = true表示该id字段是主键，查询时mybatis会给予必要的优化。
+		数组中所有的@Result组成了单个记录的映射关系，而@Results则是单个记录的集合。另外，还有一个非常重要的注解@ResultMap，用于引用@Results
+	@Select("查询语句")、@Insert("增加语句")、@Update("更新语句")和@Delete("删除语句")表示对数据进行查询、添加、更新和删除的操作。
+
+	 */
 	
 }
