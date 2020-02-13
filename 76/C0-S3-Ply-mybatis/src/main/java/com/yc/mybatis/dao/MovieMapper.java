@@ -2,12 +2,16 @@ package com.yc.mybatis.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.yc.mybatis.bean.Movie;
 
 public interface MovieMapper {
 	
+	@Select("select * from movie")
 	List<Movie> selectAll();
 	
 	/**
@@ -32,6 +36,8 @@ public interface MovieMapper {
 	
 	List<Movie> selectInLanguage(@Param("languages") String[] languages);
 	
+	@Insert("insert into movie (name,duration) values (#{name},#{duration})")
+	@Options(useGeneratedKeys = true, keyColumn = "id",keyProperty = "id")
 	void insert(Movie m);
 	
 	/**

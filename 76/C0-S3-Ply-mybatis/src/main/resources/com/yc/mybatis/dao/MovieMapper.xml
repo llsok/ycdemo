@@ -5,9 +5,9 @@
 <mapper namespace="com.yc.mybatis.dao.MovieMapper">
 
 	<!-- resultType 简单映射，自动映射 ，配置实体类的类路径 -->
-	<select id="selectAll" resultType="com.yc.mybatis.bean.Movie">
+	<!-- <select id="selectAll" resultType="com.yc.mybatis.bean.Movie">
 		select <include refid="allColumns"></include> from movie
-	</select>
+	</select> -->
 
 	<select id="selectByMovie"
 		resultType="com.yc.mybatis.bean.Movie">
@@ -62,17 +62,17 @@
 	</select>
 	
 	<!-- useGeneratedKeys="true" keyColumn="id" keyProperty="id" -->
-	<insert id="insert" >
-		<!-- selectKey   order 表示该语句执行的时机  
+	<!-- <insert id="insert" >
+		selectKey   order 表示该语句执行的时机  
 			select seq_xxx.nextval from dual
-		-->
+		
 		<selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="int">
 			select last_insert_id()
 		</selectKey>
 	
 		insert into movie (name,duration) values (#{name},#{duration})
 	
-	</insert>
+	</insert> -->
 	
 	<!-- 命名语句块 语法格式 ${语句块名} -->
 	<select id="selectAllWithOrder" resultType="com.yc.mybatis.bean.Movie">
@@ -86,6 +86,30 @@
 
 	<!-- 开启二级缓存 -->	
 	<cache></cache>
+	
+	<!-- 
+	org.apache.ibatis.exceptions.PersistenceException: 
+### Error building SqlSession.
+### The error may exist in com/yc/mybatis/dao/MovieMapper.xml
+### Cause: org.apache.ibatis.builder.BuilderException: 
+Error parsing SQL Mapper Configuration. Cause: java.lang.IllegalArgumentException: 
+Mapped Statements collection already contains value for com.yc.mybatis.dao.MovieMapper.selectAll
+	
+	 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 </mapper>
