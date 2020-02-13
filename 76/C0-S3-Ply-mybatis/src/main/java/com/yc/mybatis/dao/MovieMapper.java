@@ -32,5 +32,16 @@ public interface MovieMapper {
 	
 	List<Movie> selectInLanguage(@Param("languages") String[] languages);
 	
+	void insert(Movie m);
+	
+	/**
+	 * 根据用户的要求进行排序     order by 字段名        #{}   ==> ? 不可实现
+	 * 
+	 * 命名语句块，在单参数时，也需要加 @Param 注解
+	 * @return
+	 */
+	List<Movie> selectAllWithOrder(@Param("orders") String orders);
+	
+	
 	
 }

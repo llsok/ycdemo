@@ -59,9 +59,10 @@ public class MovieMapperTest {
 		m.setLanguage("英语");
 		mm.selectByMovie(m);
 	}
+
 	/**
 	 * org.apache.ibatis.exceptions.PersistenceException: 
- 	Parameter 'flag' not found. Available parameters are [arg1, arg0, param1, param2]
+	Parameter 'flag' not found. Available parameters are [arg1, arg0, param1, param2]
 	 */
 	@Test
 	public void testSelectByFlag() throws IOException {
@@ -69,9 +70,9 @@ public class MovieMapperTest {
 		mm.selectByFlag("少年", "1");
 		mm.selectByFlag("少年", "2");
 		mm.selectByFlag("少年", "3");
-		mm.selectByFlag("少年", "4");	
+		mm.selectByFlag("少年", "4");
 	}
-	
+
 	@Test
 	public void testUpdate() {
 		MovieMapper mm = session.getMapper(MovieMapper.class);
@@ -84,7 +85,7 @@ public class MovieMapperTest {
 		m.setDuration(null);
 		mm.update(m);
 	}
-	
+
 	/**
 	 * org.apache.ibatis.exceptions.PersistenceException: 
 		Parameter 'languages' not found. Available parameters are [array]
@@ -94,7 +95,32 @@ public class MovieMapperTest {
 	@Test
 	public void testSelectInLanguage() {
 		MovieMapper mm = session.getMapper(MovieMapper.class);
-		String[] languages = {"英语","国语","粤语","法语"};
+		String[] languages = { "英语", "国语", "粤语", "法语" };
 		mm.selectInLanguage(languages);
+	}
+
+	@Test
+	public void testInsert() {
+		MovieMapper mm = session.getMapper(MovieMapper.class);
+		Movie m = new Movie();
+		m.setName("终结者6");
+		m.setDuration(1000);
+		mm.insert(m);
+		session.commit();
+		/**
+		 * 在 insert 完成之后，直接获取到 该 movie 记录的 id 值
+		 * 需要进行必要配置
+		 */
+		System.out.println("=============="+m.getId());
+		Assert.assertEquals(true, m.getId() > 0);
+	}
+
+	
+	@Test
+	public void testSelectAllWithOrder() {
+		MovieMapper mm = session.getMapper(MovieMapper.class);
+		mm.selectAllWithOrder(" id desc");
+		mm.selectAllWithOrder(" name");
+		mm.selectAllWithOrder(" duration, name desc, region desc");
 	}
 }
