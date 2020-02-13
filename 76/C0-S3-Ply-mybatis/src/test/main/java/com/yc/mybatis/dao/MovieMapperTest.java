@@ -20,6 +20,7 @@ import com.yc.mybatis.bean.Movie;
 public class MovieMapperTest {
 
 	private SqlSession session;
+	private SqlSession session1;
 
 	// 该方法会在 Test 方法之前执行
 	@Before
@@ -32,11 +33,13 @@ public class MovieMapperTest {
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		// MyBatis 的会话底层包装着 一个 JDBC 连接
 		session = sqlSessionFactory.openSession();
+		session1 = sqlSessionFactory.openSession();
 	}
 
 	@After
 	public void after() {
 		session.close();
+		session1.close();
 	}
 
 	@Test
@@ -120,7 +123,56 @@ public class MovieMapperTest {
 	public void testSelectAllWithOrder() {
 		MovieMapper mm = session.getMapper(MovieMapper.class);
 		mm.selectAllWithOrder(" id desc");
+		System.out.println("===========================");
 		mm.selectAllWithOrder(" name");
+		System.out.println("===========================");
 		mm.selectAllWithOrder(" duration, name desc, region desc");
+		System.out.println("===========================");
+		mm.selectAllWithOrder(" name");
+		System.out.println("===========================");
+		mm.selectAllWithOrder(" name");
+		
+		// 二级缓存要求，会话必须在提交之后，才能共享缓存数据
+		session.commit();
+		
+		System.out.println("*******************************");
+		MovieMapper mm1 = session1.getMapper(MovieMapper.class);
+		mm1.selectAllWithOrder(" name");
+		System.out.println("===========================");
+		mm1.selectAllWithOrder(" name");
 	}
+	
+	
+	/**
+	 * MyBatis默认启动一级缓存：一级缓存是指“同一个会话”中的缓存
+	 * 
+	 * 二级缓存需要  <cache> 启用，二级缓存是会话之间的换
+	 *  
+		Caused by: java.io.NotSerializableException: com.yc.mybatis.bean.Movie
+		未序列化的类 ： Movie
+		
+		缓存击穿、缓存命中
+		
+		缓存作用
+		（1）映射语句文件中的所有select 语句将会被缓存。 
+		（2）映射语句文件中的所有insert、update和delete语句会刷新缓存。 
+		（3）缓存会使用Least Recently Used（LRU，最近最少使用的）算法收回。 
+		（4）根据时间表（如no Flush Interval，没有刷新间隔），缓存不会以任何时间顺序来刷新。 
+		（5）缓存会存储列表集合或对象（无论查询方法返回什么）的1024个引用。 
+		（6）缓存会被视为read/write（可读/可写）的缓存，意味着对象检索不是共享的，而且可以安全地被调用者修改，而不干扰其他调用者或线程所做的潜在修改。
+		
+		配置：只读、缓存大小2048、FIFO
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

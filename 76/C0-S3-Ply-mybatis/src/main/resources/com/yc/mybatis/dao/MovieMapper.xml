@@ -84,4 +84,8 @@
 		id,name,duration,region,language <!-- .... -->
 	</sql>
 
+	<!-- 开启二级缓存 -->	
+	<cache></cache>
+	
+
 </mapper>

@@ -2,8 +2,11 @@ package com.yc.mybatis.bean;
 
 import java.util.Date;
 
-public class Movie {
-    private Integer id;
+public class Movie implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String name;
 
