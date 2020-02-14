@@ -1,7 +1,10 @@
 package com.yc.mybatis.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.mapping.FetchType;
@@ -19,5 +22,9 @@ public interface CinemaMapper {
 				fetchType = FetchType.LAZY))
 	})
 	Cinema selectById(int id);
+	
+	@Select("select * from cinema")
+	@ResultMap("cimemaMapper")
+	List<Cinema> selectAll();
 	
 }

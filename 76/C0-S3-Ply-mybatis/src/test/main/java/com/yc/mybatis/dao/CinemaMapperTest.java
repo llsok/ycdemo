@@ -38,14 +38,19 @@ public class CinemaMapperTest {
 	}
 
 	@Test
-	public void testSelectAll() throws IOException {
+	public void testSelectById() throws IOException {
 		CinemaMapper hm = session.getMapper(CinemaMapper.class);
 		Cinema h = hm.selectById(4);
 		System.out.println(h.getHalls().size());
 	}
 	
 	
-	
+	@Test
+	public void testSelectAll() throws IOException {
+		CinemaMapper hm = session.getMapper(CinemaMapper.class);
+		List<Cinema> list = hm.selectAll();
+		System.out.println(list.get(0).getHalls().size());
+	}
 	
 	
 	
