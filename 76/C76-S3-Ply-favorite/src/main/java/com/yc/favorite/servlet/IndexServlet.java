@@ -28,6 +28,21 @@ public class IndexServlet extends HttpServlet {
 		try {
 			TagMapper tm = session.getMapper(TagMapper.class);
 			List<Tag> list = tm.selectAll();
+			
+			/**
+			 * 查找要展示的标签
+			 */
+			String tId = request.getParameter("tId");
+			if(tId!=null) {
+				for(Tag t : list) {
+					// 判断 tId 参数值是否 == 当前的标签 tId
+					if(tId.equals(""+t.gettId())) {
+						request.setAttribute("showTag", t);
+						break;
+					}
+				}
+			}
+			
 			request.setAttribute("tList", list);
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 		} finally {

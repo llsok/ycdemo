@@ -8,7 +8,7 @@
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings><!-- 常用的配置 -->
 	<typeAliases>
-		<package name="com.yc.favorite.bean.Tag"/>
+		<package name="com.yc.favorite.bean"/>
 	</typeAliases><!-- 别名的用法 -->
 	<!-- 数据环境配置 -->
 	<environments default="test">

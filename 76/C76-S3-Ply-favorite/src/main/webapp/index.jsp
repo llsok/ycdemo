@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE HTML>
 <html lang="en-US">
   <head>
@@ -46,105 +47,11 @@
 						</td>
 					</tr>
 					
+					<c:forEach items="${tList}" var="tag">
 						
-						
-					<tr><td><a href="fav.do?op=toList&type=Hibernate">Hibernate</a></td></tr>
-						
+					<tr><td><a href="index.s?tId=${tag.tId}">${tag.tName}</a></td></tr>
 					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=Java">Java</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=JPA">JPA</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=JSF">JSF</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=Spring">Spring</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=Struts">Struts</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=不能说的秘密">不能说的秘密</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=盗墓笔记">盗墓笔记</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=电影">电影</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=断臂山">断臂山</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=购物">购物</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=花钱">花钱</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=交易">交易</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=教育">教育</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=连续剧">连续剧</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=刘烨">刘烨</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=门户">门户</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=士兵突击">士兵突击</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=王筝">王筝</a></td></tr>
-						
-					
-						
-						
-					<tr><td><a href="fav.do?op=toList&type=赚钱">赚钱</a></td></tr>
-						
+					</c:forEach>
 					
 					<tr>
 						<td>
@@ -157,55 +64,22 @@
 			<td>
 			<!-- 右边fav内容 -->
 				<div class="content_links">
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.apache.org/struts/" style="color:blue;font-size:18px;" target="_blank">Apache Struts</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						Struts官方站点
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.apache.org/struts/
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sougaou.com" style="color:blue;font-size:18px;" target="_blank">搜狗</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						aa
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sougaou.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sina.com" style="color:blue;font-size:18px;" target="_blank">新浪</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						国内外著名门户网站
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sina.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.taobao.com" style="color:blue;font-size:18px;" target="_blank">淘宝</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						这是一个好网站在。。
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.taobao.com
-					</div>
-				</div>	
-				
+					<!-- 循环展示链接 -->
+					<c:forEach items="${showTag.favorites}" var="fav">
+						<div style="padding:6px 10px;">	
+							<div>
+								<a href="${fav.fUrl }" style="color:blue;font-size:18px;" target="_blank">
+									${fav.fLabel }
+								</a>
+							</div>
+							<div style="color:black;font-size:16px;">	
+								${fav.fDesc }
+							</div>
+							<div style="color:green;font-size:14px;">
+								${fav.fUrl }
+							</div>
+						</div>	
+					</c:forEach>
 				</div>
 			</td>
 		</tr>
