@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 字段属性映射使用默认的驼峰命名方式 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings><!-- 常用的配置 -->
+	<typeAliases>
+		<package name="com.yc.favorite.bean.Tag"/>
+	</typeAliases><!-- 别名的用法 -->
+	<!-- 数据环境配置 -->
+	<environments default="test">
+		<environment id="test">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1/C76-S3-Ply-favorite" />
+				<property name="username" value="root" />
+				<property name="password" value="a" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!-- package 可以设置包扫描，自动将该包下的映射文件注册进来 -->
+		<package name="com.yc.favorite.dao"/>
+	</mappers>
+</configuration>
