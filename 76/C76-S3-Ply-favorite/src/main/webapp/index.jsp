@@ -38,12 +38,12 @@
 					<tr><td><a href="#" onclick="add();" style="font-weight:bold;">添加书签</a></td></tr>
 					<tr>
 						<td class="selected_label">
-							<a href="fav.do?op=toList&type=-1">全部</a>
+							<a href="index.s?flag=1">全部</a>
 						</td>
 					</tr>
 					<tr>
 						<td >
-							<a href="fav.do?op=toList&type=0">未分类</a>
+							<a href="index.s?flag=2">未分类</a>
 						</td>
 					</tr>
 					
@@ -64,8 +64,12 @@
 			<td>
 			<!-- 右边fav内容 -->
 				<div class="content_links">
+				
+					<!-- 设值的标签    showFlist 定义新的变量名   -->
+					<c:set var="showFlist" value="${ empty fList ? showTag.favorites : fList}"></c:set>
+				
 					<!-- 循环展示链接 -->
-					<c:forEach items="${showTag.favorites}" var="fav">
+					<c:forEach items="${showFlist}" var="fav">
 						<div style="padding:6px 10px;">	
 							<div>
 								<a href="${fav.fUrl }" style="color:blue;font-size:18px;" target="_blank">
