@@ -5,6 +5,7 @@
 <mapper namespace="com.yc.favorite.dao.TagMapper">
 
 	<resultMap id="myColumnMapper" type="Tag">
+		<!-- t_name 字段要映射2个属性，所以这两个属性要单独配置 -->
 		<result column="t_name" property="tName"></result>
 		<collection property="favorites" column="t_name" fetchType="lazy"
 			select="selectFavoriteByTname"></collection>

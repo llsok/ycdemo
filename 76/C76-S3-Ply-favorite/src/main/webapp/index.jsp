@@ -35,7 +35,7 @@
 				 
 				
 				<table class="labels_table" cellspacing="0" cellpadding="0" border="0">
-					<tr><td><a href="#" onclick="add();" style="font-weight:bold;">添加书签</a></td></tr>
+					<tr><td><a href="edit.jsp" style="font-weight:bold;">添加书签</a></td></tr>
 					<tr>
 						<td class="selected_label">
 							<a href="index.s?flag=1">全部</a>
@@ -72,7 +72,7 @@
 					<c:forEach items="${showFlist}" var="fav">
 						<div style="padding:6px 10px;">	
 							<div>
-								<a href="${fav.fUrl }" style="color:blue;font-size:18px;" target="_blank">
+								<a href="http://${fav.fUrl }" style="color:blue;font-size:18px;" target="_blank">
 									${fav.fLabel }
 								</a>
 							</div>
