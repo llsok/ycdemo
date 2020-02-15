@@ -11,7 +11,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TagMapperTest {
+import com.yc.favorite.bean.Favorite;
+import com.yc.favorite.biz.FavoriteBiz;
+
+public class MapperTest {
 	private SqlSession session;
 
 	// 该方法会在 Test 方法之前执行
@@ -36,5 +39,16 @@ public class TagMapperTest {
 	public void testSelectAll() throws IOException {
 		TagMapper tm = session.getMapper(TagMapper.class);
 		System.out.println(tm.selectAll());
+	}
+	
+	@Test
+	public void testAddFavorite() throws IOException {
+		FavoriteBiz fb = new FavoriteBiz();
+		Favorite favorite = new Favorite();
+		favorite.setfLabel("淘宝");
+		favorite.setfTags("购物；消费；支付");
+		favorite.setfUrl("www.taobao.com");
+		favorite.setfDesc("国内最大的购物网站");
+		fb.addFavorite(favorite);
 	}
 }
