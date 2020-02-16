@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<settings></settings><!-- 常用的配置 -->
-	<typeAliases></typeAliases><!-- 别名的用法 -->
+	<!-- <settings></settings>常用的配置
+	<typeAliases></typeAliases>别名的用法 -->
 
 	<!-- 数据环境配置 -->
 	<environments default="test">
