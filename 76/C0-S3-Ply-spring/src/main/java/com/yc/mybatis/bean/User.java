@@ -3,7 +3,18 @@ package com.yc.mybatis.bean;
 import java.util.Date;
 
 public class User {
-    private Integer id;
+	
+	private Hall hall;
+	
+    public Hall getHall() {
+		return hall;
+	}
+
+	public void setHall(Hall hall) {
+		this.hall = hall;
+	}
+	
+	private Integer id;
 
     private String username;
 
@@ -18,7 +29,59 @@ public class User {
     private Integer status;
 
     private Date regtime;
+    
+    public User() {
+    	
+    }
+    
+    public User(Integer id, String username, String password) {
+		super();
+		System.out.println("=======  Integer id, String username, String password   =======");
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+    
+    public User(String username, String password, Integer id) {
+		super();
+		System.out.println("=======  String username, String password, Integer id  =======");
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
 
+
+	/**
+     *  初始化方法
+     */
+    public void initA() {
+    	System.out.println("=======initA===========");
+    }
+    
+    /**
+     * 销毁方法
+     */
+    public void close() {
+    	System.out.println("=======close===========");
+    }
+    
+    /**
+     * 静态的工厂方法
+     */
+    public static User create() {
+    	System.out.println("=======create===========");
+    	return new User();
+    }
+
+    /**
+     * 动态的工厂方法
+     */
+    public User create1() {
+    	System.out.println("=======create1===========");
+    	return new User();
+    }
+    
+    
     public Integer getId() {
         return id;
     }

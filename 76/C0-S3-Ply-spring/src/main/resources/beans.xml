@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- A a = new A(); A a = 容器对象.getBean("对象的名称"); id="user" bean 对象的标识 class="类的完全限定名 
+		= 包名 + 类名" scope=" singleton（单例，默认）、 prototype（原型，每次获取的bean都是一个新创建的bean） 
+		request 请求期间获取的bean 是唯一的 session 会话期间获取的bean 是唯一的 global 全局与一种特殊的应用有关" 定义bean 
+		作用域 depends-on="另一个bean的Id" 依赖属性，表示当前的bean必须依赖其他的bean destroy-method="" 用于指定销毁的方法，会在对象被销毁时执行，也就是容器关闭时 
+		destroy-method（销毁方法）与 scope="prototype"有冲突 如果设置为 prototype， 销毁方法将不执行 原型模式 
+		相当于 new 对象（）方式 init-method="" 用于指定初始化的方法，会在对象被创建时执行，也就是容器启动时 lazy-init="default" 
+		默认请求下所有的对象都在容器启动时创建（所以容器启动很慢），可通过该属性设置延迟加载，延迟到getBean时加载 primary="true" 主bean 
+		配置 org.springframework.beans.factory.NoUniqueBeanDefinitionException: No 
+		qualifying bean of type 'com.yc.mybatis.bean.User' available: expected single 
+		matching bean but found 2: user,user1 同一类型的bean出现多次 factory-method="" 设置工厂方法（动态和静态之分），如果单独使用 
+		factory-method 那么是配置静态工厂 factory-bean="另一个bean的id" factory-bean + factory-method 
+		动态的工厂方法 -->
+	<!-- bean 标签用于定义 对象的构建过程 -->
+	<bean id="user" class="com.yc.mybatis.bean.User"
+		init-method="initA" destroy-method="close" lazy-init="true"
+		primary="true" factory-method="create"></bean>
+
+	<bean id="user1" class="com.yc.mybatis.bean.User"
+		factory-method="create1" factory-bean="user"></bean>
+
+	<!-- bean 属性值注入 1、构造方法注入 2、set方法注入 3、接口注入 -->
+	<bean id="user2" class="com.yc.mybatis.bean.User">
+		<!-- 用于 set 方法注入 -->
+		<property name="id" value="1"></property>
+		<property name="username" value="武松"></property>
+	</bean>
+
+
+	<bean id="user3" class="com.yc.mybatis.bean.User">
+		<!-- 用于 构造器 方法注入 constructor-arg 定义个构造函数参数 -->
+		<constructor-arg name="username" value="李逵" index="1"></constructor-arg>
+		<constructor-arg name="id" value="1" index="0"></constructor-arg>
+		<constructor-arg name="password" value="123" index="2"></constructor-arg>
+
+		<property name="hall" ref="hall"></property>
+	</bean>
+
+	<!-- ref 表示引用其他 bean， 写bean的 id -->
+	<bean id="user4" class="com.yc.mybatis.bean.User">
+		<property name="hall" ref="hall"></property>
+	</bean>
+
+	<bean class="com.yc.mybatis.bean.Hall" id="hall">
+		<property name="name" value="小象"></property>
+	</bean>
+
+	<bean class="com.yc.mybatis.bean.Cinema" id="cinema">
+		<property name="halls">
+			<list>
+				<bean class="com.yc.mybatis.bean.Hall" id="hall">
+					<property name="name" value="红旗"></property>
+				</bean>
+				<bean class="com.yc.mybatis.bean.Hall" id="hall">
+					<property name="name" value="万达"></property>
+				</bean>
+				<bean class="com.yc.mybatis.bean.Hall" id="hall">
+					<property name="name" value="红色"></property>
+				</bean>
+				<bean class="com.yc.mybatis.bean.Hall" id="hall">
+					<property name="name" value="进步"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+
+
+
+
+</beans>
