@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <!-- 
+    	schema 添加命名空间的过程：
+    	1、2段复制
+    	2、5个替换
+     -->
+     
+   <!-- XML + 注解  混合配置方式   -->
+   
+	<!-- 
+		注解方案的三个关键注解：
+		1、@Configuration			===》beans.xml
+		2、@Component+@Autowired		===》无须配置
+		3、@ComponentScan			===》<context:component-scan>
+	 -->
+	
+	<context:component-scan base-package="com.yc.spring.bank"></context:component-scan>
+	
+	
+	
+	<!-- AOP XML 配置方案 -->
+	<aop:config>
+		<!-- 定义切点（方法的表达式：AspectJ）
+			execution    (*     com.xyz.myapp.service.*.*(..))
+			当执行某些方法时：     返回值	包名 +  类名 +                                       方法名(所有参数类型列表)   * 号表示所有
+		 -->
+		<aop:pointcut id="bankBiz"
+        	expression="execution(* com.yc.spring.bank.biz.*.*(..))"/>
+	
+		<!-- 定义   切面  =  切点 +  通知   -->
+	    <aop:aspect id="myAspect" ref="logAdvice">
+	    	<!-- 定义前置增强 -->
+	    	<aop:before pointcut-ref="bankBiz" method="before"/>
+	    </aop:aspect>
+	</aop:config>
+	
+	
+	<!-- 定义增强类 -->
+	<bean id="logAdvice" class="com.yc.spring.bank.aop.LogAdvice">
+	</bean>
+	
+	<!-- 添加 AspectJ 自动代理 -->
+	<aop:aspectj-autoproxy/>
+	
+	<!-- 作业：
+		1、参考官方文档，实现注解方式的配置
+		2、配置后置增强、异常增强、返回增强，输出方法日志
+		3、阅读作业：学习文档：进阶目录下的文档
+		
+		AOP底层实现===》动态代理===》静态代理（代理模式）（每日一讲：丁磊）
+	-->
+	
+</beans>
