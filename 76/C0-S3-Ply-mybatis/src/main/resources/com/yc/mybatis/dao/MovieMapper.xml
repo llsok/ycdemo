@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.mybatis.dao.MovieMapper">
+
+	<!-- resultType 简单映射，自动映射 ，配置实体类的类路径 -->
+	<!-- <select id="selectAll" resultType="com.yc.mybatis.bean.Movie">
+		select <include refid="allColumns"></include> from movie
+	</select> -->
+
+	<select id="selectByMovie"
+		resultType="com.yc.mybatis.bean.Movie">
+		select <include refid="allColumns"></include> from movie
+		<where>
+			<if test="name != null">and name like #{name}</if>
+			<if test="region != null">and region = #{region}</if>
+			<if test="language != null">and language = #{language}</if>
+		</where>
+	</select>
+	
+	<select id="selectByFlag"
+		resultType="com.yc.mybatis.bean.Movie">
+		select <include refid="allColumns"></include> from movie
+		<where>
+			<choose>
+				<when test="flag == 1">name=#{name}</when>
+				<when test="flag == 2">name like #{name}</when>
+				<when test="flag == 3">name is null</when>
+				<otherwise>name is not null</otherwise>
+			</choose>			
+		</where>
+	</select>
+	
+	<!-- 单参数 对名字没有要求 -->
+	<select id="selectById"
+		resultType="com.yc.mybatis.bean.Movie">
+		select <include refid="allColumns"></include> from movie where id = #{iddddddd}
+	</select>
+	
+	<update id="update">
+		update movie 
+		<set>
+			<if test="name != null ">name=#{name},</if>
+			<if test="duration != null ">duration=#{duration},</if>
+			<if test="region != null ">region=#{region}</if>
+			<!-- 其他字段省略 -->		
+		</set>
+		where id=#{id}
+	</update>
+	
+	<select id="selectInLanguage" resultType="com.yc.mybatis.bean.Movie">
+	
+		select <include refid="allColumns"></include> from movie where <!-- language in (?,?,?,?,?) -->
+		
+		<foreach collection="languages" item="l" open="language in (" close=")" separator=",">
+			<!-- language in ( #{l} , #{l} , #{l} , #{l}) -->
+			#{l}
+		</foreach>
+		
+	
+	</select>
+	
+	<!-- useGeneratedKeys="true" keyColumn="id" keyProperty="id" -->
+	<!-- <insert id="insert" >
+		selectKey   order 表示该语句执行的时机  
+			select seq_xxx.nextval from dual
+		
+		<selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="int">
+			select last_insert_id()
+		</selectKey>
+	
+		insert into movie (name,duration) values (#{name},#{duration})
+	
+	</insert> -->
+	
+	<!-- 命名语句块 语法格式 ${语句块名} -->
+	<select id="selectAllWithOrder" resultType="com.yc.mybatis.bean.Movie">
+		select <include refid="allColumns"></include> from movie order by ${orders}
+	</select>
+	
+	<!-- sql 标签用于定义 被引入的 语句块    include 用于引入指定的语句块 -->
+	<sql id="allColumns">
+		id,name,duration,region,language <!-- .... -->
+	</sql>
+
+	<!-- 开启二级缓存 -->	
+	<cache></cache>
+	
+	<!-- 
+	org.apache.ibatis.exceptions.PersistenceException: 
+### Error building SqlSession.
+### The error may exist in com/yc/mybatis/dao/MovieMapper.xml
+### Cause: org.apache.ibatis.builder.BuilderException: 
+Error parsing SQL Mapper Configuration. Cause: java.lang.IllegalArgumentException: 
+Mapped Statements collection already contains value for com.yc.mybatis.dao.MovieMapper.selectAll
+	
+	 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</mapper>

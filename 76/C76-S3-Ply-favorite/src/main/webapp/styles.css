@@ -1,0 +1,27 @@
+.selected_label{
+	background-color:#C3D9FF;
+}
+.left_labels{
+	width:100px;
+	height:500px;
+}
+.content_links{
+	color:red;
+	border-style:solid;
+	border-color:#C3D9FF;
+	border-width:20px 0px 20px 10px;
+	height:500px;
+	width:500px;	
+}
+.labels_table tr td{
+	padding:3px 10px;
+	width:70px;
+	font-size:12px;
+}
+a{
+	color:blue;
+}
+.banner{
+	font-size:30px;
+	margin:5px 0;	
+}

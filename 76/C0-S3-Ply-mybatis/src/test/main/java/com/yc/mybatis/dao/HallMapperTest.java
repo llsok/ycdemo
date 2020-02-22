@@ -8,18 +8,25 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.junit.After;
+import org.junit.AfterClass;
+/*import org.junit.After;*/
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+/*import org.junit.Before;
+import org.junit.Test;*/
+import org.junit.BeforeClass;
 
 import com.yc.mybatis.bean.Cinema;
 import com.yc.mybatis.bean.Hall;
+import com.yc.mybatis.junit.After;
+import com.yc.mybatis.junit.Before;
+import com.yc.mybatis.junit.Test;
 
 
 public class HallMapperTest {
 	
 	private SqlSession session;
+	
+
 
 	// 该方法会在 Test 方法之前执行
 	@Before

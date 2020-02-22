@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+	<!-- <settings></settings>常用的配置
+	<typeAliases></typeAliases>别名的用法 -->
+
 	<!-- 数据环境配置 -->
 	<environments default="test">
 		<environment id="development">
@@ -40,7 +44,10 @@
 
 	<mappers>
 		<!-- 注册SQL映射文件 -->
-		<mapper resource="com/yc/mybatis/dao/HallMapper.xml" />
-		<mapper resource="com/yc/mybatis/dao/CinemaMapper.xml" />
+		<!-- <mapper resource="com/yc/mybatis/dao/HallMapper.xml" />
+		<mapper resource="com/yc/mybatis/dao/CinemaMapper.xml" /> -->
+		<!-- package 可以设置包扫描，自动将该包下的映射文件注册进来 -->
+		<package name="com.yc.mybatis.dao"/>
+		
 	</mappers>
 </configuration>

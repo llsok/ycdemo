@@ -22,6 +22,7 @@
 	-->
 	<resultMap id="myColumnMapper" type="com.yc.mybatis.bean.Hall">
 		<result column="hall_type" property="hallType"></result>
+		<!-- 一对一 关联查询 -->
 		<association property="cinema" column="cinema_id"
 			select="com.yc.mybatis.dao.CinemaMapper.selectById"
 			fetchType="lazy"></association>
@@ -36,7 +37,6 @@
 	<select id="selectByCinemaId" resultMap="myColumnMapper">
 		select * from hall where cinema_id = #{cinemaId}
 	</select>
-	
 	
 	
 </mapper>

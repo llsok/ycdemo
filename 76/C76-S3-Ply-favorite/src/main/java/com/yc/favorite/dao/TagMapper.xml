@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yc.favorite.dao.TagMapper">
+
+	<resultMap id="myColumnMapper" type="Tag">
+		<!-- t_name 字段要映射2个属性，所以这两个属性要单独配置 -->
+		<result column="t_name" property="tName"></result>
+		<collection property="favorites" column="t_name" fetchType="lazy"
+			select="selectFavoriteByTname"></collection>
+	</resultMap>
+	
+	<!-- resultType="com.yc.mybatis.bean.Hall"  resultType 是简单的自动的映射 -->
+	<select id="selectAll" resultMap="myColumnMapper">
+		select * from tag
+	</select>
+	
+	<select id="selectFavoriteByTname" resultType="Favorite">
+		select * from favorite where f_tags like concat('%',#{tName},'%')
+	</select>
+	
+</mapper>
