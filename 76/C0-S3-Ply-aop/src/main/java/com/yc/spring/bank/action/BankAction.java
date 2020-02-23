@@ -56,7 +56,12 @@ public class BankAction {
 	 * @return
 	 */
 	public String details(int accountId) {
-		rBiz.queryByAccountId(accountId);
+		aBiz.details();
+		return "details";
+	}
+	
+	public String details1(int accountId) {
+		aBiz.details1();
 		return "details";
 	}
 

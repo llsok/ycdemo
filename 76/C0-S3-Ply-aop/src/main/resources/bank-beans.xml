@@ -34,12 +34,12 @@
 	<aop:config>
 		<!-- 定义切点（方法的表达式：AspectJ）
 			execution    (*     com.xyz.myapp.service.*.*(..))
-			当执行某些方法时：     返回值	包名 +  类名 +                                       方法名(所有参数类型列表)   * 号表示所有
+			当执行某些方法时：     返回值	包名 +  类名 +     方法名(所有参数类型列表)   * 号表示所有
 		 -->
 		<aop:pointcut id="bankBiz"
         	expression="execution(* com.yc.spring.bank.biz.*.*(..))"/>
 	
-		<!-- 定义   切面  =  切点 +  通知   -->
+		<!-- 定义   切面  =  切点  ｛连接点的表达式｝ +  通知   -->
 	    <aop:aspect id="myAspect" ref="logAdvice">
 	    	<!-- 定义前置增强 -->
 	    	<aop:before pointcut-ref="bankBiz" method="before"/>

@@ -1,5 +1,8 @@
 package com.yc.spring.bank.biz;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +46,19 @@ public class AccountBiz {
 		aDao.update(account2);
 		rDao.insert(new Record());
 		rDao.insert(new Record());
+	}
+	
+	/**
+	 *  查询明细
+	 * @return
+	 */
+	public List<Record> details(){
+		return new ArrayList<Record>();
+	}
+	
+	public List<Record> details1(){
+		int a = 1/0;
+		return new ArrayList<Record>();
 	}
 	
 }

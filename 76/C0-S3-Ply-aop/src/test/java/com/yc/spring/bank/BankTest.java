@@ -19,7 +19,13 @@ public class BankTest {
 	@Test
 	public void test1() {
 		bankAction.deposit(new  Account());
+		System.out.println("#####################################################################");
 		bankAction.withdraw(new  Account());
+		System.out.println("#####################################################################");
+		bankAction.details(1);
+		System.out.println("#####################################################################");
+		bankAction.details1(1);
+		System.out.println("#####################################################################");
 	}
 	
 }
