@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
@@ -9,57 +10,95 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd
     http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop.xsd">
-    
-    <!-- 
-    	schema 添加命名空间的过程：
-    	1、2段复制
-    	2、5个替换
-     -->
-     
-   <!-- XML + 注解  混合配置方式   -->
-   
-	<!-- 
-		注解方案的三个关键注解：
-		1、@Configuration			===》beans.xml
-		2、@Component+@Autowired		===》无须配置
-		3、@ComponentScan			===》<context:component-scan>
-	 -->
-	
-	<context:component-scan base-package="com.yc.spring.bank"></context:component-scan>
-	
-	
-	
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- schema 添加命名空间的过程： 1、2段复制 2、5个替换 -->
+
+	<!-- XML + 注解 混合配置方式 -->
+
+	<!-- 注解方案的三个关键注解： 1、@Configuration ===》beans.xml 2、@Component+@Autowired 
+		===》无须配置 3、@ComponentScan ===》<context:component-scan> -->
+
+	<context:component-scan
+		base-package="com.yc.spring.bank"></context:component-scan>
+
+
+
 	<!-- AOP XML 配置方案 -->
 	<aop:config>
-		<!-- 定义切点（方法的表达式：AspectJ）
-			execution    (*     com.xyz.myapp.service.*.*(..))
-			当执行某些方法时：     返回值	包名 +  类名 +     方法名(所有参数类型列表)   * 号表示所有
-		 -->
+		<!-- 定义切点（方法的表达式：AspectJ） execution (* com.xyz.myapp.service.*.*(..)) 当执行某些方法时： 
+			返回值 包名 + 类名 + 方法名(所有参数类型列表) * 号表示所有 -->
 		<aop:pointcut id="bankBiz"
-        	expression="execution(* com.yc.spring.bank.biz.*.*(..))"/>
-	
-		<!-- 定义   切面  =  切点  ｛连接点的表达式｝ +  通知   -->
-	    <aop:aspect id="myAspect" ref="logAdvice">
-	    	<!-- 定义前置增强 -->
-	    	<aop:before pointcut-ref="bankBiz" method="before"/>
-	    </aop:aspect>
+			expression="execution(* com.yc.spring.bank.biz.*.*(..))" />
+
+		<!-- 定义 切面 = 切点 ｛连接点的表达式｝ + 通知 -->
+		<aop:aspect id="myAspect" ref="logAdvice">
+			<!-- 定义前置增强 -->
+			<aop:before pointcut-ref="bankBiz" method="before" />
+		</aop:aspect>
 	</aop:config>
-	
-	
+
+
 	<!-- 定义增强类 -->
 	<bean id="logAdvice" class="com.yc.spring.bank.aop.LogAdvice">
 	</bean>
-	
+
 	<!-- 添加 AspectJ 自动代理 -->
-	<aop:aspectj-autoproxy/>
-	
-	<!-- 作业：
-		1、参考官方文档，实现注解方式的配置
-		2、配置后置增强、异常增强、返回增强，输出方法日志
-		3、阅读作业：学习文档：进阶目录下的文档
+	<aop:aspectj-autoproxy />
+
+	<!-- 作业： 1、参考官方文档，实现注解方式的配置 2、配置后置增强、异常增强、返回增强，输出方法日志 3、阅读作业：学习文档：进阶目录下的文档 
+		AOP底层实现===》动态代理===》静态代理（代理模式）（每日一讲：丁磊） -->
+
+	<bean id="dataSource1"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- 读入属性文件 -->
+	<context:property-placeholder
+		location="jdbc.properties" />
 		
-		AOP底层实现===》动态代理===》静态代理（代理模式）（每日一讲：丁磊）
-	-->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource1"></property>
+	</bean>
 	
+	
+	<!-- Spring 事务配置 -->
+	<!-- 第一步： 配置事务管理器 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource1"/>
+	</bean>
+	<!-- 第二步： 添加事务命名空间   关键字  tx -->
+	<!-- 第三步： 添加事务注解驱动 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	<!-- 第四步： 业务方法的事务配置
+			一般请情况下，事务注解是要加在 业务层 bean 上（@Service）
+			 -->
+			 
+	<!-- 
+	传播行为	意义
+		*REQUIRED｛默认值｝	业务方法需要在一个事务中运行。如果方法运行时，已经处在一个事务中，那么加入到该事务，否则为自己创建一个新的事务
+		NOT_SUPPORTED	声明方法不需要事务。如果方法没有关联到一个事务，容器不会为它开启事务。如果方法在一个事务中被调用，该事务会被挂起，在方法调用结束后，原先的事务便会恢复执行
+		*REQUIRESNEW	属性表明不管是否存在事务，业务方法总会为自己发起一个新的事务。如果方法已经运行在一个事务中，则原有事务会被挂起，新的事务会被创建，直到方法执行结束，新事务才算结束，原先的事务才会恢复执行
+		MANDATORY	该属性指定业务方法只能在一个已经存在的事务中执行，业务方法不能发起自己的事务。如果业务方法在没有事务的环境下调用，容器就会抛出例外。
+		*SUPPORTS	这一事务属性表明，如果业务方法在某个事务范围内被调用，则方法成为该事务的一部分。如果业务方法在事务范围外被调用，则方法在没有事务的环境下执行
+		Never	指定业务方法绝对不能在事务范围内执行。如果业务方法在某个事务中执行，容器会抛出例外，只有业务方法没有关联到任何事务，才能正常执行
+		NESTED	如果一个活动的事务存在，则运行在一个嵌套的事务中. 如果没有活动事务, 则按REQUIRED属性执行.它使用了一个单独的事务， 这个事务拥有多个可以回滚的保存点。内部事务的回滚不会对外部事务造成影响。它只对DataSourceTransactionManager事务管理器起效
+	
+	 -->
+	 
+	 <!-- 
+	 隔离级别	含义
+DEFAULT	使用后端数据库默认的隔离级别(spring中的的选择项)
+READ_UNCOMMITED	允许你读取还未提交的改变了的数据。可能导致脏、幻、不可重复读
+READ_COMMITTED	允许在并发事务已经提交后读取。可防止脏读，但幻读和 不可重复读仍可发生
+REPEATABLE_READ	对相同字段的多次读取是一致的，除非数据被事务本身改变。可防止脏、不可重复读，但幻读仍可能发生。
+SERIALIZABLE	完全服从ACID的隔离级别，确保不发生脏、幻、不可重复读。这在所有的隔离级别中是最慢的，它是典型的通过完全锁定在事务中涉及的数据表来完成的。
+	  -->
 </beans>
