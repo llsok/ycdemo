@@ -27,8 +27,8 @@ import com.yc.spring.bank.dao.RecordDao;
 		rollbackFor *//**重点： Spring 默认情况下只会在运行期异常出现时，执行回滚，那么如果你有其他的类型的异常要回滚事务，
 		 * 就必须设置该属性*//*
 		noRollbackFor *//** 设置不回滚的异常类型 *//*)*/
-@Transactional
-public class AccountBiz {
+@Transactional(isolation=Isolation.SERIALIZABLE)
+public class AccountBiz implements IAccountBiz{
 	
 	@Autowired
 	private AccountDao aDao;
@@ -37,9 +37,10 @@ public class AccountBiz {
 	
 	/**
 	 * 	存款业务
+	 * @throws BusiException 
 	 */
-	@Transactional
-	public void deposit(Account account) {
+	@Transactional(rollbackFor=BusiException.class)
+	public void deposit(Account account) throws BusiException {
 		System.out.println("模拟存款业务！");
 		aDao.update(account);
 		Record r = new Record();
@@ -47,7 +48,11 @@ public class AccountBiz {
 		r.setMoney(account.getMoney());
 		
 		// 数学运算异常（运行期异常）
-		int i = 1/0;
+		// int i = 1/0;
+		// 自定义业务异常(编译期异常)
+		if( account.getMoney() < 100000) {
+			throw new BusiException("操作的金额不足");
+		}
 		
 		rDao.insert(r);
 	}

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 
 import com.yc.spring.bank.bean.Account;
 import com.yc.spring.bank.biz.AccountBiz;
+import com.yc.spring.bank.biz.BusiException;
+import com.yc.spring.bank.biz.IAccountBiz;
 import com.yc.spring.bank.biz.RecordBiz;
 
 /**
@@ -14,7 +16,7 @@ import com.yc.spring.bank.biz.RecordBiz;
 public class BankAction {
 
 	@Autowired
-	private AccountBiz aBiz;
+	private IAccountBiz aBiz;
 
 	@Autowired
 	private RecordBiz rBiz;
@@ -23,8 +25,9 @@ public class BankAction {
 	 * 存款
 	 * @param account
 	 * @return
+	 * @throws BusiException 
 	 */
-	public String deposit(Account account) {
+	public String deposit(Account account) throws BusiException {
 		aBiz.deposit(account);
 		return "details";
 	}
@@ -59,7 +62,7 @@ public class BankAction {
 		aBiz.details();
 		return "details";
 	}
-	
+	  
 	public String details1(int accountId) {
 		aBiz.details1();
 		return "details";

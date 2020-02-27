@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.yc.spring.bank.action.BankAction;
 import com.yc.spring.bank.bean.Account;
 import com.yc.spring.bank.biz.AccountBiz;
+import com.yc.spring.bank.biz.BusiException;
+import com.yc.spring.bank.biz.IAccountBiz;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration("/bank-beans.xml")
@@ -23,10 +25,10 @@ public class BankTest {
 	private BankAction bankAction;
 	
 	@Resource  //  ==> @Autowired
-	private AccountBiz aBiz;
+	private IAccountBiz aBiz;
 	
 	@Test
-	public void test1() {
+	public void test1() throws BusiException {
 		bankAction.deposit(new  Account());
 		System.out.println("#####################################################################");
 		bankAction.withdraw(new  Account());
@@ -47,7 +49,7 @@ public class BankTest {
 	}
 	
 	@Test
-	public void test3() {
+	public void test3() throws BusiException {
 		Account account  = new Account();
 		account.setId(1);
 		account.setMoney(500d);
