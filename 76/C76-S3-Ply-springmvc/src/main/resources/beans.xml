@@ -25,4 +25,10 @@
 	    <!-- 视图解析器视图后缀 -->
 	    <property name="suffix" value=".jsp"/>
 	</bean>
+	
+	<!-- 处理静态资源请求 -->
+	<mvc:default-servlet-handler/>
+	
+	
+	
 </beans>

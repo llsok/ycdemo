@@ -1,4 +1,4 @@
-package com.yc.springmvc.web;
+package com.yc.springmvc.web.d0228;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller  // @RestController 是  @Controller 的子类
 public class IndexAction {
 
-	@RequestMapping("hello.s")
+	@RequestMapping({"/","hello.s"})
 	public String hello() {
 		return "hello";  // 返回视图名
 	}
