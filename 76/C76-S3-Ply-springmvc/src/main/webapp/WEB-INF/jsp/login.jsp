@@ -8,15 +8,64 @@
 <title>????</title>
 </head>
 <body>
+	<h3>
+		${string}
+	</h3>
+
 	<c:if test="${ ! empty msg }">
 		<font color="red">${msg}</font>
 	</c:if>
-	<form action="signin">
+	<form action="sign">
 		username:<input name="username"><br>
 		password:<input name="password"><br>
 	<input type="submit" value="登录">
+	</form>
+	<hr>
+	<form action="reg" method="post">
+		username:<input name="username"><br>
+		password:<input name="password"><br>
+	<input type="submit" value="注册">
+	</form>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<pre>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	作业
 	springMVC作业：
 	登录要求：
@@ -39,6 +88,6 @@
 	1, 地址映射练习
 	2, 注册练习
 	
-</form>
+
 </body>
 </html>
