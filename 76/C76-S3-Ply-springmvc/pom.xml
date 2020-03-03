@@ -64,7 +64,13 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>6.1.0.Final</version>
 		</dependency>
-		
+
+		<!-- apache commons-fileupload 文件上传组件   -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.3</version>
+		</dependency>
 	</dependencies>
 	
 	<build>

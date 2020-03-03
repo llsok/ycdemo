@@ -29,6 +29,17 @@
 	<!-- 处理静态资源请求 -->
 	<mvc:default-servlet-handler/>
 	
+	<!-- 定义 文件上传解析器   -->
+	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- one of the properties available; the maximum file size in bytes -->
+	    <property name="maxUploadSize" value="100000000"/>
+	</bean>
 	
+	<!-- 静态资源映射标签 
+		location="" 映射的 真实文件路径 (  磁盘路径,  类路径,  webapps 下的路径  )
+		mapping=""  映射的 web 路径
+	-->
+	<mvc:resources mapping="/d/**" location="file:/d:/"></mvc:resources>
 	
 </beans>
