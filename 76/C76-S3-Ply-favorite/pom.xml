@@ -51,6 +51,66 @@
 			<version>1.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.3.17.RELEASE</version>
+		</dependency>
+		
+		
+		<!-- spring 继承 Mybatis  -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.3</version>
+		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<!-- run as ==> builder... ==> jetty:run -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.15.v20190215</version>
+				<configuration>
+					<httpConnector>
+						<port>80</port>
+					</httpConnector>
+					<!-- 组件扫描时间间隔 -->
+					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<!-- 手动启动服务器 -->
+					<reload>manual</reload>
+					<!-- 自定义上下文路径 -->
+					<contextPath>/</contextPath>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

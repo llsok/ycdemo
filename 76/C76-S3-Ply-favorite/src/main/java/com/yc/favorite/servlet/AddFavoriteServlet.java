@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.yc.favorite.bean.Favorite;
 import com.yc.favorite.biz.FavoriteBiz;
 
-@WebServlet("/saveFavorite.s")
+//@WebServlet("/saveFavorite.s")
 public class AddFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

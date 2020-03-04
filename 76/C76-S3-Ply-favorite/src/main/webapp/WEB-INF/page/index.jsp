@@ -35,7 +35,7 @@
 				 
 				
 				<table class="labels_table" cellspacing="0" cellpadding="0" border="0">
-					<tr><td><a href="edit.jsp" style="font-weight:bold;">添加书签</a></td></tr>
+					<tr><td><a href="toedit" style="font-weight:bold;">添加书签</a></td></tr>
 					<tr>
 						<td class="selected_label">
 							<a href="index.s?flag=1">全部</a>

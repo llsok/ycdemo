@@ -1,13 +1,21 @@
 package com.yc.favorite.biz;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yc.favorite.bean.Favorite;
 import com.yc.favorite.dao.FavoriteMapper;
 import com.yc.favorite.dao.TagMapper;
-import com.yc.favorite.util.MyBatisHelper;
 
+@Service
+@Transactional
 public class FavoriteBiz {
+	@Resource
+	private TagMapper tm;
+	@Resource
+	private FavoriteMapper fm;
 	
 	/**
 	 * 添加新的收藏地址
@@ -21,27 +29,14 @@ public class FavoriteBiz {
 		 * 4、如果 tag 不存在，那么要新增该 tag
 		 * 5、如果 tag 存在，则修改该 tag 的 count ， count ++
 		 */
-		
-		SqlSession session = MyBatisHelper.openSession();
-		try {
-			TagMapper tm = session.getMapper(TagMapper.class);
-			FavoriteMapper fm = session.getMapper(FavoriteMapper.class);
-			fm.insert(favorite);
-			String[] tNames = favorite.getfTags().split("[；;，,\\s]");
-			for(String tName : tNames) {
-				int ret = tm.updateCount(tName);
-				if(ret == 0) {
-					tm.insert(tName);
-				}
+		fm.insert(favorite);
+		String[] tNames = favorite.getfTags().split("[；;，,\\s]");
+		for(String tName : tNames) {
+			int ret = tm.updateCount(tName);
+			if(ret == 0) {
+				tm.insert(tName);
 			}
-			session.commit();
-		} catch (RuntimeException e) {
-			session.rollback();
-			throw e;
-		} finally {
-			session.close();
 		}
-		
 	}
 
 }

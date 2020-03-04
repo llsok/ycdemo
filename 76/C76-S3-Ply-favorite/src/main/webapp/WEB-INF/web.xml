@@ -7,8 +7,25 @@
 	<welcome-file-list>
 		<welcome-file>index.s</welcome-file>
 	</welcome-file-list>
-
+	
 	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<!-- spring 的配置文件的路径 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:beans.xml</param-value>
+		</init-param>
+		<!-- 启动时加载的顺序 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<!-- / 表示映射所有的地址 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- <servlet>
 		<description></description>
 		<display-name>IndexServlet</display-name>
 		<servlet-name>IndexServlet</servlet-name>
@@ -17,5 +34,5 @@
 	<servlet-mapping>
 		<servlet-name>IndexServlet</servlet-name>
 		<url-pattern>/index.s</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 </web-app>
