@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>C76-S3-Ply-favorite</display-name>
+	<welcome-file-list>
+		<welcome-file>index.s</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<!-- spring 的配置文件的路径 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:beans.xml</param-value>
+		</init-param>
+		<!-- 启动时加载的顺序 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<!-- / 表示映射所有的地址 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- <servlet>
+		<description></description>
+		<display-name>IndexServlet</display-name>
+		<servlet-name>IndexServlet</servlet-name>
+		<servlet-class>com.yc.favorite.servlet.IndexServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IndexServlet</servlet-name>
+		<url-pattern>/index.s</url-pattern>
+	</servlet-mapping> -->
+</web-app>
