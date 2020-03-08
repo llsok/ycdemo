@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+var websocket;
+
+function conn() {
+	//创建websocket对象
+	websocket = new WebSocket("ws://localhost/websocket/" + manid.value);
+
+	//连接发生错误的回调方法
+	websocket.onerror = function() {
+	};
+	//连接成功建立的回调方法
+	websocket.onopen = function(event) {
+		console.info(event);
+	}
+	//接收到消息的回调方法
+	websocket.onmessage = function(event) {
+		msgtxt.innerHTML += event.data + "\n";
+	}
+	//连接关闭的回调方法
+	websocket.onclose = function() {
+		websocket.close();
+	}
+	
+}
+
+//关闭连接
+function closeWebSocket() {
+	websocket.close();
+}
+//发送消息
+function send(msg) {
+	websocket.send(msg);
+}
+	</script>
+	聊天人:<input id="manid">
+	<button onclick="conn()">连接</button><br>
+	消息区:<textarea id="msgtxt" rows="10" cols=""></textarea><br>
+	我说:<input id="msgid">
+	<button onclick="send(msgid.value)">发送</button>
+	<button onclick="closeWebSocket()">关闭</button>
+</body>
+</html>

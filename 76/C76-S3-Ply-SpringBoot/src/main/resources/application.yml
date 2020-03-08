@@ -11,10 +11,10 @@ spring:
      username: root
      password: a
      driver-class-name: com.mysql.jdbc.Driver
-  mvc:
-    view:
-      prefix: WEB-INF/page/
-      suffix: .jsp
+#  mvc:
+#    view:
+#      prefix: WEB-INF/page/
+#      suffix: .jsp
    
 mybatis:
   #实体类的路径

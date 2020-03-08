@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>搜藏</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	
+	<script type="text/javascript">
+	function add(){
+		window.open ('fav.do?op=toAdd', 'newwindow', 
+		'height=300, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+	}
+	</script>
+  </head>
+  <body>
+    <form name="favForm" method="post" action="/cang/fav.do;jsessionid=FF8C0487A99814B144B07E5633524A0F">
+      <input type="hidden" name="op" value="toList" />
+    
+    <div class="banner" valign="top">
+    	 搜藏
+    </div>
+      
+	<table cellspacing="0" cellpadding="0" border="0">
+		<tr>
+			<td style="text-align:right;" valign="top">
+			<!-- 左边Tag列表 -->
+				<div class="left_labels" >
+				 
+				
+				<table class="labels_table" cellspacing="0" cellpadding="0" border="0">
+					<tr><td><a href="toedit" style="font-weight:bold;">添加书签</a></td></tr>
+					<tr>
+						<td class="selected_label">
+							<a href="index.s?flag=1">全部</a>
+						</td>
+					</tr>
+					<tr>
+						<td >
+							<a href="index.s?flag=2">未分类</a>
+						</td>
+					</tr>
+					
+					<!-- <c:forEach items="${tList}" var="tag"> -->
+						
+					<tr th:each="tag : ${tList}" >
+						<td><a th:text="${tag.tName}" th:href="'index.s?tId='+${tag.tId}">标签名</a></td>
+					</tr>
+					
+					<!-- </c:forEach> -->
+					
+					<tr>
+						<td>
+							<a style="font-weight:bold;" href="fav.do?op=toCloud">云图</a>
+						</td>
+					</tr>
+				</table>
+				</div>
+			</td>
+			<td>
+			<!-- 右边fav内容 -->
+				<div class="content_links">
+				
+					<!-- 设值的标签    showFlist 定义新的变量名   -->
+					<!-- <c:set var="showFlist" value="${ empty fList ? showTag.favorites : fList}"></c:set> -->
+				
+					<!-- 循环展示链接 -->
+					<!-- <c:forEach items="${showFlist}" var="fav"> -->
+						<div th:each="fav:${showTag != null && showTag.favorites!=null ? showTag.favorites : fList}"   style="padding:6px 10px;">	
+							<div>
+								<a th:text="${fav.fLabel }" th:href="'http://'+${fav.fUrl }" style="color:blue;font-size:18px;" target="_blank">
+									网站名
+								</a>
+							</div>
+							<div th:text="${fav.fDesc }" style="color:black;font-size:16px;">	
+								网站说明
+							</div>
+							<div th:text="${fav.fUrl }" style="color:green;font-size:14px;">
+								网址
+							</div>
+						</div>	
+					<!-- </c:forEach> -->
+				</div>
+			</td>
+		</tr>
+	</table> 
+	
+    </form>
+  </body>
+</html>
