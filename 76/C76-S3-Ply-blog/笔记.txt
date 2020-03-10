@@ -1,0 +1,25 @@
+正向工程:
+设计 ==> 建模( UML) ==> 建库
+
+逆向工程:( MyBaits 自动代码生成 )
+建库 ==> 代码 ==> 建模
+
+MyBatisGenerator 生成代码的解析:
+	countXXX 表示查询数量
+	xxxExample 对象: 组合条件查询对象
+	xxxSelective 表示动态SQL语句
+	xxxWithBLOBs 表示该方法操作数据库中的  BLOB or CLOB
+	xxxPrimaryKey 表示根据主键进行的操作
+	
+thymeleaf 引入页面模板:
+
+1, 在被引入页面元素定义,使用th:fragment属性定义片断。
+2, 在引入页面使用:
+	th:insert
+	th:replace
+	th:include 
+	引入子页面
+	
+	
+	<header>标签云读者墙友情链接关注本站 <span class="caret"></span><i class="fa fa-weixin"></i> 微信<i class="fa fa-weibo"></i> 微博<i class="fa fa-rss"></i> RSSHi,请登录我要注册找回密码<img src="images/logo.png" alt="">异清轩首页前端技术后端程序管理系统授人以渔程序人生ylsat.com豫ICP备20151109-1网站地图</header>
+	
