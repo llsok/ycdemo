@@ -19,7 +19,31 @@ thymeleaf 引入页面模板:
 	th:replace
 	th:include 
 	引入子页面
+
+
+03-11
+1,首页文章查询
+	1, 无线加载
+		JQuery IAS
+		<a href="?page=2">2</a>
+		?page=2     ==>    http://127.0.0.1/?page=2
+		
+		
+	2,分页查询 ==> MyBatis
+		PageHelper ==> SpringBoot 完美支持
+	
+2,文章详情
+
+
+作业:
+	1, 实现热门文章查询:  文章表字段 readCnt > 100, 请求随机生成阅读数
+	2,实现页头区( header.html )文章分类的标签的动态生成
+	3,请大家自己设计或下载模板个人博客的页面, 完成自己的技术博客( 长期作业, 应该要在三期项目前完成 ) 
+	
+
+
+
+
 	
 	
-	<header>标签云读者墙友情链接关注本站 <span class="caret"></span><i class="fa fa-weixin"></i> 微信<i class="fa fa-weibo"></i> 微博<i class="fa fa-rss"></i> RSSHi,请登录我要注册找回密码<img src="images/logo.png" alt="">异清轩首页前端技术后端程序管理系统授人以渔程序人生ylsat.com豫ICP备20151109-1网站地图</header>
 	

@@ -118,7 +118,7 @@ $('[data-toggle="tooltip"]').tooltip();
  
  
 //无限滚动反翻页
-jQuery.ias({
+/*jQuery.ias({
 	history: false,
 	container : '.content',
 	item: '.excerpt',
@@ -135,7 +135,28 @@ jQuery.ias({
 		$('.excerpt img').attr('draggable','false');
 		$('.excerpt a').attr('draggable','false');
 	}
+});*/
+
+var page = 1;
+var ias = jQuery.ias({
+	container : '.content',
+	item : '.excerpt',
+	pagination : '.pagination',
+	next : '.next-page a'
 });
+// 加分页查询参数
+ias.on(	"load", function(e){
+	e.ajaxOptions.data = {page:++page};
+});
+// 加载图片
+ias.extension(new IASSpinnerExtension({
+    src: 'images/loading.gif', // 图片地址
+}));
+ias.extension(new IASTriggerExtension({
+    text: '查看更多',
+    offset: 5 // 第几页后开始
+}));
+
  
 //鼠标滚动超出侧边栏高度绝对定位
 $(window).scroll(function () {
