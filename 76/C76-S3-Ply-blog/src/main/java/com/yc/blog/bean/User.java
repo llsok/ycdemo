@@ -102,4 +102,12 @@ public class User {
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", account=" + account + ", pwd=" + pwd + ", phone=" + phone
+				+ ", email=" + email + ", head=" + head + ", createtime=" + createtime + ", status=" + status
+				+ ", type=" + type + "]";
+	}
+    
 }
