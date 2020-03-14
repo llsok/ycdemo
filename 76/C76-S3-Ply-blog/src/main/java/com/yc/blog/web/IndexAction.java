@@ -5,15 +5,19 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.Page;
@@ -21,11 +25,14 @@ import com.github.pagehelper.PageHelper;
 import com.yc.blog.bean.Article;
 import com.yc.blog.bean.ArticleExample;
 import com.yc.blog.bean.User;
+import com.yc.blog.biz.BizException;
+import com.yc.blog.biz.UserBiz;
 import com.yc.blog.dao.ArticleMapper;
 import com.yc.blog.dao.CategoryMapper;
 import com.yc.blog.vo.Result;
 
 @Controller
+//@SessionAttributes("loginedUser")
 public class IndexAction {
 
 	@Resource
@@ -66,7 +73,7 @@ public class IndexAction {
 	 * 分类查询
 	 */
 	@GetMapping({"category"})
-	public String category(Integer id, 
+	public String category(@RequestParam(defaultValue="1") Integer id, 
 			@RequestParam(defaultValue="1") Integer page, Model m) {
 		Page<Article> pg = PageHelper.startPage(page, 5);
 		ArticleExample ae = new ArticleExample();
@@ -92,13 +99,46 @@ public class IndexAction {
 	@Value("${myUploadPath}")
 	private String myUploadPath;
 	
+	@Resource
+	private UserBiz ubiz;
+	
 	@PostMapping("reg")
 	@ResponseBody
-	public Result reg(User user, @RequestParam("file") MultipartFile file) 
+	public Result reg(@Valid User user, Errors errors, 
+			@RequestParam("file") MultipartFile file, String repwd) 
 			throws IllegalStateException, IOException {
-		System.out.println(user);
+		if(errors.hasFieldErrors()) {
+			return new Result(1, "用户失败!", errors.getFieldErrors());
+		}
 		file.transferTo(new File(myUploadPath + file.getOriginalFilename()));
-		return new Result(0, "用户注册成功!");
+		try {
+			// 定义用户头像的图片的 web 路径
+			String head = "/" + file.getOriginalFilename();
+			user.setHead(head);
+			ubiz.reg(user, repwd);
+			return new Result(0, "用户注册成功!");
+		} catch (BizException e) {
+			e.printStackTrace();
+			// 拒绝输入值
+			errors.rejectValue(e.getName(), "" + e.getCode(), e.getMessage());
+			return new Result(e.getCode(), "用户注册失败!", errors.getFieldErrors());
+		}
+	}
+	
+	@PostMapping("login")
+	@ResponseBody
+	public Result login(@Valid User user, Errors errors, HttpSession session) {
+		if(errors.hasFieldErrors("account") || errors.hasFieldErrors("pwd")) {
+			return new Result(1, "请输入用户名和密码!");
+		}
+		try {
+			User dbuser = ubiz.login(user);
+			session.setAttribute("loginedUser", dbuser);
+			return new Result(0, "登录成功!", dbuser);
+		} catch (BizException e) {
+			e.printStackTrace();
+			return new Result(e.getCode(), e.getMessage());
+		}
 	}
 	
 } 
