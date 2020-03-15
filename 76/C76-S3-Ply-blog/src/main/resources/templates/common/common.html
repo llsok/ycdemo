@@ -23,9 +23,13 @@
             </ul>
           </li>
         </ul>
-        <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow">Hi,请登录</a>&nbsp;&nbsp;
+        <a data-toggle="modal" data-target="#loginModal" class="login" rel="nofollow"
+        	th:text="${session.loginedUser} == null ? 'Hi,请登录' : ('Hi,' + ${session.loginedUser.name})">
+        	Hi,请登录
+        </a>&nbsp;&nbsp;
         <a href="toreg" class="register" rel="nofollow">我要注册</a>&nbsp;&nbsp;
-        <a href="" rel="nofollow">找回密码</a> </div>
+        <a href="" rel="nofollow">找回密码</a> 
+      </div>
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false"> <span class="sr-only"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
         <h1 class="logo hvr-bounce-in"><a href="" title=""><img src="images/logo.png" alt=""></a></h1>
@@ -125,6 +129,11 @@ function login(){
 					$("label[for='loginModalUserNmae']").text("用户名 " + result.msg);
 				 } else {
 					$('#loginModal').modal('hide');
+					$('.login').text('Hi,' + result.data.name);
+					if(result.data.type == 1){
+						var s = '&nbsp;&nbsp;<a href="editArticle" rel="nofollow">发表文章</a>';
+						$(".header-topbar").append(s);
+					}
 				 }
 			});
 }

@@ -2,6 +2,7 @@ package com.yc.blog.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,82 +34,83 @@ import com.yc.blog.dao.CategoryMapper;
 import com.yc.blog.vo.Result;
 
 @Controller
-//@SessionAttributes("loginedUser")
+// @SessionAttributes("loginedUser")
 public class IndexAction {
 
 	@Resource
 	private ArticleMapper am;
-	
+
 	@Resource
 	private CategoryMapper cm;
-	
+
 	@ModelAttribute
 	public void init(Model m) {
 		// 查询分类列表
 		m.addAttribute("clist", cm.selectByExample(null));
 	}
-	
+
 	/**
 	 * 首页
 	 */
-	@GetMapping({"/","index","index.html"})
-	public String index(@RequestParam(defaultValue="1") Integer page, Model m) {
+	@GetMapping({ "/", "index", "index.html" })
+	public String index(@RequestParam(defaultValue = "1") Integer page, Model m) {
 		Page<Article> pg = PageHelper.startPage(page, 5);
+		ArticleExample ae = new ArticleExample();
+		ae.setOrderByClause("createtime desc");
 		// PageHelper.startPage 必须在你的查询方法前一行代码执行
-		am.selectByExampleWithBLOBs(null);
+		am.selectByExampleWithBLOBs(ae);
 		m.addAttribute("alist", pg);
 		return "index";
 	}
-	
+
 	/**
 	 * 文章详情
 	 */
-	@GetMapping({"article"})
+	@GetMapping({ "article" })
 	public String article(Integer id, Model m) {
 		Article a = am.selectByPrimaryKey(id);
 		m.addAttribute(a);
 		return "article";
 	}
-	
+
 	/**
 	 * 分类查询
 	 */
-	@GetMapping({"category"})
-	public String category(@RequestParam(defaultValue="1") Integer id, 
-			@RequestParam(defaultValue="1") Integer page, Model m) {
+	@GetMapping({ "category" })
+	public String category(@RequestParam(defaultValue = "1") Integer id, @RequestParam(defaultValue = "1") Integer page,
+			Model m) {
 		Page<Article> pg = PageHelper.startPage(page, 5);
 		ArticleExample ae = new ArticleExample();
 		ae.createCriteria().andCategoryidEqualTo(id);
 		am.selectByExampleWithBLOBs(ae);
 		m.addAttribute("alist", pg);
-		m.addAttribute("id",id);
+		m.addAttribute("id", id);
 		return "category";
 	}
-	
+
 	@GetMapping("toreg")
 	public String toreg() {
 		return "reg";
 	}
-	
+
 	/**
 	 * Ajax 方法必须使用  @ResponseBody 注解
 	 * 作业: 
 	 * 	1, 实现注册业务层代码
 	 * 	2, 加入后台的属性值验证( 名称, 密码.... ) 
 	 */
-	//@Value("${spring.resources.staticLocations}")
+	// @Value("${spring.resources.staticLocations}")
 	@Value("${myUploadPath}")
 	private String myUploadPath;
-	
+
 	@Resource
 	private UserBiz ubiz;
-	
+
 	@PostMapping("reg")
 	@ResponseBody
-	public Result reg(@Valid User user, Errors errors, 
-			@RequestParam("file") MultipartFile file, String repwd) 
+	public Result reg(@Valid User user, Errors errors, @RequestParam("file") MultipartFile file, String repwd)
 			throws IllegalStateException, IOException {
-		if(errors.hasFieldErrors()) {
+		if (errors.hasFieldErrors()) {
 			return new Result(1, "用户失败!", errors.getFieldErrors());
 		}
 		file.transferTo(new File(myUploadPath + file.getOriginalFilename()));
@@ -124,11 +127,11 @@ public class IndexAction {
 			return new Result(e.getCode(), "用户注册失败!", errors.getFieldErrors());
 		}
 	}
-	
+
 	@PostMapping("login")
 	@ResponseBody
 	public Result login(@Valid User user, Errors errors, HttpSession session) {
-		if(errors.hasFieldErrors("account") || errors.hasFieldErrors("pwd")) {
+		if (errors.hasFieldErrors("account") || errors.hasFieldErrors("pwd")) {
 			return new Result(1, "请输入用户名和密码!");
 		}
 		try {
@@ -140,5 +143,18 @@ public class IndexAction {
 			return new Result(e.getCode(), e.getMessage());
 		}
 	}
-	
-} 
+
+	@GetMapping("editArticle")
+	public String toEditArticle() {
+		return "article_edit";
+	}
+
+	@PostMapping("saveArticle")
+	public String saveArticle(Article a, @SessionAttribute("loginedUser") User user) {
+		a.setAuthor(user.getName());
+		a.setCreatetime(new Date());
+		am.insert(a);
+		// 响应重定向跳转
+		return "redirect:article?id=" + a.getId();
+	}
+}
