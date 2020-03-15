@@ -18,7 +18,7 @@
 		<!-- 加了还报错是因为 eclipse 版本低了 -->
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
-	
+
 	<dependencies>
 
 		<dependency>
@@ -28,9 +28,9 @@
 
 		<!-- 分页查询启动器依赖 -->
 		<dependency>
-		    <groupId>com.github.pagehelper</groupId>
-		    <artifactId>pagehelper-spring-boot-starter</artifactId>
-		    <version>1.2.13</version>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.13</version>
 		</dependency>
 
 		<dependency>
@@ -66,6 +66,12 @@
 			<!-- <exclusions> <exclusion> <groupId>org.junit.vintage</groupId> <artifactId>junit-vintage-engine</artifactId> 
 				</exclusion> </exclusions> -->
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

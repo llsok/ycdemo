@@ -59,4 +59,23 @@ public class UserBiz {
 
 	}
 
+	@Resource
+	private MailService ms;
+	
+	public String forget(String account) throws BizException {
+		UserExample ue = new UserExample();
+		ue.createCriteria().andAccountEqualTo(account);
+		List<User> list = um.selectByExample(ue);
+		if(list.size() == 1) {
+			User user = list.get(0);
+			String vcode = System.currentTimeMillis() + "";
+			vcode = vcode.substring(vcode.length()-4, vcode.length());
+			String content = "您重置密码所需的验证码是: " + vcode;
+			ms.sendSimpleMail(user.getEmail(), "重置密码", content);
+			return vcode;
+		} else {
+			throw new BizException(1007, "name", "用户名错误!");
+		}
+	}
+
 }

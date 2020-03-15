@@ -157,4 +157,38 @@ public class IndexAction {
 		// 响应重定向跳转
 		return "redirect:article?id=" + a.getId();
 	}
+
+	@GetMapping("toforget")
+	public String toforget() {
+		return "forget";
+	}
+
+	@PostMapping("sendVcode")
+	@ResponseBody
+	public Result sendVcode(String account, HttpSession session) {
+		try {
+			String vcode = ubiz.forget(account);
+			session.setAttribute("vcode", vcode);
+			return new Result(0, "验证码发送成功!");
+		} catch (BizException e) {
+			e.printStackTrace();
+			return new Result(1, e.getMessage());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new Result(1, "邮件发送失败,请联系客服!");
+		}
+	}
+	
+	@PostMapping("changePwd")
+	@ResponseBody
+	public Result changePwd(User user, String repwd, String vcode,
+			@SessionAttribute("vcode") String sessionVcode) {
+		System.out.println(vcode + "====" + sessionVcode);
+		if(sessionVcode.equals(vcode) == false) {
+			return new Result(0, "验证码输入错误!");
+		} else {
+			return new Result(0, "验证码输入正确!");
+		}
+	}
+
 }

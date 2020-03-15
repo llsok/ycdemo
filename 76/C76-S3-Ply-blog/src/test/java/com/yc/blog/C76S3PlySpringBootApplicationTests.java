@@ -16,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.yc.blog.bean.Article;
 import com.yc.blog.bean.ArticleExample;
 import com.yc.blog.bean.ArticleExample.Criteria;
+import com.yc.blog.biz.MailService;
 import com.yc.blog.dao.ArticleMapper;
 import com.yc.blog.dao.UserMapper;
 
@@ -28,8 +29,11 @@ class BlogApplicationTests {
 	
 	@Resource
 	private ArticleMapper am;
+	
+	@Resource
+	private MailService ms;
 
-	@Test
+	//@Test
 	void contextLoads() {
 		Assert.isTrue(um.selectByExample(null).size() > 0, "结果集数量不正确!");
 		// 如何使用组合条件查询
@@ -42,7 +46,7 @@ class BlogApplicationTests {
 		System.out.println(list);
 	}
 	
-	@Test
+	//@Test
 	void test1() {
 		// PageHelper 分页查询
 		Page<Article> page = PageHelper.startPage(1, 5);
@@ -60,6 +64,12 @@ class BlogApplicationTests {
 		page.getPageNum();
 		page.getPageSize();
 		
+	}
+	
+	@Test
+	public void test2() {
+		ms.sendSimpleMail("306529917@qq.com", "测试邮件", 
+				"文件夹区域”是由“我的文件夹”、“其他邮箱”、“记事本”组成。加锁即对这几部分设置密码，以保护你的信息。");
 	}
 
 }
