@@ -1,0 +1,12 @@
+# 工程配置 ==> 默认的服务名
+spring:
+   application:
+      name: sc-server
+
+server:
+   port: 8000
+   
+eureka:
+   client:
+      registerWithEureka: false
+      fetchRegistry: false

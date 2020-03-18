@@ -1,2 +1,31 @@
+# 没有指定  spring.profiles 是默认的分区配置
 server:
    port: 8001
+
+spring:
+   application:
+      name: sc-user
+
+eureka:
+   client:
+      serviceUrl:
+         # 注册服务器的地址
+         defaultZone: http://127.0.0.1:8000/eureka
+         
+# java 运行参数：--spring.profiles.active=cu1
+#  mvn 运行参数：-Dspring.profiles.active=cu1
+# yml 分区配置
+
+---
+# 分区配置名称
+spring:
+  profiles: cu1
+server:
+  port: 8005
+  
+---
+spring:
+  profiles: cu2
+server:
+  port: 8006
+  

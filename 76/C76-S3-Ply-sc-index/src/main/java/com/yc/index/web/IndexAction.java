@@ -19,7 +19,8 @@ public class IndexAction {
 	
 	@GetMapping("user/way")
 	public String user() {
-		String url = "http://127.0.0.1:8001/user/way";
+		// 使用服务名替代 ip + 端口
+		String url = "http://sc-user/user/way";
 		// 后台远程调用
 		String ret = restTemplate.getForObject(url, String.class);
 		return ret;
