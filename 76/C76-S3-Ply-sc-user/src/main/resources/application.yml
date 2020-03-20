@@ -16,6 +16,7 @@ eureka:
 #  mvn 运行参数：-Dspring.profiles.active=cu1
 # yml 分区配置
 
+# --- 分区配置的分割线
 ---
 # 分区配置名称
 spring:

@@ -10,3 +10,9 @@ eureka:
       serviceUrl:
          # 注册服务器的地址
          defaultZone: http://127.0.0.1:8000/eureka
+
+# 开启声明式熔断降级开关
+feign:
+  hystrix:
+    enabled: true
+         
