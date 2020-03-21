@@ -15,4 +15,47 @@ eureka:
 feign:
   hystrix:
     enabled: true
+
+zuul:
+   # 配置忽略行为, 忽略所有的子系统的默认路由
+   ignoredServices: '*'
+   routes:
+      # 定义路由名称, zuul 会默认路由子系统, 格式   zuul服务器地址/服务名/路径
+      
+      # 简单路由 : 响应重定向( 内部  + 外部 )
+      test1:
+         path: /baidu/**
+         url: http://www.baidu.com
+         
+      # 跳转路由: 请求转发( 内部资源 )
+      test2:
+         # /zuser/way ==> /user/way ==> sc-user/user/way
+         path: /zuser/**
+         url: forward:/user
+      
+      # Ribbon路由, 翻译:丝带,  Robbin: 罗宾汉
+      test3:
+         # /ruser/user/way ==> sc-user/user/way
+         path: /ruser/**
+         serviceId: sc-user
+         # 由于 zuul 有默认的敏感头设定,所以要忽略默认的敏感头设置, 必须将敏感头设置为 空
+         sensitiveHeaders: 
+      # 以服务名作为 路由名称
+      sc-user:
+         path: /rruser/**
+      
+      # 默认路由
+      legacy:
+         path: /**
+         url: http://www.163.com
+      
+      # 去敏感头域字段
+      test4:
+         # /suser/user/way ==> /sc-user/user/way
+         path: /suser/**
+         serviceId: sc-user
+         # 不是所有的头域字段都可以过滤
+         sensitiveHeaders: cookie,set-cookie
+      
+      # 注意: 如果你希望按照书写顺序来执行路由规则，则必须使用YAML文件，不能使用properties
          
