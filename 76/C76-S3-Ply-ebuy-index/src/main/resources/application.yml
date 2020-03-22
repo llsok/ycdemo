@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-     url: jdbc:mysql://127.0.0.1:3306/C76-S3-Ply-ebuy
+     url: jdbc:mysql://127.0.0.1/C76-S3-Ply-ebuy?serverTimezone=UTC&CharacterEncoding=UTF-8&useSSL=false
      username: root
      password: a
      driver-class-name: com.mysql.jdbc.Driver
