@@ -2,7 +2,7 @@ package com.yc.ebuy;
 
 import javax.annotation.Resource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.yc.ebuy.dao.EasybuyUserMapper;
