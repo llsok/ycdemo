@@ -1,14 +1,10 @@
-# found duplicate key spring
-# in 'reader', line 8, column 1:
-# 重复的键值 spring
-
 server:
-   port: 80
+   port: 8001
 
 spring:
-  application:
-     name: ebuy-index
-  datasource:
+   application:
+      name: ebuy-order
+   datasource:
      url: jdbc:mysql://127.0.0.1/C76-S3-Ply-ebuy?serverTimezone=UTC&CharacterEncoding=UTF-8&useSSL=false
      username: root
      password: a
