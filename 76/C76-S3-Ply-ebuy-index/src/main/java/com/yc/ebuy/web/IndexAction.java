@@ -10,12 +10,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexAction {
 
 	@Resource
-	IProductCategoryAction pca;
+	IEbuyBackAction eba;
 
 	@GetMapping({ "/", "index", "index.html" })
 	public ModelAndView index(ModelAndView mav) {
 		// 通过远程服务调用方式获取分类信息
-		mav.addObject("pclist", pca.getPc());
+		mav.addObject("pclist", eba.getPc());
+		mav.addObject("nlist", eba.getNews());
 		mav.setViewName("index");
 		return mav;
 	}

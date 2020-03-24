@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.yc.ebuy.bean.EasybuyNews;
 import com.yc.ebuy.bean.EasybuyProductCategory;
 
 @Component
-public class ProductCategoryAction implements IProductCategoryAction {
+public class EbuyBackAction implements IEbuyBackAction {
 
 	@Override
 	public List<EasybuyProductCategory> getPc() {
@@ -22,6 +23,11 @@ public class ProductCategoryAction implements IProductCategoryAction {
 		list.add(new EasybuyProductCategory(4, "电子商品"));
 		list.add(new EasybuyProductCategory(5, "进口食品,生鲜"));
 		return list;
+	}
+
+	@Override
+	public List<EasybuyNews> getNews() {
+		return null;
 	}
 
 }
