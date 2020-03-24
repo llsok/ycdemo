@@ -28,3 +28,8 @@ logging:
         ebuy:
           dao: debug
           web: warn
+
+# 开启声明式熔断降级开关
+feign:
+  hystrix:
+    enabled: true

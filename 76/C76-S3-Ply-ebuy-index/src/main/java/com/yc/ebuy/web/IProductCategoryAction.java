@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.yc.ebuy.bean.EasybuyProductCategory;
 
-@FeignClient("ebuy-back")
+@FeignClient(name = "ebuy-back", fallback = ProductCategoryAction.class)
 public interface IProductCategoryAction {
 	/**
 	 * http://ebuy-back/getPc
