@@ -56,5 +56,9 @@ public class EasybuyProductCategory {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public EasybuyProductCategory() {
+		
+	}
     
 }
