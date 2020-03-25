@@ -1,7 +1,12 @@
 package com.yc.ebuy.bean;
 
-public class EasybuyUser {
-    private Integer id;
+public class EasybuyUser implements java.io.Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private Integer id;
 
     private String loginname;
 

@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @SpringBootApplication
 //MyBatis 接口组件扫描
@@ -13,6 +14,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 //服务熔断降级开关
 @EnableCircuitBreaker
+// Spring会话共享注解
+@EnableRedisHttpSession
 public class EbuyIndexAppcation {
 	public static void main(String[] args) {
 		SpringApplication.run(EbuyIndexAppcation.class, args);
