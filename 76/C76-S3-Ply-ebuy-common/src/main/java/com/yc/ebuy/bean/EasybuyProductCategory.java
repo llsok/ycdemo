@@ -57,8 +57,4 @@ public class EasybuyProductCategory {
 		this.name = name;
 	}
 	
-	public EasybuyProductCategory() {
-		
-	}
-    
 }
