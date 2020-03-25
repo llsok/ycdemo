@@ -1,0 +1,30 @@
+# found duplicate key spring
+# in 'reader', line 8, column 1:
+# 重复的键值 spring
+
+server:
+   port: 80
+
+spring:
+  application:
+     name: ebuy-zuul
+
+# 日志配置
+logging:
+  level:
+    com:
+      yc:
+        ebuy:
+          dao: debug
+          web: warn
+
+zuul:
+   routes:
+      ebuy-index:
+         path: /**
+         
+         
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
