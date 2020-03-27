@@ -7,7 +7,15 @@
     <result column="parentId" jdbcType="INTEGER" property="parentid" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="iconClass" jdbcType="VARCHAR" property="iconclass" />
+    <!-- 一对多关联 -->
+    <collection property="children" column="id" select="selectChildren"
+    	fetchType="lazy"></collection>
   </resultMap>
+  
+  <select id="selectChildren" resultMap="BaseResultMap">
+  	select * from easybuy_product_category where parentid = #{pid}
+  </select>
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
