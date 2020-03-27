@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.yc.ebuy.bean.EasybuyNews;
+import com.yc.ebuy.bean.EasybuyProduct;
 import com.yc.ebuy.bean.EasybuyProductCategory;
 
 @Component
@@ -27,6 +28,11 @@ public class EbuyBackAction implements IEbuyBackAction {
 
 	@Override
 	public List<EasybuyNews> getNews() {
+		return null;
+	}
+
+	@Override
+	public List<EasybuyProduct> getHotP() {
 		return null;
 	}
 

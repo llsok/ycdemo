@@ -32,6 +32,7 @@ public class IndexAction {
 	public ModelAndView index(ModelAndView mav) {
 		// 通过远程服务调用方式获取分类信息
 		mav.addObject("pclist", eba.getPc());
+		mav.addObject("hplist", eba.getHotP());
 		mav.addObject("nlist", eba.getNews());
 		mav.setViewName("index");
 		return mav;
