@@ -9,7 +9,7 @@
     <result column="iconClass" jdbcType="VARCHAR" property="iconclass" />
     <!-- 一对多关联 -->
     <collection property="children" column="id" select="selectChildren"
-    	fetchType="lazy"></collection>
+    	></collection>
   </resultMap>
   
   <select id="selectChildren" resultMap="BaseResultMap">
