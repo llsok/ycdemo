@@ -13,6 +13,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
+	<properties>
+			<!-- 加了还报错是因为 eclipse 版本低了 -->
+		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>mysql</groupId>
