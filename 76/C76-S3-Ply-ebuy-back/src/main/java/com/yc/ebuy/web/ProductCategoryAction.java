@@ -28,5 +28,10 @@ public class ProductCategoryAction {
 		List<EasybuyProductCategory> list = pcm.selectByExample(pce);
 		return list;
 	}
+	
+	@GetMapping("test")
+	public String test() {
+		return "back test";
+	}
 
 }

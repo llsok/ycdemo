@@ -24,6 +24,13 @@ zuul:
          path: /**
          # 由于 zuul 有默认的敏感头设定,所以要忽略默认的敏感头设置, 必须将敏感头设置为 空
          sensitiveHeaders: 
+      ebuy-back:
+         # 127.0.0.1/back/** ==> 127.0.0.1/ebuy-back/**
+         path: /back/**
+         sensitiveHeaders: 
+      ebuy-order:
+         path: /order/**
+         sensitiveHeaders: 
          
 # 解决 zuul 网关报错的问题
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
