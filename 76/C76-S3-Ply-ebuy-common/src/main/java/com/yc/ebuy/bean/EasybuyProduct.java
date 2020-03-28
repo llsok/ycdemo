@@ -20,8 +20,36 @@ public class EasybuyProduct {
     private String filename;
 
     private Integer isdelete;
+    
+    private EasybuyProductCategory category1;
+    private EasybuyProductCategory category2;
+    private EasybuyProductCategory category3;
+    
+    public EasybuyProductCategory getCategory1() {
+		return category1;
+	}
 
-    public Integer getId() {
+	public void setCategory1(EasybuyProductCategory category1) {
+		this.category1 = category1;
+	}
+
+	public EasybuyProductCategory getCategory2() {
+		return category2;
+	}
+
+	public void setCategory2(EasybuyProductCategory category2) {
+		this.category2 = category2;
+	}
+
+	public EasybuyProductCategory getCategory3() {
+		return category3;
+	}
+
+	public void setCategory3(EasybuyProductCategory category3) {
+		this.category3 = category3;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -12,7 +12,17 @@
     <result column="categoryLevel3Id" jdbcType="INTEGER" property="categorylevel3id" />
     <result column="fileName" jdbcType="VARCHAR" property="filename" />
     <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+    
+    <association property="category1" column="categorylevel1id" select="selectCategory"></association>
+    <association property="category2" column="categorylevel2id" select="selectCategory"></association>
+    <association property="category3" column="categorylevel3id" select="selectCategory"></association>
+    
   </resultMap>
+  
+  <select id="selectCategory" resultType="com.yc.ebuy.bean.EasybuyProductCategory">
+  	select * from easybuy_product_category where id=#{id}
+  </select>
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
