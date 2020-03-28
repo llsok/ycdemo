@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,9 +61,9 @@ public class IndexAction {
 	}
 	
 	@GetMapping("product")
-	public ModelAndView product(int id, ModelAndView mav) {
+	public ModelAndView product(@RequestParam("id")int id, ModelAndView mav) {
 		// 要展示的商品
-		mav.addObject("product?id=" + id, eba.product());
+		mav.addObject("product", eba.product(id));
 		// 商品分类
 		mav.addObject("pclist", eba.getPc());
 		mav.setViewName("product");

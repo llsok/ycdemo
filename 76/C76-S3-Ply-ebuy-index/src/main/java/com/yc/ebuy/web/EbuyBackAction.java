@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yc.ebuy.bean.EasybuyNews;
 import com.yc.ebuy.bean.EasybuyProduct;
@@ -37,7 +38,7 @@ public class EbuyBackAction implements IEbuyBackAction {
 	}
 
 	@Override
-	public EasybuyProduct product() {
+	public EasybuyProduct product(@RequestParam("id")int id) {
 		return null;
 	}
 
