@@ -3,7 +3,6 @@ package com.yc.ebuy.web;
 import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -57,6 +56,16 @@ public class IndexAction {
 			mav.addObject("msg", e.getMessage());
 			mav.setViewName("Login");
 		}
+		return mav;
+	}
+	
+	@GetMapping("product")
+	public ModelAndView product(int id, ModelAndView mav) {
+		// 要展示的商品
+		mav.addObject("product?id=" + id, eba.product());
+		// 商品分类
+		mav.addObject("pclist", eba.getPc());
+		mav.setViewName("product");
 		return mav;
 	}
 

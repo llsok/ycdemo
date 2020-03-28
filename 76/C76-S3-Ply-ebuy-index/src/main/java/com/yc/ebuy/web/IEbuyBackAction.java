@@ -23,4 +23,7 @@ public interface IEbuyBackAction {
 	
 	@GetMapping("getNews")
 	public List<EasybuyNews> getNews();
+	
+	@GetMapping("product")
+	public EasybuyProduct product();
 }

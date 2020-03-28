@@ -16,7 +16,7 @@ import com.yc.ebuy.dao.EasybuyProductMapper;
 public class ProductAction {
 	
 	@Resource
-	private EasybuyProductMapper pcm;
+	private EasybuyProductMapper pm;
 
 	/**
 	 * 查询所有的商品分类信息
@@ -27,8 +27,13 @@ public class ProductAction {
 		EasybuyProductExample pce = new EasybuyProductExample();
 		pce.setOrderByClause("stock desc");
 		PageHelper.startPage(1, 10);
-		List<EasybuyProduct> list = pcm.selectByExample(pce);
+		List<EasybuyProduct> list = pm.selectByExample(pce);
 		return list;
+	}
+	
+	@GetMapping("product")
+	public EasybuyProduct product(int id){
+		return pm.selectByPrimaryKey(id);
 	}
 	
 }

@@ -165,7 +165,7 @@
                                         	<a href="#"><img th:src="'files/'+${p.filename}" width="160" height="136" /></a>
                                         </div>                                        
                                         <div class="name">
-                                        	<a href="#">
+                                        	<a th:href="'product?id='+${p.id}">
                                             <h2 th:text="${p.name}">德国进口</h2>
                                            	 <span th:text="${p.name}">德亚全脂纯牛奶200ml*48盒</span>
                                             </a>
