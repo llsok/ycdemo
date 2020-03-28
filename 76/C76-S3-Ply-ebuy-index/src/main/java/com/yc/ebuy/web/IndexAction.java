@@ -61,7 +61,7 @@ public class IndexAction {
 	}
 	
 	@GetMapping("product")
-	public ModelAndView product(@RequestParam("id")int id, ModelAndView mav) {
+	public ModelAndView product(int id, ModelAndView mav) {
 		// 要展示的商品
 		mav.addObject("product", eba.product(id));
 		// 商品分类

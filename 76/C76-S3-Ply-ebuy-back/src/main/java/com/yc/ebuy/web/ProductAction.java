@@ -33,7 +33,7 @@ public class ProductAction {
 	}
 	
 	@GetMapping("product")
-	public EasybuyProduct product(@RequestParam("id")int id){
+	public EasybuyProduct product(int id){
 		return pm.selectByPrimaryKey(id);
 	}
 	

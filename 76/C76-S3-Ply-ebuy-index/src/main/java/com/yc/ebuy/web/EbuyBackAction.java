@@ -38,7 +38,7 @@ public class EbuyBackAction implements IEbuyBackAction {
 	}
 
 	@Override
-	public EasybuyProduct product(@RequestParam("id")int id) {
+	public EasybuyProduct product(int id) {
 		return null;
 	}
 
