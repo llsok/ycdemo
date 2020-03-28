@@ -42,9 +42,9 @@
 <div class="i_bg">
 	<div class="postion">
     	<span class="fl">全部 > 
-    		<span th:text="${product.category1.name}">美妆个护</span> > 
-    		<span th:text="${product.category2.name}">香水</span> >
-    		<span th:text="${product.category3.name}">迪奥</span></span>
+    		<span th:if="${product.category1} != null" th:text="${product.category1.name}">美妆个护</span> > 
+    		<span th:if="${product.category2} != null" th:text="${product.category2.name}">香水</span> >
+    		<span th:if="${product.category3} != null" th:text="${product.category3.name}">迪奥</span></span>
     </div>    
     <div class="content">
     	                    

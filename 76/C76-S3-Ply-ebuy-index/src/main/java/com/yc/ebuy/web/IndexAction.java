@@ -69,5 +69,11 @@ public class IndexAction {
 		mav.setViewName("product");
 		return mav;
 	}
+	
+	@GetMapping("addCart")
+	public ModelAndView addCart(ModelAndView mav) {
+		mav.setViewName("BuyCar");
+		return mav;
+	}
 
 }
