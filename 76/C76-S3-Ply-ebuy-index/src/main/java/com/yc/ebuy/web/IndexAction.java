@@ -1,10 +1,12 @@
 package com.yc.ebuy.web;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,12 +46,26 @@ public class IndexAction {
 	}
 	
 	@PostMapping("login")
-	public ModelAndView login(EasybuyUser user, ModelAndView mav) {
+	public ModelAndView login(EasybuyUser user, ModelAndView mav, 
+			@SessionAttribute(name="uri",required=false) String uri,
+			HttpSession session) {
+		
+		System.out.println("session id: " + session.getId());
+		System.out.println("11111uri: " + uri);
+		System.out.println("22222uri: " + session.getAttribute("uri"));
 		try {
 			EasybuyUser dbuser = ubiz.login(user);
 			// 将用户对象添加到会话
 			mav.addObject("loginedUser", dbuser);
-			//mav.setViewName("index");
+			if(uri != null) {
+				System.out.println("===========2==========");
+				// 这是拦截登录的情况
+				mav.setViewName("redirect:" + uri);
+			} else {
+				System.out.println("===========1==========");
+				// 这是用户的主动登录
+				mav.setViewName("index");
+			}
 			return index(mav);
 		} catch (BizException e) {
 			e.printStackTrace();
