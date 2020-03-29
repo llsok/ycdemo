@@ -51,10 +51,6 @@ public class IndexAction {
 	public ModelAndView login(EasybuyUser user, ModelAndView mav, 
 			@SessionAttribute(name="uri",required=false) String uri,
 			HttpSession session) {
-		
-		System.out.println("session id: " + session.getId());
-		System.out.println("11111uri: " + uri);
-		System.out.println("22222uri: " + session.getAttribute("uri"));
 		try {
 			EasybuyUser dbuser = ubiz.login(user);
 			/**
@@ -68,11 +64,9 @@ public class IndexAction {
 			 */
 			session.setAttribute("loginedUser", dbuser);
 			if(uri != null) {
-				System.out.println("===========2==========");
 				// 这是拦截登录的情况
-				mav.setViewName("redirect:" + uri);
+				mav.setViewName("redirect:http://127.0.0.1" + uri);
 			} else {
-				System.out.println("===========1==========");
 				// 这是用户的主动登录
 				mav.setViewName("index");
 			}
