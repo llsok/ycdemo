@@ -12,8 +12,18 @@ public class EasybuyCart {
     private Integer count;
 
     private Date createtime;
+    
+    private EasybuyProduct product;
+    
+    public EasybuyProduct getProduct() {
+		return product;
+	}
 
-    public Integer getId() {
+	public void setProduct(EasybuyProduct product) {
+		this.product = product;
+	}
+
+	public Integer getId() {
         return id;
     }
 

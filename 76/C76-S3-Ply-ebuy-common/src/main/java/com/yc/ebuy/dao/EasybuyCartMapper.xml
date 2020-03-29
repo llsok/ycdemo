@@ -7,6 +7,8 @@
     <result column="pid" jdbcType="INTEGER" property="pid" />
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <association property="product" column="pid" 
+    	select="com.yc.ebuy.dao.EasybuyProductMapper.selectByPrimaryKey"></association>
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

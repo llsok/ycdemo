@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yc.ebuy.bean.EasybuyCart;
+import com.yc.ebuy.bean.EasybuyCartExample;
 import com.yc.ebuy.bean.EasybuyUser;
 import com.yc.ebuy.biz.BizException;
 import com.yc.ebuy.biz.UserBiz;
+import com.yc.ebuy.dao.EasybuyCartMapper;
 
 @RestController
 @SessionAttributes("loginedUser")
@@ -90,7 +93,21 @@ public class IndexAction {
 	}
 	
 	@GetMapping("addCart")
-	public ModelAndView addCart(ModelAndView mav) {
+	public ModelAndView addCart(ModelAndView mav, EasybuyCart cart,
+			@SessionAttribute("loginedUser") EasybuyUser user) {
+		ubiz.addCart(user, cart);
+		return toCart(mav,user);
+	}
+	
+	@Resource
+	private EasybuyCartMapper ecm;
+	
+	@GetMapping("toCart")
+	public ModelAndView toCart(ModelAndView mav,
+			@SessionAttribute("loginedUser") EasybuyUser user) {
+		EasybuyCartExample ece = new EasybuyCartExample();
+		ece.createCriteria().andUidEqualTo(user.getId());
+		mav.addObject("clist",ecm.selectByExample(ece));
 		mav.setViewName("BuyCar");
 		return mav;
 	}

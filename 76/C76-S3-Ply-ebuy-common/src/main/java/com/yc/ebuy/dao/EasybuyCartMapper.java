@@ -4,8 +4,13 @@ import com.yc.ebuy.bean.EasybuyCart;
 import com.yc.ebuy.bean.EasybuyCartExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 public interface EasybuyCartMapper {
+	
+	@Update("update Easybuy_Cart set count = count + 1 where uid=#{uid} and pid=#{pid}")
+	int addCount(EasybuyCart record);
+	
     long countByExample(EasybuyCartExample example);
 
     int deleteByExample(EasybuyCartExample example);
