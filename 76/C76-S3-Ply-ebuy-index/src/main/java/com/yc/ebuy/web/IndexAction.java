@@ -57,8 +57,16 @@ public class IndexAction {
 		System.out.println("22222uri: " + session.getAttribute("uri"));
 		try {
 			EasybuyUser dbuser = ubiz.login(user);
-			// 将用户对象添加到会话
-			mav.addObject("loginedUser", dbuser);
+			/**
+			 * 	屏蔽之前的写法
+				// 将用户对象添加到会话
+				mav.addObject("loginedUser", dbuser);
+				
+			 * 	响应重定向添加会话属性, 使用
+			 * 		mav.addObject("loginedUser", dbuser);
+			 * 	会出现会话属性添加失败的问题, 所以改成下面的写法
+			 */
+			session.setAttribute("loginedUser", dbuser);
 			if(uri != null) {
 				System.out.println("===========2==========");
 				// 这是拦截登录的情况
