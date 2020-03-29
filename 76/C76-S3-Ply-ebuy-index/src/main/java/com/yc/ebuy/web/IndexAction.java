@@ -35,7 +35,9 @@ public class IndexAction {
 		mav.addObject("pclist", eba.getPc());
 		mav.addObject("hplist", eba.getHotP());
 		mav.addObject("nlist", eba.getNews());
-		mav.setViewName("index");
+		if(mav.getViewName()!=null) {
+			mav.setViewName("index");
+		}
 		return mav;
 	}
 	
