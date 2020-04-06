@@ -14,6 +14,6 @@ spring:
             # 配置文件分支
             # default-label: master
             # 配置文件所在根目录
-            # search-paths: config
+            search-paths: 76/config
             uri: https://github.com/llsok/ycdemo
-            search-paths: 76/C76-S3-Ply-ebuy-config/src/main/resources/config
+            #search-paths: 76/C76-S3-Ply-ebuy-config/src/main/resources/config
