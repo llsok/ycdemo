@@ -1,0 +1,14 @@
+spring:
+  application:
+      name: ebuy-index
+  cloud:
+     config:
+       uri: http://localhost:8080
+       label: master
+
+---
+spring:
+   profiles: index8003
+   cloud:
+     config:
+       profile: index8003

@@ -1,0 +1,7 @@
+spring:
+  application:
+      name: ebuy-back
+  cloud:
+     config:
+       uri: http://localhost:8080
+       label: master
