@@ -1,0 +1,27 @@
+server:
+   port: 8001
+
+spring:
+   application:
+      name: ebuy-order
+   datasource:
+     url: jdbc:mysql://127.0.0.1/C76-S3-Ply-ebuy?serverTimezone=UTC&CharacterEncoding=UTF-8&useSSL=false
+     username: root
+     password: a
+     driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  #实体类的路径
+  type-aliases-package: com.yc.ebuy.bean
+  configuration:
+     map-underscore-to-camel-case: true
+  
+# 日志配置
+logging:
+  level:
+    com:
+      yc:
+        ebuy:
+          dao: debug
+          web: warn
+          

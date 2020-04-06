@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: ebuy-config  # 应用名称
+  cloud:
+     config:
+        server:
+          git:
+            # 配置文件所在仓库
+            uri: https://github.com/llsok/ycdemo
+            # 登录账号
+            # username: github
+            # 登录密码
+            # password: github
+            # 配置文件分支
+            # default-label: master
+            # 配置文件所在根目录
+            search-paths: config
