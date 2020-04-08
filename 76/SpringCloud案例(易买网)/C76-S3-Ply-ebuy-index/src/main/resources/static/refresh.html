@@ -1,0 +1,6 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<form action="http://127.0.0.1/actuator/refresh" method="post" enctype="application/json">
+<input type="button" value="refresh" 
+onclick="$.post('http://127.0.0.1/actuator/refresh',null,function(data){alert(data)})">
+</form>
