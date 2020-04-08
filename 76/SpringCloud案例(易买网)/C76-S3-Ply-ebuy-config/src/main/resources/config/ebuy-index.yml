@@ -36,3 +36,12 @@ feign:
     
     
 test: 测试数据
+
+management:
+  endpoint:
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
