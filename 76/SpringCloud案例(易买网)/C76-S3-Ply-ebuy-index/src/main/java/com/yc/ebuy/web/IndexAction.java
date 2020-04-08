@@ -117,6 +117,7 @@ public class IndexAction {
 	
 	@Value("${test}")
 	private String test;
+	@GetMapping("test")
 	public String test() {
 		return "test = " + test;
 	}
