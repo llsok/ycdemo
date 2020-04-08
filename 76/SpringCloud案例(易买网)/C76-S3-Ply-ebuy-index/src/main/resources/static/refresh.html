@@ -2,6 +2,7 @@
 
 <form action="http://127.0.0.1/test">
 <input type="button" value="refresh" 
-onclick="$.post('http://127.0.0.1/actuator/refresh',null,function(data){alert(data)})">
+onclick="$.post('http://127.0.0.1/actuator/refresh',null,function(data){$('#t').append(data))">
 <input type="submit" value="test" >
 </form>
+<div id="t"></div>
