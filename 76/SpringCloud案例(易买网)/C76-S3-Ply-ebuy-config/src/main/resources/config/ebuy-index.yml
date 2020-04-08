@@ -33,3 +33,6 @@ logging:
 feign:
   hystrix:
     enabled: true
+    
+    
+test: 测试数据

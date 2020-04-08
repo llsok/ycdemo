@@ -3,6 +3,8 @@ package com.yc.ebuy.web;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import com.yc.ebuy.dao.EasybuyCartMapper;
 
 @RestController
 @SessionAttributes("loginedUser")
+@RefreshScope
 public class IndexAction {
 
 	@Resource
@@ -110,6 +113,12 @@ public class IndexAction {
 		mav.addObject("clist",ecm.selectByExample(ece));
 		mav.setViewName("BuyCar");
 		return mav;
+	}
+	
+	@Value("${test}")
+	private String test;
+	public String test() {
+		return "test = " + test;
 	}
 
 }
