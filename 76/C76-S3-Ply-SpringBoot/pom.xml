@@ -44,7 +44,7 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<!-- Overriding managed version 8.0.19 for mysql-connector-java -->
-			<version>5.1.47</version><!--$NO-MVN-MAN-VER$ -->
+			<version>8.0.28</version><!--$NO-MVN-MAN-VER$ -->
 			<scope>runtime</scope>
 		</dependency>
 
